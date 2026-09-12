@@ -314,6 +314,12 @@ msgstr "{0} i {1} rozstrzygają to jako terminalowe dinozaury. O zwycięzcy decy
 msgid "{0} behind you"
 msgstr "{0} za tobą"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} skomentował(a) {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} deweloperów jest w rankingu według użycia agentów. Twoje ostatnie 30 dni już się liczy — tylko jest ukryte. Tylko liczby tokenów i nazwy modeli, żadnych nazw repozytoriów, ścieżek plików ani promptów."
@@ -783,6 +789,9 @@ msgstr "{offlineHostCount, plural, one {# urządzenie jest offline i zachowa swo
 
 msgid "{openCount} open"
 msgstr "{openCount} otwartych"
+
+msgid "{overflow} more new comment(s)"
+msgstr "Jeszcze {overflow} nowych komentarzy"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} częściowo"
@@ -10162,6 +10171,9 @@ msgstr "Otwórz opcje pull requesta"
 
 msgid "Open pull requests"
 msgstr "Otwarte pull requesty"
+
+msgid "Open Pull requests to read them."
+msgstr "Otwórz Pull requests, aby je przeczytać."
 
 msgid "Open recent"
 msgstr "Otwórz ostatnie"

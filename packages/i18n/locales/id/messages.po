@@ -314,6 +314,12 @@ msgstr "{0} dan {1} menyelesaikannya sebagai dinosaurus terminal. Statistik yang
 msgid "{0} behind you"
 msgstr "{0} di belakang Anda"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} mengomentari {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} developer diperingkat berdasarkan penggunaan agen. 30 hari terakhir Anda sudah dihitung, hanya disembunyikan. Hanya jumlah token dan nama model, tanpa nama repo, path file, atau prompt."
@@ -783,6 +789,9 @@ msgstr "{offlineHostCount, plural, one {# perangkat sedang offline dan tetap men
 
 msgid "{openCount} open"
 msgstr "{openCount} terbuka"
+
+msgid "{overflow} more new comment(s)"
+msgstr "{overflow} komentar baru lagi"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} sebagian"
@@ -10162,6 +10171,9 @@ msgstr "Buka opsi pull request"
 
 msgid "Open pull requests"
 msgstr "Pull request terbuka"
+
+msgid "Open Pull requests to read them."
+msgstr "Buka Pull requests untuk membacanya."
 
 msgid "Open recent"
 msgstr "Buka yang terbaru"

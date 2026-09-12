@@ -21,6 +21,11 @@ const INITIAL_LOOKBACK_MS = 15 * 60 * 1000;
  * unbounded cardinality, which the persisted-state policy keeps out of
  * localStorage. A fixed-size singleton is explicitly allowed.
  */
+// ponytail: GitHub's repo-scoped `since` returns a single 100-item page, so a
+// watermark older than this would silently drop whatever falls past it. Cap the
+// look-back rather than paginate — after a long absence you get the recent
+// comments, not a backfill. Paginate if anyone actually wants the backfill.
+const MAX_LOOKBACK_MS = 24 * 60 * 60 * 1000;
 const WATERMARK_KEY = "pr-comment-notify-watermark-v1";
 /** One burst of comments should not become one notification per comment. */
 const MAX_NOTIFICATIONS_PER_POLL = 3;
@@ -33,6 +38,12 @@ function readWatermark(): string {
 		// Private windows and cleared site data both throw here.
 	}
 	return new Date(Date.now() - INITIAL_LOOKBACK_MS).toISOString();
+}
+
+/** Never ask GitHub for more history than one page can answer. */
+function clampSince(watermark: string): string {
+	const floor = new Date(Date.now() - MAX_LOOKBACK_MS).toISOString();
+	return watermark < floor ? floor : watermark;
 }
 
 function writeWatermark(value: string): void {
@@ -59,7 +70,7 @@ export function usePullRequestCommentNotifications(): void {
 			return getHostServiceClientByUrl(
 				activeHostUrl,
 			).github.listRecentComments.query({
-				since: watermarkRef.current ?? readWatermark(),
+				since: clampSince(watermarkRef.current ?? readWatermark()),
 			});
 		},
 	});

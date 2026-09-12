@@ -314,6 +314,12 @@ msgstr "{0} a {1} si to vyříkají jako termináloví dinosauři. O vítězi ro
 msgid "{0} behind you"
 msgstr "{0} za vámi"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} okomentoval(a) {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "Počet vývojářů v žebříčku podle využití agentů: {0}. Vašich posledních 30 dní se už počítá, jen je skryto. Pouze počty tokenů a názvy modelů, žádné názvy repozitářů, cesty k souborům ani prompty."
@@ -783,6 +789,9 @@ msgstr "{offlineHostCount, plural, one {# zařízení je offline a ponechá si s
 
 msgid "{openCount} open"
 msgstr "{openCount} otevřených"
+
+msgid "{overflow} more new comment(s)"
+msgstr "Dalších {overflow} nových komentářů"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} částečně"
@@ -10162,6 +10171,9 @@ msgstr "Otevřít možnosti pull requestu"
 
 msgid "Open pull requests"
 msgstr "Otevřené pull requesty"
+
+msgid "Open Pull requests to read them."
+msgstr "Otevři Pull requests a přečti si je."
 
 msgid "Open recent"
 msgstr "Otevřít nedávné"

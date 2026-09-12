@@ -314,6 +314,12 @@ msgstr "{0} và {1} phân định thắng thua trong hình hài khủng long ter
 msgid "{0} behind you"
 msgstr "{0} phía sau bạn"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} đã bình luận trên {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} nhà phát triển được xếp hạng theo mức dùng agent. 30 ngày qua của bạn đã được tính, chỉ là đang ẩn. Chỉ số lượng token và tên mô hình, không có tên repo, đường dẫn tệp hay prompt."
@@ -783,6 +789,9 @@ msgstr "{offlineHostCount, plural, one {# thiết bị đang ngoại tuyến và
 
 msgid "{openCount} open"
 msgstr "{openCount} còn mở"
+
+msgid "{overflow} more new comment(s)"
+msgstr "Thêm {overflow} bình luận mới"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} một phần"
@@ -10162,6 +10171,9 @@ msgstr "Mở tùy chọn pull request"
 
 msgid "Open pull requests"
 msgstr "Pull request đang mở"
+
+msgid "Open Pull requests to read them."
+msgstr "Mở Pull requests để đọc."
 
 msgid "Open recent"
 msgstr "Mở gần đây"

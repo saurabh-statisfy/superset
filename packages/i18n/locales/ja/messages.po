@@ -314,6 +314,12 @@ msgstr "{0}と{1}がターミナル恐竜となって決着をつけます。勝
 msgid "{0} behind you"
 msgstr "{0}差で後続"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} が {1}#{2} にコメントしました"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0}人の開発者がエージェント利用量でランク付けされています。あなたの直近30日はすでに集計済みで、非表示になっているだけです。公開されるのはトークン数とモデル名のみで、リポジトリ名・ファイルパス・プロンプトは含まれません。"
@@ -783,6 +789,9 @@ msgstr "{offlineHostCount, plural, one {#台のデバイスがオフラインの
 
 msgid "{openCount} open"
 msgstr "{openCount}件通過"
+
+msgid "{overflow} more new comment(s)"
+msgstr "他に {overflow} 件の新しいコメント"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount}件一部通過"
@@ -10162,6 +10171,9 @@ msgstr "プルリクエストのオプションを開く"
 
 msgid "Open pull requests"
 msgstr "オープンなプルリクエスト"
+
+msgid "Open Pull requests to read them."
+msgstr "Pull requests を開いて確認してください。"
 
 msgid "Open recent"
 msgstr "最近使った項目を開く"

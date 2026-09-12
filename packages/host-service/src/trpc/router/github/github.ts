@@ -162,7 +162,10 @@ export const githubRouter = router({
 			if (open.length === 0) return { comments: [] };
 
 			// Group tracked PR numbers by repo so each repo is polled once.
-			const byRepo = new Map<string, { owner: string; repo: string; numbers: Set<number> }>();
+			const byRepo = new Map<
+				string,
+				{ owner: string; repo: string; numbers: Set<number> }
+			>();
 			for (const row of open) {
 				const key = `${row.repoOwner}/${row.repoName}`;
 				const entry = byRepo.get(key) ?? {
@@ -207,10 +210,17 @@ export const githubRouter = router({
 					urlField: string,
 				) => {
 					for (const item of items) {
-						const prNumber = prNumberFromUrl(item[urlField] as string | undefined);
+						const prNumber = prNumberFromUrl(
+							item[urlField] as string | undefined,
+						);
 						if (prNumber === null || !numbers.has(prNumber)) continue;
-						const author = ((item.user as { login?: string } | null)?.login) ?? "";
+						const author =
+							(item.user as { login?: string } | null)?.login ?? "";
 						if (!author || (viewer && author === viewer)) continue;
+						// CI bots comment on every push; a notification per bot
+						// comment trains people to ignore the notifications that
+						// matter. Humans only.
+						if (author.endsWith("[bot]")) continue;
 						comments.push({
 							id: Number(item.id),
 							prNumber,
@@ -232,7 +242,11 @@ export const githubRouter = router({
 						since: input.since,
 						per_page: 100,
 					});
-					collect(issueComments.data as Array<Record<string, unknown>>, "issue", "issue_url");
+					collect(
+						issueComments.data as Array<Record<string, unknown>>,
+						"issue",
+						"issue_url",
+					);
 				} catch {
 					// One unreachable repo must not sink the rest of the poll.
 				}
@@ -244,7 +258,11 @@ export const githubRouter = router({
 						since: input.since,
 						per_page: 100,
 					});
-					collect(reviewComments.data as Array<Record<string, unknown>>, "review", "pull_request_url");
+					collect(
+						reviewComments.data as Array<Record<string, unknown>>,
+						"review",
+						"pull_request_url",
+					);
 				} catch {}
 			}
 

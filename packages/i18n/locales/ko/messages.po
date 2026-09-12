@@ -314,6 +314,12 @@ msgstr "{0}와 {1}이(가) 터미널 공룡이 되어 결판을 냅니다. 승�
 msgid "{0} behind you"
 msgstr "{0} 차이로 뒤"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0}님이 {1}#{2}에 댓글을 남겼습니다"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0}명의 개발자가 에이전트 사용량으로 순위에 올라 있습니다. 최근 30일 사용량은 이미 집계되어 있고 숨겨져 있을 뿐입니다. 토큰 수와 모델 이름만 공개되며 저장소 이름, 파일 경로, 프롬프트는 포함되지 않습니다."
@@ -783,6 +789,9 @@ msgstr "{offlineHostCount, plural, one {기기 #대가 오프라인 상태이며
 
 msgid "{openCount} open"
 msgstr "{openCount}개 열림"
+
+msgid "{overflow} more new comment(s)"
+msgstr "새 댓글 {overflow}개 더"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount}개 부분 달성"
@@ -10162,6 +10171,9 @@ msgstr "풀 리퀘스트 옵션 열기"
 
 msgid "Open pull requests"
 msgstr "열린 풀 리퀘스트"
+
+msgid "Open Pull requests to read them."
+msgstr "Pull requests에서 확인하세요."
 
 msgid "Open recent"
 msgstr "최근 항목 열기"

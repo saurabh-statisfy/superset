@@ -314,6 +314,12 @@ msgstr "{0} and {1} settle it as terminal dinosaurs. Stats decide the winner."
 msgid "{0} behind you"
 msgstr "{0} behind you"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} commented on {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
@@ -783,6 +789,9 @@ msgstr "{offlineHostCount, plural, one {# device is offline and keeps its copy.}
 
 msgid "{openCount} open"
 msgstr "{openCount} open"
+
+msgid "{overflow} more new comment(s)"
+msgstr "{overflow} more new comment(s)"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} partial"
@@ -10162,6 +10171,9 @@ msgstr "Open pull request options"
 
 msgid "Open pull requests"
 msgstr "Open pull requests"
+
+msgid "Open Pull requests to read them."
+msgstr "Open Pull requests to read them."
 
 msgid "Open recent"
 msgstr "Open recent"

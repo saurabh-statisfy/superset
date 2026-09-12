@@ -314,6 +314,12 @@ msgstr "{0} en {1} beslechten het als terminaldinosaurussen. De statistieken bep
 msgid "{0} behind you"
 msgstr "{0} achter je"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} reageerde op {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} developers zijn gerangschikt op agentgebruik. Je laatste 30 dagen zijn al meegeteld, alleen verborgen. Alleen tokenaantallen en modelnamen, geen repo-namen, bestandspaden of prompts."
@@ -783,6 +789,9 @@ msgstr "{offlineHostCount, plural, one {# apparaat is offline en behoudt zijn ko
 
 msgid "{openCount} open"
 msgstr "{openCount} open"
+
+msgid "{overflow} more new comment(s)"
+msgstr "Nog {overflow} nieuwe reactie(s)"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} gedeeltelijk"
@@ -10162,6 +10171,9 @@ msgstr "Pull request-opties openen"
 
 msgid "Open pull requests"
 msgstr "Open pull requests"
+
+msgid "Open Pull requests to read them."
+msgstr "Open Pull requests om ze te lezen."
 
 msgid "Open recent"
 msgstr "Recent openen"

@@ -314,6 +314,12 @@ msgstr "{0} и {1} выясняют отношения в облике терм�
 msgid "{0} behind you"
 msgstr "{0} позади вас"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} прокомментировал(а) {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "Разработчиков в рейтинге по использованию агентов: {0}. Ваши последние 30 дней уже учтены — просто скрыты. Только количество токенов и названия моделей, без имён репозиториев, путей к файлам и промптов."
@@ -783,6 +789,9 @@ msgstr "{offlineHostCount, plural, one {# устройство офлайн и �
 
 msgid "{openCount} open"
 msgstr "{openCount} открыто"
+
+msgid "{overflow} more new comment(s)"
+msgstr "Ещё {overflow} новых комментариев"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} частично"
@@ -10162,6 +10171,9 @@ msgstr "Открыть параметры пул-реквеста"
 
 msgid "Open pull requests"
 msgstr "Открытые пул-реквесты"
+
+msgid "Open Pull requests to read them."
+msgstr "Откройте Pull requests, чтобы прочитать их."
 
 msgid "Open recent"
 msgstr "Открыть недавние"

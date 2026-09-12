@@ -314,6 +314,12 @@ msgstr "{0}与{1}化身终端恐龙一决高下。数据决定胜负。"
 msgid "{0} behind you"
 msgstr "落后你{0}"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} 评论了 {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "已有{0}位开发者按agent用量排名。你最近30天的数据已计入，只是尚未公开。仅包含token数量和模型名称，不含仓库名、文件路径或提示词。"
@@ -783,6 +789,9 @@ msgstr "{offlineHostCount, plural, one {# 台设备处于离线状态，将保�
 
 msgid "{openCount} open"
 msgstr "{openCount}项已开启"
+
+msgid "{overflow} more new comment(s)"
+msgstr "还有 {overflow} 条新评论"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount}项部分开启"
@@ -10162,6 +10171,9 @@ msgstr "打开拉取请求选项"
 
 msgid "Open pull requests"
 msgstr "打开的拉取请求"
+
+msgid "Open Pull requests to read them."
+msgstr "打开 Pull requests 查看。"
 
 msgid "Open recent"
 msgstr "打开最近使用"

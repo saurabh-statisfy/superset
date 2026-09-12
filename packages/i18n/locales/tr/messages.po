@@ -314,6 +314,12 @@ msgstr "{0} ve {1} bu işi terminal dinozorları olarak çözüyor. Kazananı is
 msgid "{0} behind you"
 msgstr "{0} arkanızda"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0}, {1}#{2} üzerine yorum yaptı"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} geliştirici ajan kullanımına göre sıralanıyor. Son 30 gününüz zaten sayılıyor, yalnızca gizli. Yalnızca token sayıları ve model adları; repo adları, dosya yolları veya prompt'lar yok."
@@ -783,6 +789,9 @@ msgstr "{offlineHostCount, plural, one {# cihaz çevrimdışı ve kopyasını ko
 
 msgid "{openCount} open"
 msgstr "{openCount} açık"
+
+msgid "{overflow} more new comment(s)"
+msgstr "{overflow} yeni yorum daha"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} kısmi"
@@ -10162,6 +10171,9 @@ msgstr "Pull request seçeneklerini aç"
 
 msgid "Open pull requests"
 msgstr "Açık pull request'ler"
+
+msgid "Open Pull requests to read them."
+msgstr "Okumak için Pull requests'i aç."
 
 msgid "Open recent"
 msgstr "Son kullanılanı aç"
