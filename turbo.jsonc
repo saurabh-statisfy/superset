@@ -2,6 +2,10 @@
 	"$schema": "https://turbo.build/schema.json",
 	"ui": "tui",
 	"globalEnv": [
+		// Declared here, not in globalPassThroughEnv: an offline build differs
+		// from a normal one, so the flag must be part of the cache key or
+		// toggling it hands back a stale artifact.
+		"SUPERSET_OFFLINE",
 		"DATABASE_URL",
 		"DATABASE_URL_UNPOOLED",
 		"USERCONTENT_URL",

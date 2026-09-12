@@ -12,7 +12,6 @@ import { NavigationControls } from "../NavigationControls";
 import { SidebarToggle } from "../SidebarToggle";
 import { SyncMainButton } from "../SyncMainButton";
 import { OpenInMenuButton } from "./components/OpenInMenuButton";
-import { OrganizationDropdown } from "./components/OrganizationDropdown";
 import { ResourceConsumption } from "./components/ResourceConsumption";
 import { RightSidebarToggle } from "./components/RightSidebarToggle";
 import { TopBarPortsDropdown } from "./components/TopBarPortsDropdown";
@@ -112,7 +111,6 @@ export function TopBar() {
 						projectId={workspace.project?.id}
 					/>
 				) : null}
-				{!isV2CloudEnabled && <OrganizationDropdown />}
 				{isV2WorkspaceRoute && <RightSidebarToggle />}
 				{!isMac && <WindowControls />}
 			</div>
