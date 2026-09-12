@@ -10,6 +10,7 @@ import { electronTrpc } from "renderer/lib/electron-trpc";
 import { useWorkspaceSidebarStore } from "renderer/stores/workspace-sidebar-state";
 import { NavigationControls } from "../NavigationControls";
 import { SidebarToggle } from "../SidebarToggle";
+import { SyncMainButton } from "../SyncMainButton";
 import { OpenInMenuButton } from "./components/OpenInMenuButton";
 import { OrganizationDropdown } from "./components/OrganizationDropdown";
 import { ResourceConsumption } from "./components/ResourceConsumption";
@@ -81,6 +82,7 @@ export function TopBar() {
 						    v2 is the default, so the button simply did not exist for
 						    most users. The component already takes the surface. */}
 						<ResourceConsumption surface={isV2CloudEnabled ? "v2" : "v1"} />
+						<SyncMainButton />
 					</ZoomStable>
 				)}
 			</div>

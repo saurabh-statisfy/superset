@@ -757,9 +757,6 @@ msgstr "{months}mo"
 msgid "{months}mo ago"
 msgstr "{months}mo ago"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "{myFailedCount} of your automations failed their last run"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} is built in and cannot be removed"
@@ -2268,14 +2265,8 @@ msgstr "Automation title"
 msgid "Automations"
 msgstr "Automations"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Automations ({myFailedCount} failing)"
-
 msgid "Automations & event triggers"
 msgstr "Automations & event triggers"
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Automations, {myFailedCount} failing"
 
 msgid "Autonomous"
 msgstr "Autonomous"
@@ -3613,6 +3604,9 @@ msgstr "Configure workspace run command"
 
 msgid "Confirm before quitting"
 msgstr "Confirm before quitting"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Conflicting merges were rolled back — those worktrees are unchanged."
 
 msgid "Connect"
 msgstr "Connect"
@@ -5654,6 +5648,9 @@ msgstr "Every Wednesday at 9am, review this week's merged PRs and update any doc
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
+
+msgid "Every worktree was already up to date"
+msgstr "Every worktree was already up to date"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
@@ -8197,6 +8194,9 @@ msgstr "Local Device"
 msgid "Local First"
 msgstr "Local First"
 
+msgid "Local host service is not running"
+msgstr "Local host service is not running"
+
 msgid "Local Network"
 msgstr "Local Network"
 
@@ -8504,6 +8504,12 @@ msgstr "Merged"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Merged by {0}"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "Merged into {merged} worktree(s)"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "Merged into {merged} worktree(s). Needs attention: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Merged, but couldn't refresh PR state — try again in a moment"
@@ -9522,6 +9528,9 @@ msgstr "No workspaces on this host yet"
 
 msgid "No workspaces yet"
 msgstr "No workspaces yet"
+
+msgid "No worktrees to sync"
+msgstr "No worktrees to sync"
 
 msgid "No-Prompt Launch"
 msgstr "No-Prompt Launch"
@@ -13348,6 +13357,9 @@ msgstr "Skip for now"
 msgid "Skipped"
 msgstr "Skipped"
 
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Skipped worktrees with uncommitted changes."
+
 msgid "Slack Account Linked"
 msgstr "Slack Account Linked"
 
@@ -14078,6 +14090,9 @@ msgstr "Sync issues bidirectionally with Linear."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 
+msgid "Sync main into all worktrees"
+msgstr "Sync main into all worktrees"
+
 msgid "Sync Repositories"
 msgstr "Sync Repositories"
 
@@ -14089,6 +14104,9 @@ msgstr "Syncing with remote"
 
 msgid "Syncing..."
 msgstr "Syncing..."
+
+msgid "Syncing…"
+msgstr "Syncing…"
 
 msgid "System"
 msgstr "System"

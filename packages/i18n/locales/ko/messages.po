@@ -757,9 +757,6 @@ msgstr "{months}개월"
 msgid "{months}mo ago"
 msgstr "{months}개월 전"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "내 자동화 {myFailedCount}개가 마지막 실행에 실패했습니다"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name}은(는) 기본 제공이라 제거할 수 없습니다"
@@ -2268,14 +2265,8 @@ msgstr "자동화 제목"
 msgid "Automations"
 msgstr "자동화"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "자동화 ({myFailedCount}개 실패)"
-
 msgid "Automations & event triggers"
 msgstr "자동화 및 이벤트 트리거"
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "자동화, {myFailedCount}개 실패"
 
 msgid "Autonomous"
 msgstr "자율"
@@ -3613,6 +3604,9 @@ msgstr "워크스페이스 실행 명령 구성"
 
 msgid "Confirm before quitting"
 msgstr "종료 전 확인"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "충돌한 병합은 되돌렸습니다 — 해당 워크트리는 변경되지 않았습니다."
 
 msgid "Connect"
 msgstr "연결"
@@ -5654,6 +5648,9 @@ msgstr "매주 수요일 오전 9시에 이번 주 머지된 PR을 검토하고,
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "평일 오전 9시마다 새 GitHub 이슈를 읽고, 라벨을 적용하고, 검토용 첫 답변 초안을 작성합니다."
+
+msgid "Every worktree was already up to date"
+msgstr "모든 워크트리가 이미 최신 상태입니다"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "이것이 일반화될 수 있는지를 두고 모두가 논쟁합니다. 그 논쟁 자체가 해당 단계에 도달했다는 신호입니다."
@@ -8197,6 +8194,9 @@ msgstr "로컬 기기"
 msgid "Local First"
 msgstr "로컬 우선"
 
+msgid "Local host service is not running"
+msgstr "로컬 host-service가 실행 중이 아닙니다"
+
 msgid "Local Network"
 msgstr "로컬 네트워크"
 
@@ -8504,6 +8504,12 @@ msgstr "머지됨"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "{0}이(가) 머지함"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "{merged}개 워크트리에 병합했습니다"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "{merged}개 워크트리에 병합했습니다. 확인 필요: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "머지했지만 PR 상태를 새로 고치지 못했습니다 — 잠시 후 다시 시도하세요"
@@ -9522,6 +9528,9 @@ msgstr "아직 이 호스트에 워크스페이스가 없습니다"
 
 msgid "No workspaces yet"
 msgstr "아직 워크스페이스가 없습니다"
+
+msgid "No worktrees to sync"
+msgstr "동기화할 워크트리가 없습니다"
 
 msgid "No-Prompt Launch"
 msgstr "프롬프트 없는 실행"
@@ -13348,6 +13357,9 @@ msgstr "지금은 건너뛰기"
 msgid "Skipped"
 msgstr "건너뜀"
 
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "커밋되지 않은 변경 사항이 있는 워크트리를 건너뛰었습니다."
+
 msgid "Slack Account Linked"
 msgstr "Slack 계정 연결됨"
 
@@ -14078,6 +14090,9 @@ msgstr "Linear와 이슈를 양방향으로 동기화합니다."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Linear와 이슈를 양방향으로 동기화하세요. Superset에서 만든 작업을 Linear에 나타나게 하거나 기존 Linear 이슈를 가져올 수 있습니다."
 
+msgid "Sync main into all worktrees"
+msgstr "main을 모든 워크트리에 병합"
+
 msgid "Sync Repositories"
 msgstr "리포지토리 동기화"
 
@@ -14089,6 +14104,9 @@ msgstr "원격과 동기화하는 중"
 
 msgid "Syncing..."
 msgstr "동기화하는 중..."
+
+msgid "Syncing…"
+msgstr "동기화 중…"
 
 msgid "System"
 msgstr "시스템"

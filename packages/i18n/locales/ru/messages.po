@@ -757,9 +757,6 @@ msgstr "{months} мес."
 msgid "{months}mo ago"
 msgstr "{months} мес. назад"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "Последний запуск завершился ошибкой у {myFailedCount} ваших автоматизаций"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} встроен и не может быть удалён"
@@ -2268,14 +2265,8 @@ msgstr "Название автоматизации"
 msgid "Automations"
 msgstr "Автоматизации"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Автоматизации (с ошибкой: {myFailedCount})"
-
 msgid "Automations & event triggers"
 msgstr "Автоматизации и триггеры по событиям"
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Автоматизации, с ошибкой: {myFailedCount}"
 
 msgid "Autonomous"
 msgstr "Автономно"
@@ -3613,6 +3604,9 @@ msgstr "Настроить команду запуска рабочей обла
 
 msgid "Confirm before quitting"
 msgstr "Подтверждать выход"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Конфликтующие слияния отменены — эти рабочие деревья не изменились."
 
 msgid "Connect"
 msgstr "Подключить"
@@ -5654,6 +5648,9 @@ msgstr "Каждую среду в 9:00 просматривай объедин�
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Каждый будний день в 9:00 читай новые задачи GitHub, расставляй метки и готовь первый черновик ответа мне на проверку."
+
+msgid "Every worktree was already up to date"
+msgstr "Все рабочие деревья уже актуальны"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Все спорят, обобщается ли это. Сам спор — признак того, что уровень достигнут."
@@ -8197,6 +8194,9 @@ msgstr "Локальное устройство"
 msgid "Local First"
 msgstr "Сначала локально"
 
+msgid "Local host service is not running"
+msgstr "Локальный host-service не запущен"
+
 msgid "Local Network"
 msgstr "Локальная сеть"
 
@@ -8504,6 +8504,12 @@ msgstr "Объединён"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Объединил {0}"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "Влито в {merged} рабочих дерева"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "Влито в {merged} рабочих дерева. Требуют внимания: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Объединено, но не удалось обновить состояние PR — повторите через мгновение"
@@ -9522,6 +9528,9 @@ msgstr "На этом хосте пока нет рабочих областей
 
 msgid "No workspaces yet"
 msgstr "Рабочих областей пока нет"
+
+msgid "No worktrees to sync"
+msgstr "Нет рабочих деревьев для синхронизации"
 
 msgid "No-Prompt Launch"
 msgstr "Запуск без промпта"
@@ -13348,6 +13357,9 @@ msgstr "Пока пропустить"
 msgid "Skipped"
 msgstr "Пропущено"
 
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Рабочие деревья с незафиксированными изменениями пропущены."
+
 msgid "Slack Account Linked"
 msgstr "Аккаунт Slack связан"
 
@@ -14078,6 +14090,9 @@ msgstr "Двусторонняя синхронизация задач с Linear
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Двусторонняя синхронизация задач с Linear. Создавайте задачи в Superset — они появятся в Linear, или импортируйте существующие задачи Linear."
 
+msgid "Sync main into all worktrees"
+msgstr "Влить main во все рабочие деревья"
+
 msgid "Sync Repositories"
 msgstr "Синхронизировать репозитории"
 
@@ -14089,6 +14104,9 @@ msgstr "Синхронизация с удалённым репозиторие�
 
 msgid "Syncing..."
 msgstr "Синхронизация..."
+
+msgid "Syncing…"
+msgstr "Синхронизация…"
 
 msgid "System"
 msgstr "Системная"

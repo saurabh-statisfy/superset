@@ -757,9 +757,6 @@ msgstr "{months}ay"
 msgid "{months}mo ago"
 msgstr "{months}ay önce"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "Otomasyonlarınızdan {myFailedCount} tanesi son çalıştırmasında başarısız oldu"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} yerleşiktir ve kaldırılamaz"
@@ -2268,14 +2265,8 @@ msgstr "Otomasyon başlığı"
 msgid "Automations"
 msgstr "Otomasyonlar"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Otomasyonlar ({myFailedCount} başarısız)"
-
 msgid "Automations & event triggers"
 msgstr "Otomasyonlar ve olay tetikleyicileri"
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Otomasyonlar, {myFailedCount} başarısız"
 
 msgid "Autonomous"
 msgstr "Otonom"
@@ -3613,6 +3604,9 @@ msgstr "Çalışma alanı çalıştırma komutunu yapılandır"
 
 msgid "Confirm before quitting"
 msgstr "Çıkmadan önce onay iste"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Çakışan birleştirmeler geri alındı — bu worktree'ler değişmedi."
 
 msgid "Connect"
 msgstr "Bağla"
@@ -5654,6 +5648,9 @@ msgstr "Her çarşamba 09.00'da bu haftanın birleştirilen PR'larını incele v
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Her hafta içi 09.00'da yeni GitHub issue'larını oku, etiket uygula ve incelemem için ilk yanıt taslağını hazırla."
+
+msgid "Every worktree was already up to date"
+msgstr "Tüm worktree'ler zaten günceldi"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Herkes bunun genellenebilir olup olmadığını tartışır. Bu tartışma, düzeye ulaşıldığının işaretidir."
@@ -8197,6 +8194,9 @@ msgstr "Yerel cihaz"
 msgid "Local First"
 msgstr "Yerel öncelikli"
 
+msgid "Local host service is not running"
+msgstr "Yerel host-service çalışmıyor"
+
 msgid "Local Network"
 msgstr "Yerel ağ"
 
@@ -8504,6 +8504,12 @@ msgstr "Birleştirildi"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "{0} birleştirdi"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "{merged} worktree'ye birleştirildi"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "{merged} worktree'ye birleştirildi. İlgilenilmesi gerekenler: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Birleştirildi, ancak PR durumu yenilenemedi — birazdan yeniden deneyin"
@@ -9522,6 +9528,9 @@ msgstr "Bu host'ta henüz çalışma alanı yok"
 
 msgid "No workspaces yet"
 msgstr "Henüz çalışma alanı yok"
+
+msgid "No worktrees to sync"
+msgstr "Senkronize edilecek worktree yok"
 
 msgid "No-Prompt Launch"
 msgstr "İstemsiz başlatma"
@@ -13348,6 +13357,9 @@ msgstr "Şimdilik atla"
 msgid "Skipped"
 msgstr "Atlandı"
 
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Kaydedilmemiş değişiklikleri olan worktree'ler atlandı."
+
 msgid "Slack Account Linked"
 msgstr "Slack hesabı bağlandı"
 
@@ -14078,6 +14090,9 @@ msgstr "Issue'ları Linear ile çift yönlü eşitleyin."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Issue'ları Linear ile çift yönlü eşitleyin. Superset'te görev oluşturup Linear'da görünmesini sağlayın veya mevcut Linear issue'larını içe aktarın."
 
+msgid "Sync main into all worktrees"
+msgstr "main'i tüm worktree'lere birleştir"
+
 msgid "Sync Repositories"
 msgstr "Depoları eşitle"
 
@@ -14089,6 +14104,9 @@ msgstr "Uzak depo ile eşitleniyor"
 
 msgid "Syncing..."
 msgstr "Eşitleniyor..."
+
+msgid "Syncing…"
+msgstr "Senkronize ediliyor…"
 
 msgid "System"
 msgstr "Sistem"

@@ -757,9 +757,6 @@ msgstr "{months}個月"
 msgid "{months}mo ago"
 msgstr "{months}個月前"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "你有{myFailedCount}個自動化上次執行失敗"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} 是內建的，無法移除"
@@ -2268,14 +2265,8 @@ msgstr "自動化標題"
 msgid "Automations"
 msgstr "自動化"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "自動化（{myFailedCount}個失敗）"
-
 msgid "Automations & event triggers"
 msgstr "自動化與事件觸發"
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "自動化，{myFailedCount}個失敗"
 
 msgid "Autonomous"
 msgstr "自主"
@@ -3613,6 +3604,9 @@ msgstr "配置工作區執行命令"
 
 msgid "Confirm before quitting"
 msgstr "退出前確認"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "有衝突的合併已回復 — 這些工作樹未變更。"
 
 msgid "Connect"
 msgstr "連線"
@@ -5654,6 +5648,9 @@ msgstr "每週三上午9點，回顧本週合併的PR，更新被它們改過時
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "每個工作日上午9點，閱讀新的GitHub議題，打上標籤，並起草初步回覆供我審閱。"
+
+msgid "Every worktree was already up to date"
+msgstr "所有工作樹都已是最新"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "所有人都在爭論這能否推廣。這場爭論本身就說明這一級別已經達到了。"
@@ -8197,6 +8194,9 @@ msgstr "本地裝置"
 msgid "Local First"
 msgstr "本地優先"
 
+msgid "Local host service is not running"
+msgstr "本機 host-service 未執行"
+
 msgid "Local Network"
 msgstr "本地網路"
 
@@ -8504,6 +8504,12 @@ msgstr "已合併"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "由{0}合併"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "已合併至 {merged} 個工作樹"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "已合併至 {merged} 個工作樹。需要處理：{names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "已合併，但無法重新整理PR狀態 — 請稍後重試"
@@ -9522,6 +9528,9 @@ msgstr "此主機上還沒有工作區"
 
 msgid "No workspaces yet"
 msgstr "暫無工作區"
+
+msgid "No worktrees to sync"
+msgstr "沒有可同步的工作樹"
 
 msgid "No-Prompt Launch"
 msgstr "無提示詞啟動"
@@ -13348,6 +13357,9 @@ msgstr "暫時跳過"
 msgid "Skipped"
 msgstr "已跳過"
 
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "已略過有未提交變更的工作樹。"
+
 msgid "Slack Account Linked"
 msgstr "Slack帳戶已關聯"
 
@@ -14078,6 +14090,9 @@ msgstr "與Linear雙向同步議題。"
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "與Linear雙向同步議題。在Superset中建立任務並讓它們出現在Linear裡，也可以匯入已有的Linear議題。"
 
+msgid "Sync main into all worktrees"
+msgstr "將 main 合併至所有工作樹"
+
 msgid "Sync Repositories"
 msgstr "同步儲存庫"
 
@@ -14089,6 +14104,9 @@ msgstr "正在與遠端同步"
 
 msgid "Syncing..."
 msgstr "正在同步..."
+
+msgid "Syncing…"
+msgstr "正在同步…"
 
 msgid "System"
 msgstr "跟隨系統"

@@ -20,7 +20,6 @@ import {
 import { UpdatesPill } from "renderer/components/UpdatesPill";
 import { useV2UserPreferences } from "renderer/hooks/useV2UserPreferences";
 import { useHotkeyDisplay } from "renderer/hotkeys";
-import { OrganizationDropdown } from "renderer/routes/_authenticated/_dashboard/components/TopBar/components/OrganizationDropdown";
 import { useDashboardSidebarState } from "renderer/routes/_authenticated/hooks/useDashboardSidebarState";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import { useSidebarSectionsCollapseStore } from "renderer/stores/sidebar-sections-collapse";
@@ -440,14 +439,6 @@ export function DashboardSidebar({
 												: "flex items-center gap-1 p-2",
 										)}
 									>
-										{isCollapsed ? (
-											<OrganizationDropdown variant="collapsed" />
-										) : (
-											<div className="min-w-0 flex-1">
-												<OrganizationDropdown variant="expanded" />
-											</div>
-										)}
-
 										<UpdatesPill isCollapsed={isCollapsed} />
 										<Tooltip delayDuration={300}>
 											<TooltipTrigger asChild>

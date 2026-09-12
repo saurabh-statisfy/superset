@@ -757,9 +757,6 @@ msgstr "{months} tháng"
 msgid "{months}mo ago"
 msgstr "{months} tháng trước"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "{myFailedCount} tự động hóa của bạn thất bại ở lần chạy gần nhất"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} là tích hợp sẵn nên không thể gỡ"
@@ -2268,14 +2265,8 @@ msgstr "Tiêu đề tự động hóa"
 msgid "Automations"
 msgstr "Tự động hóa"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Tự động hóa ({myFailedCount} đang lỗi)"
-
 msgid "Automations & event triggers"
 msgstr "Tự động hóa & trigger sự kiện"
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Tự động hóa, {myFailedCount} đang lỗi"
 
 msgid "Autonomous"
 msgstr "Tự chủ"
@@ -3613,6 +3604,9 @@ msgstr "Cấu hình lệnh chạy của workspace"
 
 msgid "Confirm before quitting"
 msgstr "Xác nhận trước khi thoát"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Các lần hợp nhất bị xung đột đã được hoàn tác — những worktree đó không thay đổi."
 
 msgid "Connect"
 msgstr "Kết nối"
@@ -5654,6 +5648,9 @@ msgstr "Mỗi thứ Tư lúc 9h sáng, xem lại các PR đã merge trong tuần
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Mỗi ngày trong tuần lúc 9h sáng, đọc issue GitHub mới, gán nhãn và soạn câu trả lời đầu tiên để tôi xem lại."
+
+msgid "Every worktree was already up to date"
+msgstr "Mọi worktree đều đã được cập nhật"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Ai cũng tranh cãi liệu điều này có khái quát được không. Chính cuộc tranh cãi đó là dấu hiệu mức này đã đạt được."
@@ -8197,6 +8194,9 @@ msgstr "Thiết bị cục bộ"
 msgid "Local First"
 msgstr "Ưu tiên cục bộ"
 
+msgid "Local host service is not running"
+msgstr "host-service cục bộ không chạy"
+
 msgid "Local Network"
 msgstr "Mạng cục bộ"
 
@@ -8504,6 +8504,12 @@ msgstr "Đã merge"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Được merge bởi {0}"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "Đã hợp nhất vào {merged} worktree"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "Đã hợp nhất vào {merged} worktree. Cần chú ý: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Đã merge, nhưng không làm mới được trạng thái PR — hãy thử lại sau giây lát"
@@ -9522,6 +9528,9 @@ msgstr "Chưa có workspace nào trên host này"
 
 msgid "No workspaces yet"
 msgstr "Chưa có workspace nào"
+
+msgid "No worktrees to sync"
+msgstr "Không có worktree nào để đồng bộ"
 
 msgid "No-Prompt Launch"
 msgstr "Khởi chạy không prompt"
@@ -13348,6 +13357,9 @@ msgstr "Bỏ qua bây giờ"
 msgid "Skipped"
 msgstr "Đã bỏ qua"
 
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Đã bỏ qua các worktree có thay đổi chưa commit."
+
 msgid "Slack Account Linked"
 msgstr "Đã liên kết tài khoản Slack"
 
@@ -14078,6 +14090,9 @@ msgstr "Đồng bộ issue hai chiều với Linear."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Đồng bộ issue hai chiều với Linear. Tạo tác vụ trong Superset để chúng xuất hiện trong Linear, hoặc nhập issue Linear có sẵn."
 
+msgid "Sync main into all worktrees"
+msgstr "Hợp nhất main vào tất cả worktree"
+
 msgid "Sync Repositories"
 msgstr "Đồng bộ repository"
 
@@ -14089,6 +14104,9 @@ msgstr "Đang đồng bộ với remote"
 
 msgid "Syncing..."
 msgstr "Đang đồng bộ..."
+
+msgid "Syncing…"
+msgstr "Đang đồng bộ…"
 
 msgid "System"
 msgstr "Hệ thống"

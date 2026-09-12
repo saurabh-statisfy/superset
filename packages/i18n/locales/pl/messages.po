@@ -757,9 +757,6 @@ msgstr "{months} mies."
 msgid "{months}mo ago"
 msgstr "{months} mies. temu"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "{myFailedCount} Twoich automatyzacji zawiodło przy ostatnim uruchomieniu"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} jest wbudowany i nie można go usunąć"
@@ -2268,14 +2265,8 @@ msgstr "Tytuł automatyzacji"
 msgid "Automations"
 msgstr "Automatyzacje"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Automatyzacje ({myFailedCount} nieudanych)"
-
 msgid "Automations & event triggers"
 msgstr "Automatyzacje i wyzwalacze zdarzeń"
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Automatyzacje, {myFailedCount} nieudanych"
 
 msgid "Autonomous"
 msgstr "Autonomiczny"
@@ -3613,6 +3604,9 @@ msgstr "Skonfiguruj polecenie uruchamiania obszaru roboczego"
 
 msgid "Confirm before quitting"
 msgstr "Potwierdzaj przed zamknięciem"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Scalenia z konfliktami zostały wycofane — te worktree są bez zmian."
 
 msgid "Connect"
 msgstr "Połącz"
@@ -5654,6 +5648,9 @@ msgstr "W każdą środę o 9:00 przejrzyj scalone w tym tygodniu PR-y i zaktual
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "W każdy dzień roboczy o 9:00 przeczytaj nowe zgłoszenia GitHub, nadaj etykiety i przygotuj pierwszą odpowiedź do mojego przeglądu."
+
+msgid "Every worktree was already up to date"
+msgstr "Wszystkie worktree były już aktualne"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Wszyscy spierają się, czy to się uogólnia. Ten spór jest znakiem, że poziom został osiągnięty."
@@ -8197,6 +8194,9 @@ msgstr "Urządzenie lokalne"
 msgid "Local First"
 msgstr "Najpierw lokalnie"
 
+msgid "Local host service is not running"
+msgstr "Lokalny host-service nie jest uruchomiony"
+
 msgid "Local Network"
 msgstr "Sieć lokalna"
 
@@ -8504,6 +8504,12 @@ msgstr "Scalony"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Scalone przez {0}"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "Scalono w {merged} worktree"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "Scalono w {merged} worktree. Wymaga uwagi: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Scalono, ale nie udało się odświeżyć stanu PR — spróbuj za chwilę"
@@ -9522,6 +9528,9 @@ msgstr "Brak obszarów roboczych na tym hoście"
 
 msgid "No workspaces yet"
 msgstr "Brak obszarów roboczych"
+
+msgid "No worktrees to sync"
+msgstr "Brak worktree do zsynchronizowania"
 
 msgid "No-Prompt Launch"
 msgstr "Uruchomienie bez promptu"
@@ -13348,6 +13357,9 @@ msgstr "Pomiń na razie"
 msgid "Skipped"
 msgstr "Pominięte"
 
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Pominięto worktree z niezatwierdzonymi zmianami."
+
 msgid "Slack Account Linked"
 msgstr "Konto Slack powiązane"
 
@@ -14078,6 +14090,9 @@ msgstr "Synchronizuj zgłoszenia dwukierunkowo z Linear."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Synchronizuj zgłoszenia dwukierunkowo z Linear. Twórz zadania w Superset, aby pojawiały się w Linear, albo importuj istniejące zgłoszenia z Linear."
 
+msgid "Sync main into all worktrees"
+msgstr "Scal main do wszystkich worktree"
+
 msgid "Sync Repositories"
 msgstr "Synchronizuj repozytoria"
 
@@ -14089,6 +14104,9 @@ msgstr "Synchronizacja ze zdalnym repozytorium"
 
 msgid "Syncing..."
 msgstr "Synchronizowanie..."
+
+msgid "Syncing…"
+msgstr "Synchronizowanie…"
 
 msgid "System"
 msgstr "Systemowy"

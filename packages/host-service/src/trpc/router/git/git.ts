@@ -402,6 +402,109 @@ export const gitRouter = router({
 			return { baseBranch: (configured || null) as string | null };
 		}),
 
+	/**
+	 * Merge the default branch into every worktree on this host.
+	 *
+	 * Deliberately non-destructive: a worktree whose merge conflicts is rolled
+	 * back with `merge --abort` so it is left exactly as it was, and reported
+	 * instead. Nothing is closed or deleted — the caller only ever gains
+	 * commits, never loses a tree to a half-finished merge.
+	 */
+	syncAllFromDefaultBranch: protectedProcedure
+		.output(
+			z.object({
+				results: z.array(
+					z.object({
+						workspaceId: z.string(),
+						branch: z.string(),
+						status: z.enum([
+							"merged",
+							"already-current",
+							"conflict",
+							"dirty",
+							"skipped-base",
+							"error",
+						]),
+						detail: z.string().nullable(),
+					}),
+				),
+			}),
+		)
+		.mutation(async ({ ctx }) => {
+			const rows = ctx.db.query.workspaces.findMany().sync();
+			const results: Array<{
+				workspaceId: string;
+				branch: string;
+				status:
+					| "merged"
+					| "already-current"
+					| "conflict"
+					| "dirty"
+					| "skipped-base"
+					| "error";
+				detail: string | null;
+			}> = [];
+
+			for (const row of rows) {
+				const record = {
+					workspaceId: row.id,
+					branch: row.branch,
+					status: "error" as (typeof results)[number]["status"],
+					detail: null as string | null,
+				};
+				try {
+					const git = await ctx.git(row.worktreePath);
+					const base = await getDefaultBranchName(git);
+					if (!base) {
+						record.detail = "No default branch on origin";
+						results.push(record);
+						continue;
+					}
+					if (row.branch === base) {
+						record.status = "skipped-base";
+						results.push(record);
+						continue;
+					}
+					// A merge into a dirty tree either refuses or leaves the tree
+					// mixed with the user's edits; neither is worth doing behind a
+					// one-click button.
+					const status = await git.status();
+					if (!status.isClean()) {
+						record.status = "dirty";
+						record.detail = `${status.files.length} uncommitted change(s)`;
+						results.push(record);
+						continue;
+					}
+					await git.fetch(["origin", base]);
+					const target = `origin/${base}`;
+					const behind = (
+						await git.raw(["rev-list", "--count", `HEAD..${target}`])
+					).trim();
+					if (behind === "0") {
+						record.status = "already-current";
+						results.push(record);
+						continue;
+					}
+					try {
+						await git.raw(["merge", "--no-edit", target]);
+						record.status = "merged";
+						record.detail = `${behind} commit(s) from ${base}`;
+					} catch (mergeError) {
+						// Roll back so the worktree is left clean rather than mid-merge.
+						await git.raw(["merge", "--abort"]).catch(() => {});
+						record.status = "conflict";
+						record.detail =
+							mergeError instanceof Error ? mergeError.message : null;
+					}
+				} catch (error) {
+					record.detail = error instanceof Error ? error.message : String(error);
+				}
+				results.push(record);
+			}
+
+			return { results };
+		}),
+
 	setBaseBranch: protectedProcedure
 		.input(
 			z.object({
