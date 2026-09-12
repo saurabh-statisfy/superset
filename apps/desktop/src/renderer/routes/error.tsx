@@ -1,4 +1,6 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import { i18n } from "@superset/i18n";
 import { Button } from "@superset/ui/button";
 import type { ErrorComponentProps } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
@@ -14,7 +16,14 @@ const IS_DEV = process.env.NODE_ENV === "development";
 const ERROR_DETAILS_ID = "error-details";
 
 export function ErrorPage({ error, info }: ErrorComponentProps) {
-	const { t } = useLingui();
+	// This is the ROOT route's errorComponent, so it renders *instead of*
+	// RootComponent — outside RootLayout, and therefore outside
+	// LanguageAwareI18nProvider. `useLingui`/`<Trans>` throw without that
+	// context, which replaced every real route error with "useLingui hook was
+	// used without I18nProvider" and made the actual failure invisible. The
+	// global i18n instance needs no context and falls back to the English
+	// source text when no catalog is active yet.
+	const t = (descriptor: MessageDescriptor) => i18n._(descriptor);
 	const message =
 		error instanceof Error ? error.message : String(error ?? "Unknown error");
 	const stack = error instanceof Error ? error.stack : undefined;
@@ -47,23 +56,24 @@ export function ErrorPage({ error, info }: ErrorComponentProps) {
 
 					<div className="flex flex-col items-center gap-2 text-center">
 						<h1 className="text-xl font-semibold">
-							<Trans>Something went wrong</Trans>
+							{t(msg({ message: "Something went wrong" }))}
 						</h1>
 						<p className="text-sm text-muted-foreground">
-							<Trans>
-								Superset hit an unexpected error. Reload to try again.
-							</Trans>
+							{t(
+								msg({
+									message:
+										"Superset hit an unexpected error. Reload to try again.",
+								}),
+							)}
 						</p>
 					</div>
 
 					<div className="flex items-center gap-3">
 						<Button onClick={() => window.location.reload()}>
-							<Trans>Reload</Trans>
+							{t(msg({ message: "Reload" }))}
 						</Button>
 						<Button variant="outline" asChild>
-							<Link to="/">
-								<Trans>Go home</Trans>
-							</Link>
+							<Link to="/">{t(msg({ message: "Go home" }))}</Link>
 						</Button>
 					</div>
 
@@ -74,11 +84,9 @@ export function ErrorPage({ error, info }: ErrorComponentProps) {
 						aria-controls={ERROR_DETAILS_ID}
 						className="text-xs text-muted-foreground hover:text-foreground transition-colors"
 					>
-						{showDetails ? (
-							<Trans>Hide details</Trans>
-						) : (
-							<Trans>Show details</Trans>
-						)}
+						{showDetails
+							? t(msg({ message: "Hide details" }))
+							: t(msg({ message: "Show details" }))}
 					</button>
 
 					{showDetails && (
@@ -89,9 +97,7 @@ export function ErrorPage({ error, info }: ErrorComponentProps) {
 									void copyToClipboard(details).catch(() => {});
 								}}
 								className="absolute top-2 right-2 flex items-center justify-center h-6 w-6 bg-background/80 backdrop-blur border border-border rounded hover:bg-accent transition-colors"
-								aria-label={t({
-									message: "Copy error details",
-								})}
+								aria-label={t(msg({ message: "Copy error details" }))}
 							>
 								{copied ? (
 									<HiCheck className="w-3.5 h-3.5 text-green-500" />

@@ -43,9 +43,11 @@ export const env = createEnv({
 		RELAY_URL: process.env.RELAY_URL,
 	},
 	emptyStringAsUndefined: true,
-	// Only allow skipping validation in development (never in production)
+	// Dev, or a packaged offline build (see env.renderer.ts).
 	skipValidation:
-		process.env.NODE_ENV === "development" && !!process.env.SKIP_ENV_VALIDATION,
+		(process.env.NODE_ENV === "development" &&
+			!!process.env.SKIP_ENV_VALIDATION) ||
+		!!process.env.SUPERSET_OFFLINE,
 
 	// Main process runs in trusted Node.js environment
 	isServer: true,

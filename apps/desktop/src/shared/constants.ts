@@ -36,8 +36,10 @@ export const NOTIFICATION_EVENTS = {
 	SETTINGS_EXTERNAL_CHANGE: "settings-external-change",
 } as const;
 
-// Development/testing mock values (used when SKIP_ENV_VALIDATION is set)
-export const MOCK_ORG_ID = "mock-org-id";
+// Development/testing mock values (used when SKIP_ENV_VALIDATION is set).
+// Must be a real UUID: host-service validates ORGANIZATION_ID against one and
+// refuses to boot otherwise, which left the dev bypass with no host service.
+export const MOCK_ORG_ID = "00000000-0000-4000-8000-000000000000";
 
 // Terminal defaults
 export const DEFAULT_TERMINAL_SCROLLBACK = 5000;

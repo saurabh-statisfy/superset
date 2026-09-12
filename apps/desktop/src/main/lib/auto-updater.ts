@@ -198,7 +198,13 @@ export function dismissUpdate(): void {
 }
 
 export function checkForUpdates(): void {
-	if (env.NODE_ENV === "development" || !IS_AUTO_UPDATE_PLATFORM) {
+	if (
+		env.NODE_ENV === "development" ||
+		// An offline build is not the official release and must not replace
+		// itself with one.
+		!!process.env.SUPERSET_OFFLINE ||
+		!IS_AUTO_UPDATE_PLATFORM
+	) {
 		return;
 	}
 	if (isUpdateReadyToInstall()) {
@@ -392,7 +398,13 @@ export function simulateError(): void {
 }
 
 export function setupAutoUpdater(): void {
-	if (env.NODE_ENV === "development" || !IS_AUTO_UPDATE_PLATFORM) {
+	if (
+		env.NODE_ENV === "development" ||
+		// An offline build is not the official release and must not replace
+		// itself with one.
+		!!process.env.SUPERSET_OFFLINE ||
+		!IS_AUTO_UPDATE_PLATFORM
+	) {
 		return;
 	}
 

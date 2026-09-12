@@ -27,6 +27,7 @@ import { applyShellEnvToProcess } from "lib/trpc/routers/workspaces/utils/shell-
 import { env as mainEnv } from "main/env.main";
 import {
 	DEFAULT_CONFIRM_ON_QUIT,
+	MOCK_ORG_ID,
 	PLATFORM,
 	PROTOCOL_SCHEME,
 } from "shared/constants";
@@ -507,9 +508,28 @@ if (!gotTheLock) {
 		}
 		downloadManager.start();
 
+		// SKIP_ENV_VALIDATION skips sign-in, so nothing ever persists a token or
+		// org membership — and without those the host service never starts, which
+		// leaves the app unable to open a folder. Fall back to the same mock org
+		// the renderer uses; the desktop authenticates to its host over a shared
+		// secret, so only cloud-backed calls need a real token.
+		const loadAuthOrDev = async () => {
+			const stored = await loadToken();
+			if (
+				stored.token ||
+				!(process.env.SKIP_ENV_VALIDATION || process.env.SUPERSET_OFFLINE)
+			)
+				return stored;
+			return {
+				...stored,
+				token: "dev-no-auth",
+				organizationIds: [MOCK_ORG_ID],
+			};
+		};
+
 		const hostServiceCoordinator = getHostServiceCoordinator();
 		hostServiceCoordinator.setConfigProvider(async () => {
-			const { token } = await loadToken();
+			const { token } = await loadAuthOrDev();
 			if (!token) return null;
 			return { authToken: token, cloudApiUrl: mainEnv.NEXT_PUBLIC_API_URL };
 		});
@@ -524,7 +544,7 @@ if (!gotTheLock) {
 		}) => {
 			const generation = authGeneration;
 			try {
-				const storedAuth = providedAuth ?? (await loadToken());
+				const storedAuth = providedAuth ?? (await loadAuthOrDev());
 				if (generation !== authGeneration) return;
 				if (!storedAuth.token || !storedAuth.organizationIds) return;
 				await hostServiceCoordinator.reconcile(storedAuth.organizationIds, {
@@ -587,7 +607,7 @@ if (!gotTheLock) {
 
 		if (IS_DEV) {
 			hostServiceCoordinator.enableDevReload(async () => {
-				const { token } = await loadToken();
+				const { token } = await loadAuthOrDev();
 				if (!token) return null;
 				return { authToken: token, cloudApiUrl: mainEnv.NEXT_PUBLIC_API_URL };
 			});

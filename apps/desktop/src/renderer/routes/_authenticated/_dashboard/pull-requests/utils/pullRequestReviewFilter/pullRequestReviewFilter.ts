@@ -63,6 +63,9 @@ const ALL_REVIEWS_LABEL: MessageDescriptor = msg({
 export type PullRequestReviewFilter =
 	(typeof PULL_REQUEST_REVIEW_FILTERS)[number]["value"];
 
+/** The "Awaiting review from you" filter, as used by the sidebar's own entry. */
+export const REVIEW_REQUESTED: PullRequestReviewFilter = "review-requested";
+
 export function normalizePullRequestReviewFilter(
 	value: unknown,
 ): PullRequestReviewFilter | null {

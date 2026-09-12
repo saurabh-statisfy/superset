@@ -70,6 +70,10 @@ export default defineConfig({
 				process.env.SKIP_ENV_VALIDATION,
 				"",
 			),
+			"process.env.SUPERSET_OFFLINE": defineEnv(
+				process.env.SUPERSET_OFFLINE,
+				"",
+			),
 			"process.env.NEXT_PUBLIC_API_URL": defineEnv(
 				process.env.NEXT_PUBLIC_API_URL,
 				"https://api.superset.sh",
@@ -175,6 +179,10 @@ export default defineConfig({
 				process.env.SKIP_ENV_VALIDATION,
 				"",
 			),
+			"process.env.SUPERSET_OFFLINE": defineEnv(
+				process.env.SUPERSET_OFFLINE,
+				"",
+			),
 			__APP_VERSION__: defineEnv(version),
 		},
 
@@ -193,6 +201,10 @@ export default defineConfig({
 			"process.env.NODE_ENV": defineEnv(process.env.NODE_ENV),
 			"process.env.SKIP_ENV_VALIDATION": defineEnv(
 				process.env.SKIP_ENV_VALIDATION,
+				"",
+			),
+			"process.env.SUPERSET_OFFLINE": defineEnv(
+				process.env.SUPERSET_OFFLINE,
 				"",
 			),
 			"process.platform": defineEnv(process.platform),

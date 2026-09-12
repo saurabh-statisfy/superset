@@ -46,9 +46,14 @@ const rawEnv = {
 	RELAY_URL: process.env.RELAY_URL,
 };
 
-// Only allow skipping validation in development (never in production)
+// Dev skips validation and sign-in. SUPERSET_OFFLINE is the packaged
+// equivalent: a build made with it set has no sign-in and talks to no cloud.
+// Separate from SKIP_ENV_VALIDATION on purpose — tests and sandbox scripts set
+// that one, and neither should be able to ship an auth-free release.
 const SKIP_ENV_VALIDATION =
-	process.env.NODE_ENV === "development" && !!process.env.SKIP_ENV_VALIDATION;
+	(process.env.NODE_ENV === "development" &&
+		!!process.env.SKIP_ENV_VALIDATION) ||
+	!!process.env.SUPERSET_OFFLINE;
 
 export const env = {
 	...(SKIP_ENV_VALIDATION

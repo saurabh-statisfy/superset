@@ -9,11 +9,14 @@ import {
 import { toast } from "@superset/ui/sonner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
-import { useMatchRoute, useNavigate } from "@tanstack/react-router";
+import {
+	useMatchRoute,
+	useNavigate,
+	useRouterState,
+} from "@tanstack/react-router";
 import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useRef } from "react";
-import { GoGitPullRequest } from "react-icons/go";
-import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
+import { GoCodeReview, GoGitPullRequest } from "react-icons/go";
 import {
 	LuClock,
 	LuFileText,
@@ -30,7 +33,6 @@ import {
 	VscNewFolder,
 } from "react-icons/vsc";
 import { useFrameStackStore } from "renderer/commandPalette";
-import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
 import { SidebarKbdHint } from "renderer/components/SidebarKbdHint";
 import { ZoomStable } from "renderer/components/ZoomStable";
 import { env } from "renderer/env.renderer";
@@ -47,10 +49,7 @@ import {
 	pullRequestsSearchFromFilters,
 	usePullRequestsFilterStore,
 } from "renderer/routes/_authenticated/_dashboard/pull-requests/stores/pullRequestsFilterStore";
-import {
-	tasksSearchFromFilters,
-	useTasksFilterStore,
-} from "renderer/routes/_authenticated/_dashboard/tasks/stores/tasks-filter-state";
+import { REVIEW_REQUESTED } from "renderer/routes/_authenticated/_dashboard/pull-requests/utils/pullRequestReviewFilter";
 import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/HostWorkspacesProvider";
 import {
 	getUsageLastSection,
@@ -134,7 +133,6 @@ export function DashboardSidebarHeader({
 	const isMac = platform === undefined || platform === "darwin";
 	const zoomFactor = useZoomFactor();
 	const matchRoute = useMatchRoute();
-	const { gateFeature } = usePaywall();
 	const isWorkspacesListOpen = !!matchRoute({ to: "/v2-workspaces" });
 	const v2WorkspaceMatch = matchRoute({
 		to: "/v2-workspace/$workspaceId",
@@ -149,11 +147,18 @@ export function DashboardSidebarHeader({
 					(workspace) => workspace.id === v2WorkspaceMatch.workspaceId,
 				)?.projectId ?? undefined)
 			: undefined;
-	const isTasksOpen = !!matchRoute({ to: "/tasks", fuzzy: true });
-	const isPullRequestsOpen = !!matchRoute({
+	const isPullRequestsRoute = !!matchRoute({
 		to: "/pull-requests",
 		fuzzy: true,
 	});
+	// Both PR entries land on /pull-requests; only the review filter in the URL
+	// tells them apart, so read it rather than lighting up both.
+	const activeReviewFilter = useRouterState({
+		select: (state) => (state.location.search as { review?: string }).review,
+	});
+	const isReviewRequestedOpen =
+		isPullRequestsRoute && activeReviewFilter === REVIEW_REQUESTED;
+	const isPullRequestsOpen = isPullRequestsRoute && !isReviewRequestedOpen;
 	const isAutomationsOpen = !!matchRoute({ to: "/automations", fuzzy: true });
 	const isPluginsOpen = !!matchRoute({ to: "/plugins", fuzzy: true });
 	const isPagesOpen = !!matchRoute({ to: "/pages", fuzzy: true });
@@ -165,15 +170,6 @@ export function DashboardSidebarHeader({
 		env.NODE_ENV === "development";
 	const { myFailedCount } = useFailedAutomations();
 
-	const {
-		tab: lastTab,
-		assignee: lastAssignee,
-		search: lastSearch,
-		typeTab: lastTypeTab,
-		projectFilters: lastProjectFilters,
-		linearProjectFilter: lastLinearProjectFilter,
-		includeClosedIssues: lastIncludeClosedIssues,
-	} = useTasksFilterStore();
 	const {
 		search: lastPullRequestsSearch,
 		projectFilters: lastPullRequestsProjectFilters,
@@ -191,23 +187,6 @@ export function DashboardSidebarHeader({
 		navigate({ to: "/automations" });
 	};
 
-	const handleTasksClick = () => {
-		gateFeature(GATED_FEATURES.TASKS, () => {
-			navigate({
-				to: "/tasks",
-				search: tasksSearchFromFilters({
-					tab: lastTab,
-					assignee: lastAssignee,
-					search: lastSearch,
-					typeTab: lastTypeTab,
-					projectFilters: lastProjectFilters,
-					linearProjectFilter: lastLinearProjectFilter,
-					includeClosedIssues: lastIncludeClosedIssues,
-				}),
-			});
-		});
-	};
-
 	const isPagesEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.PAGES) ?? false;
 	const { data: isUsageInSidebarEnabled } =
 		electronTrpc.settings.getShowUsageInSidebar.useQuery();
@@ -218,6 +197,20 @@ export function DashboardSidebarHeader({
 
 	const handlePluginsClick = () => {
 		navigate({ to: "/plugins" });
+	};
+
+	const handleReviewRequestedClick = () => {
+		navigate({
+			to: "/pull-requests",
+			search: pullRequestsSearchFromFilters({
+				search: "",
+				projectFilters: lastPullRequestsProjectFilters,
+				authorFilter: null,
+				reviewFilter: REVIEW_REQUESTED,
+				includeClosed: false,
+				mergedOnly: false,
+			}),
+		});
 	};
 
 	const handlePullRequestsClick = () => {
@@ -361,30 +354,6 @@ export function DashboardSidebarHeader({
 						<TooltipTrigger asChild>
 							<button
 								type="button"
-								onClick={handleTasksClick}
-								aria-label={t({
-									message: "Tasks",
-								})}
-								aria-current={isTasksOpen ? "page" : undefined}
-								className={cn(
-									"flex size-7 items-center justify-center rounded-md transition-colors",
-									isTasksOpen
-										? "bg-fill-selected text-muted-foreground"
-										: "text-muted-foreground hover:bg-fill-hover",
-								)}
-							>
-								<HiOutlineClipboardDocumentList className="size-3.5" />
-							</button>
-						</TooltipTrigger>
-						<TooltipContent side="right">
-							<Trans>Tasks</Trans>
-						</TooltipContent>
-					</Tooltip>
-
-					<Tooltip delayDuration={300}>
-						<TooltipTrigger asChild>
-							<button
-								type="button"
 								onClick={handlePullRequestsClick}
 								aria-label={t({
 									message: "Pull requests",
@@ -402,6 +371,30 @@ export function DashboardSidebarHeader({
 						</TooltipTrigger>
 						<TooltipContent side="right">
 							<Trans>Pull requests</Trans>
+						</TooltipContent>
+					</Tooltip>
+
+					<Tooltip delayDuration={300}>
+						<TooltipTrigger asChild>
+							<button
+								type="button"
+								onClick={handleReviewRequestedClick}
+								aria-label={t({
+									message: "Review requested",
+								})}
+								aria-current={isReviewRequestedOpen ? "page" : undefined}
+								className={cn(
+									"flex size-7 items-center justify-center rounded-md transition-colors",
+									isReviewRequestedOpen
+										? "bg-fill-selected text-muted-foreground"
+										: "text-muted-foreground hover:bg-fill-hover",
+								)}
+							>
+								<GoCodeReview className="size-3.5" />
+							</button>
+						</TooltipTrigger>
+						<TooltipContent side="right">
+							<Trans>Review requested</Trans>
 						</TooltipContent>
 					</Tooltip>
 
@@ -642,26 +635,6 @@ export function DashboardSidebarHeader({
 
 			<button
 				type="button"
-				onClick={handleTasksClick}
-				aria-label={t({
-					message: "Tasks",
-				})}
-				aria-current={isTasksOpen ? "page" : undefined}
-				className={cn(
-					"flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium transition-colors",
-					isTasksOpen
-						? "bg-fill-selected text-foreground"
-						: "text-muted-foreground hover:bg-fill-hover hover:text-foreground",
-				)}
-			>
-				<HiOutlineClipboardDocumentList className="size-4 shrink-0 text-muted-foreground" />
-				<span className="flex-1 text-left">
-					<Trans>Tasks</Trans>
-				</span>
-			</button>
-
-			<button
-				type="button"
 				onClick={handlePullRequestsClick}
 				aria-label={t({
 					message: "Pull requests",
@@ -677,6 +650,26 @@ export function DashboardSidebarHeader({
 				<GoGitPullRequest className="size-4 shrink-0 text-muted-foreground" />
 				<span className="flex-1 text-left">
 					<Trans>Pull requests</Trans>
+				</span>
+			</button>
+
+			<button
+				type="button"
+				onClick={handleReviewRequestedClick}
+				aria-label={t({
+					message: "Review requested",
+				})}
+				aria-current={isReviewRequestedOpen ? "page" : undefined}
+				className={cn(
+					"flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium transition-colors",
+					isReviewRequestedOpen
+						? "bg-fill-selected text-foreground"
+						: "text-muted-foreground hover:bg-fill-hover hover:text-foreground",
+				)}
+			>
+				<GoCodeReview className="size-4 shrink-0 text-muted-foreground" />
+				<span className="flex-1 text-left">
+					<Trans>Review requested</Trans>
 				</span>
 			</button>
 

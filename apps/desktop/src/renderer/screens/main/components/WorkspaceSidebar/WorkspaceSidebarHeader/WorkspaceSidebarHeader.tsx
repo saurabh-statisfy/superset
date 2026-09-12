@@ -2,19 +2,18 @@ import { msg } from "@lingui/core/macro";
 import { useLingui as useTranslation } from "@lingui/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
-import { useMatchRoute, useNavigate } from "@tanstack/react-router";
-import { GoGitPullRequest } from "react-icons/go";
-import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
+import {
+	useMatchRoute,
+	useNavigate,
+	useRouterState,
+} from "@tanstack/react-router";
+import { GoCodeReview, GoGitPullRequest } from "react-icons/go";
 import { LuLayers } from "react-icons/lu";
-import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
 import {
 	pullRequestsSearchFromFilters,
 	usePullRequestsFilterStore,
 } from "renderer/routes/_authenticated/_dashboard/pull-requests/stores/pullRequestsFilterStore";
-import {
-	tasksSearchFromFilters,
-	useTasksFilterStore,
-} from "renderer/routes/_authenticated/_dashboard/tasks/stores/tasks-filter-state";
+import { REVIEW_REQUESTED } from "renderer/routes/_authenticated/_dashboard/pull-requests/utils/pullRequestReviewFilter";
 import { STROKE_WIDTH } from "../constants";
 import { NewWorkspaceButton } from "./NewWorkspaceButton";
 
@@ -29,14 +28,20 @@ export function WorkspaceSidebarHeader({
 
 	const navigate = useNavigate();
 	const matchRoute = useMatchRoute();
-	const { gateFeature } = usePaywall();
 
 	const isWorkspacesListOpen = !!matchRoute({ to: "/workspaces" });
-	const isTasksOpen = !!matchRoute({ to: "/tasks", fuzzy: true });
-	const isPullRequestsOpen = !!matchRoute({
+	const isPullRequestsRoute = !!matchRoute({
 		to: "/pull-requests",
 		fuzzy: true,
 	});
+	// Both PR entries land on /pull-requests; only the review filter in the URL
+	// tells them apart, so read it rather than lighting up both.
+	const activeReviewFilter = useRouterState({
+		select: (state) => (state.location.search as { review?: string }).review,
+	});
+	const isReviewRequestedOpen =
+		isPullRequestsRoute && activeReviewFilter === REVIEW_REQUESTED;
+	const isPullRequestsOpen = isPullRequestsRoute && !isReviewRequestedOpen;
 
 	const handleWorkspacesClick = () => {
 		if (isWorkspacesListOpen) {
@@ -48,15 +53,6 @@ export function WorkspaceSidebarHeader({
 	};
 
 	const {
-		tab: lastTab,
-		assignee: lastAssignee,
-		search: lastSearch,
-		typeTab: lastTypeTab,
-		projectFilters: lastProjectFilters,
-		linearProjectFilter: lastLinearProjectFilter,
-		includeClosedIssues: lastIncludeClosedIssues,
-	} = useTasksFilterStore();
-	const {
 		search: lastPullRequestsSearch,
 		projectFilters: lastPullRequestsProjectFilters,
 		authorFilter: lastPullRequestsAuthorFilter,
@@ -65,20 +61,17 @@ export function WorkspaceSidebarHeader({
 		mergedOnly: lastPullRequestsMergedOnly,
 	} = usePullRequestsFilterStore();
 
-	const handleTasksClick = () => {
-		gateFeature(GATED_FEATURES.TASKS, () => {
-			navigate({
-				to: "/tasks",
-				search: tasksSearchFromFilters({
-					tab: lastTab,
-					assignee: lastAssignee,
-					search: lastSearch,
-					typeTab: lastTypeTab,
-					projectFilters: lastProjectFilters,
-					linearProjectFilter: lastLinearProjectFilter,
-					includeClosedIssues: lastIncludeClosedIssues,
-				}),
-			});
+	const handleReviewRequestedClick = () => {
+		navigate({
+			to: "/pull-requests",
+			search: pullRequestsSearchFromFilters({
+				search: "",
+				projectFilters: lastPullRequestsProjectFilters,
+				authorFilter: null,
+				reviewFilter: REVIEW_REQUESTED,
+				includeClosed: false,
+				mergedOnly: false,
+			}),
 		});
 	};
 
@@ -121,29 +114,6 @@ export function WorkspaceSidebarHeader({
 					<TooltipTrigger asChild>
 						<button
 							type="button"
-							onClick={handleTasksClick}
-							aria-label={translate(msg({ message: "Tasks" }))}
-							aria-current={isTasksOpen ? "page" : undefined}
-							className={cn(
-								"flex items-center justify-center size-8 rounded-md transition-colors",
-								isTasksOpen
-									? "text-foreground bg-fill-selected"
-									: "text-muted-foreground hover:text-foreground hover:bg-fill-hover",
-							)}
-						>
-							<HiOutlineClipboardDocumentList
-								className="size-4"
-								strokeWidth={STROKE_WIDTH}
-							/>
-						</button>
-					</TooltipTrigger>
-					<TooltipContent side="right">Tasks</TooltipContent>
-				</Tooltip>
-
-				<Tooltip delayDuration={300}>
-					<TooltipTrigger asChild>
-						<button
-							type="button"
 							onClick={handlePullRequestsClick}
 							aria-label={translate(msg({ message: "Pull requests" }))}
 							aria-current={isPullRequestsOpen ? "page" : undefined}
@@ -158,6 +128,26 @@ export function WorkspaceSidebarHeader({
 						</button>
 					</TooltipTrigger>
 					<TooltipContent side="right">Pull requests</TooltipContent>
+				</Tooltip>
+
+				<Tooltip delayDuration={300}>
+					<TooltipTrigger asChild>
+						<button
+							type="button"
+							onClick={handleReviewRequestedClick}
+							aria-label={translate(msg({ message: "Review requested" }))}
+							aria-current={isReviewRequestedOpen ? "page" : undefined}
+							className={cn(
+								"flex items-center justify-center size-8 rounded-md transition-colors",
+								isReviewRequestedOpen
+									? "text-foreground bg-fill-selected"
+									: "text-muted-foreground hover:text-foreground hover:bg-fill-hover",
+							)}
+						>
+							<GoCodeReview className="size-4" strokeWidth={STROKE_WIDTH} />
+						</button>
+					</TooltipTrigger>
+					<TooltipContent side="right">Review requested</TooltipContent>
 				</Tooltip>
 
 				<NewWorkspaceButton isCollapsed />
@@ -185,27 +175,6 @@ export function WorkspaceSidebarHeader({
 
 			<button
 				type="button"
-				onClick={handleTasksClick}
-				aria-label={translate(msg({ message: "Tasks" }))}
-				aria-current={isTasksOpen ? "page" : undefined}
-				className={cn(
-					"flex items-center gap-2 px-2 py-1.5 w-full rounded-md transition-colors",
-					isTasksOpen
-						? "text-foreground bg-fill-selected"
-						: "text-muted-foreground hover:text-foreground hover:bg-fill-hover",
-				)}
-			>
-				<div className="flex items-center justify-center size-5">
-					<HiOutlineClipboardDocumentList
-						className="size-4"
-						strokeWidth={STROKE_WIDTH}
-					/>
-				</div>
-				<span className="text-sm font-medium flex-1 text-left">Tasks</span>
-			</button>
-
-			<button
-				type="button"
 				onClick={handlePullRequestsClick}
 				aria-label={translate(msg({ message: "Pull requests" }))}
 				aria-current={isPullRequestsOpen ? "page" : undefined}
@@ -221,6 +190,26 @@ export function WorkspaceSidebarHeader({
 				</div>
 				<span className="text-sm font-medium flex-1 text-left">
 					Pull requests
+				</span>
+			</button>
+
+			<button
+				type="button"
+				onClick={handleReviewRequestedClick}
+				aria-label={translate(msg({ message: "Review requested" }))}
+				aria-current={isReviewRequestedOpen ? "page" : undefined}
+				className={cn(
+					"flex items-center gap-2 px-2 py-1.5 w-full rounded-md transition-colors",
+					isReviewRequestedOpen
+						? "text-foreground bg-fill-selected"
+						: "text-muted-foreground hover:text-foreground hover:bg-fill-hover",
+				)}
+			>
+				<div className="flex items-center justify-center size-5">
+					<GoCodeReview className="size-4" strokeWidth={STROKE_WIDTH} />
+				</div>
+				<span className="text-sm font-medium flex-1 text-left">
+					Review requested
 				</span>
 			</button>
 
