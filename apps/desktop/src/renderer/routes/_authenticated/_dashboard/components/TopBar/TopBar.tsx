@@ -77,7 +77,10 @@ export function TopBar() {
 					<ZoomStable enabled={isMac} className="flex items-center gap-1.5">
 						<SidebarToggle />
 						<NavigationControls />
-						{!isV2CloudEnabled && <ResourceConsumption surface="v1" />}
+						{/* v2 had no resource monitor at all: this was gated to v1 while
+						    v2 is the default, so the button simply did not exist for
+						    most users. The component already takes the surface. */}
+						<ResourceConsumption surface={isV2CloudEnabled ? "v2" : "v1"} />
 					</ZoomStable>
 				)}
 			</div>

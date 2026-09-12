@@ -43,6 +43,7 @@ import { electronTrpc } from "renderer/lib/electron-trpc";
 import { useFolderFirstImport } from "renderer/routes/_authenticated/_dashboard/components/AddRepositoryModals/hooks/useFolderFirstImport";
 import { NavigationControls } from "renderer/routes/_authenticated/_dashboard/components/NavigationControls";
 import { SidebarToggle } from "renderer/routes/_authenticated/_dashboard/components/SidebarToggle";
+import { ResourceConsumption } from "renderer/routes/_authenticated/_dashboard/components/TopBar/components/ResourceConsumption";
 import { TopBarPortsDropdown } from "renderer/routes/_authenticated/_dashboard/components/TopBar/components/TopBarPortsDropdown";
 import { useFailedAutomations } from "renderer/routes/_authenticated/_dashboard/hooks/useFailedAutomations";
 import {
@@ -549,6 +550,10 @@ export function DashboardSidebarHeader({
 					{/* Lives here (persistent chrome) rather than the workspace tab
 					    bar, which remounts on every navigation. */}
 					<TopBarPortsDropdown align="start" />
+					{/* An expanded v2 sidebar hosts the chrome, so the TopBar's copy
+					    is not rendered — without this the resource monitor is
+					    unreachable in the default layout. */}
+					<ResourceConsumption surface="v2" />
 				</ZoomStable>
 				<div className="drag h-full min-w-0 flex-1" />
 			</div>
