@@ -31,6 +31,7 @@ import { DiffThemeSync } from "renderer/routes/_authenticated/components/DiffThe
 import { LeaderboardAutoPublish } from "renderer/routes/_authenticated/components/LeaderboardAutoPublish";
 import { LeaderboardFirstRunDialog } from "renderer/routes/_authenticated/components/LeaderboardFirstRunDialog";
 import { PendingDeletionScreen } from "renderer/routes/_authenticated/components/PendingDeletionScreen";
+import { PullRequestCommentNotifier } from "renderer/routes/_authenticated/components/PullRequestCommentNotifier";
 import { StarNagObserver } from "renderer/routes/_authenticated/components/StarNagObserver";
 import {
 	V1AutoMigration,
@@ -42,7 +43,6 @@ import {
 } from "renderer/routes/_authenticated/components/V1FlipNotice";
 import { V1ImportModal } from "renderer/routes/_authenticated/components/V1ImportModal";
 import { useForwardedHotkeys } from "renderer/routes/_authenticated/hooks/useForwardedHotkeys";
-import { usePullRequestCommentNotifications } from "renderer/routes/_authenticated/hooks/usePullRequestCommentNotifications";
 import { useZoomHotkeys } from "renderer/routes/_authenticated/hooks/useZoomHotkeys";
 import { WorkspaceInitEffects } from "renderer/screens/main/components/WorkspaceInitEffects";
 import { useSettingsStore } from "renderer/stores/settings-state";
@@ -118,7 +118,6 @@ function AuthenticatedLayout() {
 	const [isSigningOut, setIsSigningOut] = useState(false);
 
 	useAgentHookListener();
-	usePullRequestCommentNotifications();
 	useSettingsExternalChangeListener();
 
 	// Seed the parked-terminal eviction cap from settings (SUPER-1545).
@@ -317,6 +316,7 @@ function AuthenticatedLayout() {
 								<AgentHooks />
 								<FileMenuListener />
 								<V2NotificationController />
+								<PullRequestCommentNotifier />
 								<DockBadgeController />
 								<StarNagObserver />
 								<LeaderboardAutoPublish />
