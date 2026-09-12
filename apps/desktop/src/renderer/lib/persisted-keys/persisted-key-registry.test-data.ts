@@ -103,6 +103,13 @@ export const PERSISTED_KEY_REGISTRY: ReadonlyArray<
 	["src/renderer/stores/v2-notifications/store.ts", ["v2-notifications-v1"]],
 	["src/renderer/stores/hiring-banner/store.ts", ["hiring-banner-v1"]],
 	["src/renderer/stores/star-nag/store.ts", ["star-nag-v1"]],
+	// Fixed-size singleton: one ISO timestamp marking the newest PR comment
+	// already notified. Bounded by shape, rewritten in place, and harmless if
+	// lost (the look-back window just restarts).
+	[
+		"src/renderer/routes/_authenticated/hooks/usePullRequestCommentNotifications/usePullRequestCommentNotifications.ts",
+		["pr-comment-notify-watermark-v1"],
+	],
 	[
 		"src/renderer/stores/terminal-close-confirm/store.ts",
 		["terminal-close-confirm-v1"],

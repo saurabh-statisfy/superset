@@ -126,6 +126,132 @@ export const githubRouter = router({
 			return data;
 		}),
 
+	/**
+	 * New comments on the pull requests this host tracks, since a timestamp.
+	 *
+	 * Two REST calls per *repository* (issue comments + review comments), not
+	 * per pull request: GitHub's `since` filter is repo-scoped, so watching 20
+	 * PRs across 2 repos costs 4 requests rather than 40. Comments are then
+	 * narrowed to the PR numbers this host actually has rows for.
+	 *
+	 * The viewer's own comments are dropped — being notified about your own
+	 * typing is noise, and it is the single most common complaint about
+	 * notifiers like this.
+	 */
+	listRecentComments: protectedProcedure
+		.input(z.object({ since: z.string() }))
+		.output(
+			z.object({
+				comments: z.array(
+					z.object({
+						id: z.number(),
+						prNumber: z.number(),
+						repo: z.string(),
+						author: z.string(),
+						body: z.string(),
+						url: z.string(),
+						createdAt: z.string(),
+						kind: z.enum(["issue", "review"]),
+					}),
+				),
+			}),
+		)
+		.query(async ({ ctx, input }) => {
+			const rows = ctx.db.query.pullRequests.findMany().sync();
+			const open = rows.filter((row) => row.state === "open");
+			if (open.length === 0) return { comments: [] };
+
+			// Group tracked PR numbers by repo so each repo is polled once.
+			const byRepo = new Map<string, { owner: string; repo: string; numbers: Set<number> }>();
+			for (const row of open) {
+				const key = `${row.repoOwner}/${row.repoName}`;
+				const entry = byRepo.get(key) ?? {
+					owner: row.repoOwner,
+					repo: row.repoName,
+					numbers: new Set<number>(),
+				};
+				entry.numbers.add(row.prNumber);
+				byRepo.set(key, entry);
+			}
+
+			const octokit = await ctx.github();
+			let viewer = "";
+			try {
+				viewer = (await octokit.users.getAuthenticated()).data.login ?? "";
+			} catch {
+				// Without a viewer login the worst case is notifying on your own
+				// comment; that is better than failing the whole poll.
+			}
+
+			const prNumberFromUrl = (url: string | undefined): number | null => {
+				const match = /\/(?:issues|pulls)\/(\d+)(?:$|[?#])/.exec(url ?? "");
+				return match ? Number(match[1]) : null;
+			};
+
+			const comments: Array<{
+				id: number;
+				prNumber: number;
+				repo: string;
+				author: string;
+				body: string;
+				url: string;
+				createdAt: string;
+				kind: "issue" | "review";
+			}> = [];
+
+			for (const { owner, repo, numbers } of byRepo.values()) {
+				const repoLabel = `${owner}/${repo}`;
+				const collect = (
+					items: Array<Record<string, unknown>>,
+					kind: "issue" | "review",
+					urlField: string,
+				) => {
+					for (const item of items) {
+						const prNumber = prNumberFromUrl(item[urlField] as string | undefined);
+						if (prNumber === null || !numbers.has(prNumber)) continue;
+						const author = ((item.user as { login?: string } | null)?.login) ?? "";
+						if (!author || (viewer && author === viewer)) continue;
+						comments.push({
+							id: Number(item.id),
+							prNumber,
+							repo: repoLabel,
+							author,
+							// The notification body is a line, not a thread.
+							body: String(item.body ?? "").slice(0, 300),
+							url: String(item.html_url ?? ""),
+							createdAt: String(item.created_at ?? ""),
+							kind,
+						});
+					}
+				};
+
+				try {
+					const issueComments = await octokit.issues.listCommentsForRepo({
+						owner,
+						repo,
+						since: input.since,
+						per_page: 100,
+					});
+					collect(issueComments.data as Array<Record<string, unknown>>, "issue", "issue_url");
+				} catch {
+					// One unreachable repo must not sink the rest of the poll.
+				}
+
+				try {
+					const reviewComments = await octokit.pulls.listReviewCommentsForRepo({
+						owner,
+						repo,
+						since: input.since,
+						per_page: 100,
+					});
+					collect(reviewComments.data as Array<Record<string, unknown>>, "review", "pull_request_url");
+				} catch {}
+			}
+
+			comments.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+			return { comments };
+		}),
+
 	getUser: protectedProcedure.query(async ({ ctx }) => {
 		const octokit = await ctx.github();
 		const { data } = await octokit.users.getAuthenticated();
