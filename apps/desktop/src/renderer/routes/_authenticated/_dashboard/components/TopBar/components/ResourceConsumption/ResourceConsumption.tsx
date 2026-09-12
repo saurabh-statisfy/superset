@@ -22,6 +22,7 @@ import {
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { useRenderStressInstrumentation } from "renderer/lib/performance/stress-instrumentation";
 import { AppResourceSection } from "./components/AppResourceSection";
+import { MemoryHistory } from "./components/MemoryHistory";
 import { ResourceMetricsSummary } from "./components/ResourceMetricsSummary";
 import { WorkspaceResourceSection } from "./components/WorkspaceResourceSection";
 import { useResourceNavigation } from "./hooks/useResourceNavigation";
@@ -229,6 +230,7 @@ function ResourceConsumptionContent({
 				{normalizedSnapshot && (
 					<div className="mt-3">
 						<ResourceMetricsSummary snapshot={normalizedSnapshot} />
+						<MemoryHistory />
 					</div>
 				)}
 			</div>

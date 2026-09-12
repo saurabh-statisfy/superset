@@ -3424,6 +3424,9 @@ msgstr "Collapsible"
 msgid "Collapsible thinking block with duration label"
 msgstr "Blok berpikir yang bisa diciutkan dengan label durasi"
 
+msgid "Collecting memory history…"
+msgstr "Mengumpulkan riwayat memori…"
+
 msgid "Collecting…"
 msgstr "Mengumpulkan…"
 
@@ -8457,6 +8460,9 @@ msgstr "Memori"
 msgid "Memory share"
 msgstr "Porsi memori"
 
+msgid "Memory, last hour"
+msgstr "Memori, satu jam terakhir"
+
 msgid "Menu"
 msgstr "Menu"
 
@@ -13283,6 +13289,10 @@ msgstr "Simulasikan pembaruan: kesalahan"
 
 msgid "Simulate update: ready"
 msgstr "Simulasikan pembaruan: siap"
+
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "sejak {0}"
 
 msgid "Since 2025"
 msgstr "Sejak 2025"

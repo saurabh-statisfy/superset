@@ -1,4 +1,5 @@
 import { collectResourceMetrics } from "main/lib/resource-metrics";
+import { getResourceHistory } from "main/lib/resource-metrics/history";
 import { z } from "zod";
 import { publicProcedure, router } from "..";
 import {
@@ -36,5 +37,19 @@ export const createResourceMetricsRouter = () => {
 				}
 				return validation.snapshot;
 			}),
+
+		getHistory: publicProcedure
+			.output(
+				z.array(
+					z.object({
+						t: z.number(),
+						memory: z.number(),
+						cpu: z.number(),
+						hostUsedMemory: z.number(),
+						hostTotalMemory: z.number(),
+					}),
+				),
+			)
+			.query(() => getResourceHistory()),
 	});
 };

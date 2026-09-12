@@ -3424,6 +3424,9 @@ msgstr "可摺疊面板"
 msgid "Collapsible thinking block with duration label"
 msgstr "可摺疊的思考塊，帶時長標籤"
 
+msgid "Collecting memory history…"
+msgstr "正在收集記憶體記錄…"
+
 msgid "Collecting…"
 msgstr "正在收集…"
 
@@ -8457,6 +8460,9 @@ msgstr "記憶體"
 msgid "Memory share"
 msgstr "記憶體佔比"
 
+msgid "Memory, last hour"
+msgstr "記憶體，過去一小時"
+
 msgid "Menu"
 msgstr "選單"
 
@@ -13283,6 +13289,10 @@ msgstr "模擬更新：錯誤"
 
 msgid "Simulate update: ready"
 msgstr "模擬更新：就緒"
+
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "自 {0}"
 
 msgid "Since 2025"
 msgstr "自2025年起"

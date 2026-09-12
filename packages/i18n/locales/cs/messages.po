@@ -3424,6 +3424,9 @@ msgstr "Sbalitelný panel"
 msgid "Collapsible thinking block with duration label"
 msgstr "Sbalitelný blok přemýšlení s údajem o trvání"
 
+msgid "Collecting memory history…"
+msgstr "Sbírání historie paměti…"
+
 msgid "Collecting…"
 msgstr "Sbírám data…"
 
@@ -8457,6 +8460,9 @@ msgstr "Paměť"
 msgid "Memory share"
 msgstr "Podíl paměti"
 
+msgid "Memory, last hour"
+msgstr "Paměť, poslední hodina"
+
 msgid "Menu"
 msgstr "Nabídka"
 
@@ -13283,6 +13289,10 @@ msgstr "Simulovat aktualizaci: chyba"
 
 msgid "Simulate update: ready"
 msgstr "Simulovat aktualizaci: připraveno"
+
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "od {0}"
 
 msgid "Since 2025"
 msgstr "Od roku 2025"

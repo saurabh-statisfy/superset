@@ -3424,6 +3424,9 @@ msgstr "접이식 영역"
 msgid "Collapsible thinking block with duration label"
 msgstr "소요 시간 레이블이 있는 접을 수 있는 사고 블록"
 
+msgid "Collecting memory history…"
+msgstr "메모리 기록 수집 중…"
+
 msgid "Collecting…"
 msgstr "수집하는 중…"
 
@@ -8457,6 +8460,9 @@ msgstr "메모리"
 msgid "Memory share"
 msgstr "메모리 점유율"
 
+msgid "Memory, last hour"
+msgstr "메모리, 지난 1시간"
+
 msgid "Menu"
 msgstr "메뉴"
 
@@ -13283,6 +13289,10 @@ msgstr "업데이트 시뮬레이션: 오류"
 
 msgid "Simulate update: ready"
 msgstr "업데이트 시뮬레이션: 준비 완료"
+
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "{0}부터"
 
 msgid "Since 2025"
 msgstr "2025년부터"

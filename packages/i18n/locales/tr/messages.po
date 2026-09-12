@@ -3424,6 +3424,9 @@ msgstr "Daraltılabilir"
 msgid "Collapsible thinking block with duration label"
 msgstr "Süre etiketli, daraltılabilir düşünme bloğu"
 
+msgid "Collecting memory history…"
+msgstr "Bellek geçmişi toplanıyor…"
+
 msgid "Collecting…"
 msgstr "Toplanıyor…"
 
@@ -8457,6 +8460,9 @@ msgstr "Bellek"
 msgid "Memory share"
 msgstr "Bellek payı"
 
+msgid "Memory, last hour"
+msgstr "Bellek, son bir saat"
+
 msgid "Menu"
 msgstr "Menü"
 
@@ -13283,6 +13289,10 @@ msgstr "Güncellemeyi simüle et: hata"
 
 msgid "Simulate update: ready"
 msgstr "Güncellemeyi simüle et: hazır"
+
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "{0}'dan beri"
 
 msgid "Since 2025"
 msgstr "2025'ten beri"

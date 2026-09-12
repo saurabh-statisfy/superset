@@ -3424,6 +3424,9 @@ msgstr "Collapsible"
 msgid "Collapsible thinking block with duration label"
 msgstr "Einklappbarer Denkblock mit Dauerangabe"
 
+msgid "Collecting memory history…"
+msgstr "Speicherverlauf wird erfasst…"
+
 msgid "Collecting…"
 msgstr "Wird erfasst…"
 
@@ -8457,6 +8460,9 @@ msgstr "Speicher"
 msgid "Memory share"
 msgstr "Speicheranteil"
 
+msgid "Memory, last hour"
+msgstr "Speicher, letzte Stunde"
+
 msgid "Menu"
 msgstr "Menü"
 
@@ -13283,6 +13289,10 @@ msgstr "Update simulieren: Fehler"
 
 msgid "Simulate update: ready"
 msgstr "Update simulieren: bereit"
+
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "seit {0}"
 
 msgid "Since 2025"
 msgstr "Seit 2025"

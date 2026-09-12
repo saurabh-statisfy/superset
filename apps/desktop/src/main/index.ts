@@ -55,6 +55,7 @@ import { syncInstalledPluginMcpServers } from "./lib/plugin-installs";
 import { portForwardManager } from "./lib/port-forward";
 import { ensureProjectIconsDir, getProjectIconPath } from "./lib/project-icons";
 import { runQuitCleanup } from "./lib/quit-sequence";
+import { startResourceHistorySampler } from "./lib/resource-metrics/history";
 import { initSentry } from "./lib/sentry";
 import {
 	prewarmTerminalRuntime,
@@ -613,6 +614,7 @@ if (!gotTheLock) {
 			});
 		}
 
+		startResourceHistorySampler();
 		initAppServices();
 		await makeAppSetup(
 			() => createPlatformWindow({ orgId: null }),

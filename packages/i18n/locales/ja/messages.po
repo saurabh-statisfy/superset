@@ -3424,6 +3424,9 @@ msgstr "Collapsible"
 msgid "Collapsible thinking block with duration label"
 msgstr "所要時間ラベル付きの折りたためる思考ブロック"
 
+msgid "Collecting memory history…"
+msgstr "メモリ履歴を収集中…"
+
 msgid "Collecting…"
 msgstr "収集中…"
 
@@ -8457,6 +8460,9 @@ msgstr "メモリ"
 msgid "Memory share"
 msgstr "メモリシェア"
 
+msgid "Memory, last hour"
+msgstr "メモリ、過去1時間"
+
 msgid "Menu"
 msgstr "メニュー"
 
@@ -13283,6 +13289,10 @@ msgstr "アップデートをシミュレート: エラー"
 
 msgid "Simulate update: ready"
 msgstr "アップデートをシミュレート: 準備完了"
+
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "{0} から"
 
 msgid "Since 2025"
 msgstr "2025年から"

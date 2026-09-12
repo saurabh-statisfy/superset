@@ -3424,6 +3424,9 @@ msgstr "Collapsible"
 msgid "Collapsible thinking block with duration label"
 msgstr "Khối suy nghĩ thu gọn được, kèm nhãn thời lượng"
 
+msgid "Collecting memory history…"
+msgstr "Đang thu thập lịch sử bộ nhớ…"
+
 msgid "Collecting…"
 msgstr "Đang thu thập…"
 
@@ -8457,6 +8460,9 @@ msgstr "Bộ nhớ"
 msgid "Memory share"
 msgstr "Tỷ lệ bộ nhớ"
 
+msgid "Memory, last hour"
+msgstr "Bộ nhớ, một giờ qua"
+
 msgid "Menu"
 msgstr "Menu"
 
@@ -13283,6 +13289,10 @@ msgstr "Mô phỏng cập nhật: lỗi"
 
 msgid "Simulate update: ready"
 msgstr "Mô phỏng cập nhật: sẵn sàng"
+
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "từ {0}"
 
 msgid "Since 2025"
 msgstr "Từ 2025"

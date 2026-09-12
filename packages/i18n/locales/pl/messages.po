@@ -3424,6 +3424,9 @@ msgstr "Element zwijany"
 msgid "Collapsible thinking block with duration label"
 msgstr "Zwijany blok myślenia z etykietą czasu trwania"
 
+msgid "Collecting memory history…"
+msgstr "Zbieranie historii pamięci…"
+
 msgid "Collecting…"
 msgstr "Zbieranie…"
 
@@ -8457,6 +8460,9 @@ msgstr "Pamięć"
 msgid "Memory share"
 msgstr "Udział pamięci"
 
+msgid "Memory, last hour"
+msgstr "Pamięć, ostatnia godzina"
+
 msgid "Menu"
 msgstr "Menu"
 
@@ -13283,6 +13289,10 @@ msgstr "Symuluj aktualizację: błąd"
 
 msgid "Simulate update: ready"
 msgstr "Symuluj aktualizację: gotowa"
+
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "od {0}"
 
 msgid "Since 2025"
 msgstr "Od 2025"

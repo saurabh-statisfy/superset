@@ -3424,6 +3424,9 @@ msgstr "Сворачиваемый блок"
 msgid "Collapsible thinking block with duration label"
 msgstr "Сворачиваемый блок размышлений с меткой длительности"
 
+msgid "Collecting memory history…"
+msgstr "Сбор истории памяти…"
+
 msgid "Collecting…"
 msgstr "Сбор данных…"
 
@@ -8457,6 +8460,9 @@ msgstr "Память"
 msgid "Memory share"
 msgstr "Доля памяти"
 
+msgid "Memory, last hour"
+msgstr "Память, последний час"
+
 msgid "Menu"
 msgstr "Меню"
 
@@ -13283,6 +13289,10 @@ msgstr "Симуляция обновления: ошибка"
 
 msgid "Simulate update: ready"
 msgstr "Симуляция обновления: готово"
+
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "с {0}"
 
 msgid "Since 2025"
 msgstr "С 2025 года"

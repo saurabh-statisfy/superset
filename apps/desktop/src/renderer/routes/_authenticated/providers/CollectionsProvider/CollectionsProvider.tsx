@@ -115,7 +115,16 @@ export function CollectionsProvider({ children }: { children: ReactNode }) {
 			windowOrgId != null &&
 			organizations != null &&
 			organizations.some((organization) => organization.id === windowOrgId);
-		if (windowOrgId != null && organizations == null) return;
+		// Offline (SKIP_ENV_VALIDATION / SUPERSET_OFFLINE) there is no cloud
+		// membership list to wait for — organization.list can never resolve, so
+		// this guard would hold activeOrganizationId at null forever and render
+		// the whole authenticated tree as null. The mock org is the only org.
+		if (
+			!env.SKIP_ENV_VALIDATION &&
+			windowOrgId != null &&
+			organizations == null
+		)
+			return;
 		const resolved =
 			(registryOrgIsStillMine ? windowOrgId : sessionOrgId) ?? null;
 		if (!resolved) return;
