@@ -217,7 +217,7 @@ function V2WorkspaceContent() {
 		target: openUrlTarget,
 		requestId: openUrlRequestId,
 	});
-	useConsumePageOpenRequest({ workspaceId, store });
+	useConsumePageOpenRequest({ workspaceId, store, isLayoutReady });
 
 	const {
 		openFilePaneFromTreeClick,
