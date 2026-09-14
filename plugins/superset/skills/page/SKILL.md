@@ -275,13 +275,18 @@ list. Pass `--page <id>` to add a version to a page you already have.
 Keep the source file. It is the only copy you can edit; the published version is
 derived from it.
 
-Creating a page (its first version) opens it automatically, inside the
-workspace that published it, as a free "it's ready" signal — landing as a
-split, a new tab, or the system browser, whichever the user's Settings →
-Links → Pages preference says. Already have that page open in this workspace?
-It switches to that tab instead of opening a second one. Publishing outside a
-workspace falls back to the system browser, the only option left.
-Republishing a later version does not reopen it.
+Creating a page (its first version) also asks the desktop to open it, as a
+free "it's ready" signal — landing as a split, a new tab, or the system
+browser, whichever the user's Settings → Links → Pages preference says.
+Already have that page open in this workspace? It switches to that tab
+instead of opening a second one. Publishing outside a workspace opens the
+system browser on the machine running the CLI instead. Republishing a later
+version does not reopen it.
+
+This is best effort, not a guarantee: the request only lands if the desktop
+is running with that workspace open. Tell the user where the page is, give
+them the URL, and let them say whether it showed up — never report that you
+opened it for them.
 
 ## Update an existing page
 
