@@ -17,18 +17,12 @@ mock.module("node:child_process", () => ({
 const { openUrl } = await import("./open-url");
 
 describe("openUrl", () => {
-	test("resolves once the launcher exits 0", async () => {
+	test("resolves once the launcher has been spawned", async () => {
 		nextChild = new FakeChild();
 		const promise = openUrl("https://example.com");
-		nextChild.emit("close", 0);
+		nextChild.emit("spawn");
 		await expect(promise).resolves.toBeUndefined();
-	});
-
-	test("rejects when the launcher exits non-zero", async () => {
-		nextChild = new FakeChild();
-		const promise = openUrl("https://example.com");
-		nextChild.emit("close", 1);
-		await expect(promise).rejects.toThrow(/exited with code 1/);
+		expect(nextChild.unref).toHaveBeenCalled();
 	});
 
 	test("rejects when the launcher binary itself can't run", async () => {
@@ -38,9 +32,12 @@ describe("openUrl", () => {
 		await expect(promise).rejects.toThrow("ENOENT");
 	});
 
-	test("rejects instead of hanging forever when the launcher never closes", async () => {
+	test("does not wait for the launcher to exit", async () => {
 		nextChild = new FakeChild();
-		const promise = openUrl("https://example.com", 10);
-		await expect(promise).rejects.toThrow(/did not exit within 10ms/);
+		const promise = openUrl("https://example.com");
+		nextChild.emit("spawn");
+		await expect(promise).resolves.toBeUndefined();
+		nextChild.emit("close", 1);
+		await expect(promise).resolves.toBeUndefined();
 	});
 });
