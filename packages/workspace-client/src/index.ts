@@ -9,6 +9,7 @@ export {
 	getEventBus,
 	type HostConnectionState,
 	type HostConnectionStatus,
+	type PageOpenRequestedPayload,
 	type PageWatchChangedPayload,
 	type PortChangedPayload,
 	type ProjectChangedPayload,

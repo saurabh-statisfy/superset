@@ -2,6 +2,7 @@ import type {
 	AgentBindingsChangedPayload,
 	AgentLifecyclePayload,
 	GitChangedPayload,
+	PageOpenRequestedPayload,
 	PageWatchChangedPayload,
 	PortChangedPayload,
 	TerminalLifecyclePayload,
@@ -58,6 +59,12 @@ export function useWorkspaceEvent(
 	enabled?: boolean,
 ): void;
 export function useWorkspaceEvent(
+	type: "page:open-requested",
+	workspaceId: string,
+	callback: (payload: PageOpenRequestedPayload) => void,
+	enabled?: boolean,
+): void;
+export function useWorkspaceEvent(
 	type:
 		| "git:changed"
 		| "fs:events"
@@ -65,7 +72,8 @@ export function useWorkspaceEvent(
 		| "agent:bindings-changed"
 		| "terminal:lifecycle"
 		| "port:changed"
-		| "page-watch:changed",
+		| "page-watch:changed"
+		| "page:open-requested",
 	workspaceId: string,
 	callback:
 		| ((event: FsWatchEvent) => void)
@@ -74,7 +82,8 @@ export function useWorkspaceEvent(
 		| ((payload: AgentBindingsChangedPayload) => void)
 		| ((payload: TerminalLifecyclePayload) => void)
 		| ((payload: PortChangedPayload) => void)
-		| ((payload: PageWatchChangedPayload) => void),
+		| ((payload: PageWatchChangedPayload) => void)
+		| ((payload: PageOpenRequestedPayload) => void),
 	enabled = true,
 ): void {
 	const hostUrl = useWorkspaceHostUrl(workspaceId);
@@ -140,6 +149,15 @@ export function useWorkspaceEvent(
 				workspaceId,
 				(_wid, payload) => {
 					(handler as (payload: PageWatchChangedPayload) => void)(payload);
+				},
+			);
+			cleanups.push(removeListener);
+		} else if (type === "page:open-requested") {
+			const removeListener = bus.on(
+				"page:open-requested",
+				workspaceId,
+				(_wid, payload) => {
+					(handler as (payload: PageOpenRequestedPayload) => void)(payload);
 				},
 			);
 			cleanups.push(removeListener);

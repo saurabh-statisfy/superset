@@ -283,6 +283,16 @@ export class EventBus {
 		this.broadcast({ type: "page-watch:changed", ...message });
 	}
 
+	/** Fan out a freshly published page's auto-open request. See PageOpenRequestedMessage. */
+	broadcastPageOpenRequested(
+		message: Omit<
+			Extract<ServerMessage, { type: "page:open-requested" }>,
+			"type"
+		>,
+	): void {
+		this.broadcast({ type: "page:open-requested", ...message });
+	}
+
 	/**
 	 * Fan out workspace lifecycle changes (create/rename/delete) from the
 	 * host-owned workspaces table. Broadcast to all clients — list consumers

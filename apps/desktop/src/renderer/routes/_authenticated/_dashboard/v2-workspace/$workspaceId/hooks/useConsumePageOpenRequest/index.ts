@@ -1,0 +1,1 @@
+export { useConsumePageOpenRequest } from "./useConsumePageOpenRequest";

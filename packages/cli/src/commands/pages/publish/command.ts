@@ -10,6 +10,7 @@ import {
 } from "./utils/collectDirectoryPublish";
 import { publishResult } from "./utils/publishResult";
 import { registerWatch, watchTerminalId } from "./utils/registerWatch";
+import { requestPageOpen } from "./utils/requestOpen";
 import {
 	EXTERNAL_ENTRY_PREFIX,
 	externalEntryPath,
@@ -46,9 +47,6 @@ export default command({
 		),
 		noWatch: boolean().desc(
 			"Do not watch this page for new comments from this session",
-		),
-		noOpen: boolean().desc(
-			"Do not open the page in the default browser after creating it",
 		),
 	},
 	run: async ({ ctx, args, options }) => {
@@ -201,12 +199,29 @@ export default command({
 
 		let opened = false;
 		let openNote: string | null = null;
-		if (!options.noOpen && page.version === 1) {
+		if (page.version === 1) {
 			try {
-				await openUrl(page.url);
+				// Prefer notifying the workspace that published it — the desktop
+				// app opens it per its own Pages link preference (split, new tab,
+				// or external). No workspace to target (publishing outside one)
+				// falls back to the system browser, the only option left.
+				if (workspaceId && organizationId) {
+					await requestPageOpen({
+						pageId: page.id,
+						slug: page.slug,
+						title: page.title,
+						workspaceId,
+						url: page.url,
+						organizationId,
+						userJwt: ctx.bearer,
+						api: ctx.api,
+					});
+				} else {
+					await openUrl(page.url);
+				}
 				opened = true;
 			} catch (error) {
-				openNote = `Could not open the browser: ${
+				openNote = `Could not open the page: ${
 					error instanceof Error ? error.message : String(error)
 				}`;
 			}

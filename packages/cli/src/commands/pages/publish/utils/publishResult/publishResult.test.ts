@@ -38,7 +38,7 @@ describe("publishResult", () => {
 			watching: true,
 			watchNote: "Watching for comments — they will be sent to this session",
 			opened: false,
-			openNote: "Could not open the browser: no display",
+			openNote: "Could not open the page: no display",
 		});
 		expect(message.split("\n")).toEqual([
 			'Published "Q3 Report" v3',
@@ -47,7 +47,7 @@ describe("publishResult", () => {
 			"demo.mov may not play in every browser",
 			'Outside the workspace, so this page is keyed as "~external/report/index.html"',
 			"Watching for comments — they will be sent to this session",
-			"Could not open the browser: no display",
+			"Could not open the page: no display",
 		]);
 		expect(data.watching).toBe(true);
 		expect(data.assets).toEqual({ uploaded: 1, reused: 1 });

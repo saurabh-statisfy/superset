@@ -46,6 +46,7 @@ import { useAutoAdoptBackgroundSessions } from "./hooks/useAutoAdoptBackgroundSe
 import { useClearActivePaneAttention } from "./hooks/useClearActivePaneAttention";
 import { useConsumeAutomationRunLink } from "./hooks/useConsumeAutomationRunLink";
 import { useConsumeOpenUrlRequest } from "./hooks/useConsumeOpenUrlRequest";
+import { useConsumePageOpenRequest } from "./hooks/useConsumePageOpenRequest";
 import { useConsumeSubagentLink } from "./hooks/useConsumeSubagentLink";
 import { useCreatePendingMigratedTerminals } from "./hooks/useCreatePendingMigratedTerminals";
 import { useDefaultContextMenuActions } from "./hooks/useDefaultContextMenuActions";
@@ -216,6 +217,7 @@ function V2WorkspaceContent() {
 		target: openUrlTarget,
 		requestId: openUrlRequestId,
 	});
+	useConsumePageOpenRequest({ workspaceId, store });
 
 	const {
 		openFilePaneFromTreeClick,
