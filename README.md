@@ -1,3 +1,9 @@
+> **Modified copy.** This branch is not an official Superset build. It is modified
+> from upstream [`superset-sh/superset`](https://github.com/superset-sh/superset)
+> at commit `2a30770c3` to run offline with no sign-in and no telemetry.
+> See [`NOTICE.md`](NOTICE.md) for the full list of changes, and
+> [`LICENSE.md`](LICENSE.md) (Elastic License 2.0) for the terms.
+
 <div align="center">
 
 <img width="full" alt="Claude and OpenCode working in parallel Superset workspaces with live diffs" src="apps/marketing/public/images/readme-hero.gif" />
