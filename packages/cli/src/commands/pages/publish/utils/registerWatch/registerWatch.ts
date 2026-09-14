@@ -1,5 +1,5 @@
-import { getHostId } from "@superset/shared/host-info";
-import { resolveHostTarget } from "../../../../../lib/host-target";
+import type { resolveHostTarget } from "../../../../../lib/host-target";
+import { resolvePageWatchClient } from "../resolvePageWatchClient";
 
 export function watchTerminalId(): string | undefined {
 	return process.env.SUPERSET_TERMINAL_ID;
@@ -24,13 +24,12 @@ export async function registerWatch({
 	userJwt: string;
 	api: Parameters<typeof resolveHostTarget>[0]["api"];
 }): Promise<void> {
-	const target = await resolveHostTarget({
-		requestedHostId: getHostId(),
+	const pageWatch = await resolvePageWatchClient({
 		organizationId,
 		userJwt,
 		api,
 	});
-	await target.client.pageWatch.assign.mutate({
+	await pageWatch.assign.mutate({
 		pageId,
 		slug,
 		title,

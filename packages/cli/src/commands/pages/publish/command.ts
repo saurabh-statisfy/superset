@@ -201,10 +201,6 @@ export default command({
 		let openNote: string | null = null;
 		if (page.version === 1) {
 			try {
-				// Prefer notifying the workspace that published it — the desktop
-				// app opens it per its own Pages link preference (split, new tab,
-				// or external). No workspace to target (publishing outside one)
-				// falls back to the system browser, the only option left.
 				if (workspaceId && organizationId) {
 					await requestPageOpen({
 						pageId: page.id,

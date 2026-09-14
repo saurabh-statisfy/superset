@@ -3,11 +3,14 @@ import { z } from "zod";
 import type { PageWatchStatus } from "../../../page-watch/index.ts";
 import { protectedProcedure, router } from "../../index";
 
-const assignInputSchema = z.object({
+const pageRefSchema = z.object({
 	pageId: z.string().uuid(),
 	slug: z.string().min(1),
 	title: z.string().min(1),
 	workspaceId: z.string().min(1),
+});
+
+const assignInputSchema = pageRefSchema.extend({
 	terminalId: z.string().min(1),
 	agentId: z.string().min(1).nullable().default(null),
 });
@@ -18,12 +21,8 @@ const listInputSchema = z
 	.object({ workspaceId: z.string().min(1).optional() })
 	.optional();
 
-const requestOpenInputSchema = z.object({
-	pageId: z.string().uuid(),
-	slug: z.string().min(1),
-	title: z.string().min(1),
-	workspaceId: z.string().min(1),
-	url: z.string().min(1),
+const requestOpenInputSchema = pageRefSchema.extend({
+	url: z.string().url(),
 });
 
 export const pageWatchRouter = router({
@@ -41,10 +40,6 @@ export const pageWatchRouter = router({
 			return ctx.runtime.pageWatch.list(input.workspaceId);
 		}),
 
-	// Independent of watch state (no agent required) — a one-shot broadcast
-	// asking whatever renderer has this workspace open to open the page,
-	// per its own pageOpenAction preference. Fire-and-forget: nothing is
-	// listening when no window has this workspace open, and that's fine.
 	requestOpen: protectedProcedure
 		.input(requestOpenInputSchema)
 		.mutation(({ ctx, input }) => {

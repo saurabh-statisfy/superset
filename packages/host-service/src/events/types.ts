@@ -239,14 +239,6 @@ export interface PageWatchChangedMessage {
 	occurredAt: number;
 }
 
-/**
- * A page was just published and wants to open in the workspace that
- * published it — the CLI's `pages publish` auto-open. Fired once per
- * publish; where it lands (split, new tab, external browser) is entirely
- * the receiving renderer's call, resolved from its own `pageOpenAction`
- * preference, since that preference lives in renderer-local storage this
- * process can't read.
- */
 export interface PageOpenRequestedMessage {
 	type: "page:open-requested";
 	workspaceId: string;

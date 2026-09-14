@@ -283,7 +283,6 @@ export class EventBus {
 		this.broadcast({ type: "page-watch:changed", ...message });
 	}
 
-	/** Fan out a freshly published page's auto-open request. See PageOpenRequestedMessage. */
 	broadcastPageOpenRequested(
 		message: Omit<
 			Extract<ServerMessage, { type: "page:open-requested" }>,

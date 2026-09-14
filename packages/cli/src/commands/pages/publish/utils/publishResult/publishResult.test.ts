@@ -51,6 +51,23 @@ describe("publishResult", () => {
 		]);
 		expect(data.watching).toBe(true);
 		expect(data.assets).toEqual({ uploaded: 1, reused: 1 });
+		expect(data.openNote).toBe("Could not open the page: no display");
+	});
+
+	test("open/watch failures land in data, not just the message", () => {
+		const { data } = publishResult({
+			page: PAGE,
+			assets: { uploaded: 0, reused: 0, warnings: [] },
+			externalPath: null,
+			watching: false,
+			watchNote: "Not watching for comments: could not reach the host",
+			opened: false,
+			openNote: null,
+		});
+		expect(data.watchNote).toBe(
+			"Not watching for comments: could not reach the host",
+		);
+		expect(data.openNote).toBeUndefined();
 	});
 
 	test("one asset, none reused: singular wording, no reuse suffix", () => {

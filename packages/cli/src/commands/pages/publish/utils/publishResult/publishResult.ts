@@ -53,7 +53,9 @@ export function publishResult({
 		data: {
 			...page,
 			watching,
+			...(watchNote ? { watchNote } : {}),
 			opened,
+			...(openNote ? { openNote } : {}),
 			assets: { uploaded: assets.uploaded, reused: assets.reused },
 		},
 		message: lines.join("\n"),

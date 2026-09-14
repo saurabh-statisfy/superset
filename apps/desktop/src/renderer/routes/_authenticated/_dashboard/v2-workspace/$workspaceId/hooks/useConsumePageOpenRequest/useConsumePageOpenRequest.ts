@@ -7,13 +7,6 @@ import type { StoreApi } from "zustand/vanilla";
 import type { PaneViewerData } from "../../types";
 import { openPagePaneInStore } from "../../utils/openPagePaneInStore";
 
-/**
- * Reacts to the CLI's `pages publish` auto-open (see PageOpenRequestedMessage)
- * for whichever workspace is mounted here. Resolution mirrors a clicked page
- * link in terminal output (runUrlLinkAction): `pageOpenAction` decides split
- * vs. new tab vs. the system browser, since that preference lives in this
- * renderer's own local storage and the CLI has no way to read it.
- */
 export function useConsumePageOpenRequest({
 	workspaceId,
 	store,

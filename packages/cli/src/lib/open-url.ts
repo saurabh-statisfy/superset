@@ -11,9 +11,13 @@ export function openUrl(url: string): Promise<void> {
 	return new Promise((resolve, reject) => {
 		const child = spawn(bin, args, { stdio: "ignore", detached: true });
 		child.once("error", reject);
-		child.once("spawn", () => {
+		child.once("close", (code) => {
 			child.unref();
-			resolve();
+			if (code === 0) {
+				resolve();
+			} else {
+				reject(new Error(`${bin} exited with code ${code}`));
+			}
 		});
 	});
 }
