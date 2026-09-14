@@ -21,9 +21,7 @@ const listInputSchema = z
 	.object({ workspaceId: z.string().min(1).optional() })
 	.optional();
 
-const requestOpenInputSchema = pageRefSchema.extend({
-	url: z.string().url(),
-});
+const requestOpenInputSchema = pageRefSchema;
 
 export const pageWatchRouter = router({
 	assign: protectedProcedure

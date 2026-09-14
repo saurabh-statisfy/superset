@@ -206,7 +206,6 @@ export default command({
 						slug: page.slug,
 						title: page.title,
 						workspaceId,
-						url: page.url,
 						organizationId,
 						userJwt: ctx.bearer,
 						api: ctx.api,

@@ -6,7 +6,6 @@ export async function requestPageOpen({
 	slug,
 	title,
 	workspaceId,
-	url,
 	organizationId,
 	userJwt,
 	api,
@@ -15,7 +14,6 @@ export async function requestPageOpen({
 	slug: string;
 	title: string;
 	workspaceId: string;
-	url: string;
 	organizationId: string;
 	userJwt: string;
 	api: Parameters<typeof resolveHostTarget>[0]["api"];
@@ -25,5 +23,5 @@ export async function requestPageOpen({
 		userJwt,
 		api,
 	});
-	await pageWatch.requestOpen.mutate({ pageId, slug, title, workspaceId, url });
+	await pageWatch.requestOpen.mutate({ pageId, slug, title, workspaceId });
 }

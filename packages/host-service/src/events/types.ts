@@ -245,7 +245,6 @@ export interface PageOpenRequestedMessage {
 	pageId: string;
 	slug: string;
 	title: string;
-	url: string;
 	requestId: string;
 	occurredAt: number;
 }
