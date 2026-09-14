@@ -197,7 +197,6 @@ export default command({
 			}
 		}
 
-		let opened = false;
 		let openNote: string | null = null;
 		if (page.version === 1) {
 			try {
@@ -215,7 +214,6 @@ export default command({
 				} else {
 					await openUrl(page.url);
 				}
-				opened = true;
 			} catch (error) {
 				openNote = `Could not open the page: ${
 					error instanceof Error ? error.message : String(error)
@@ -229,7 +227,6 @@ export default command({
 			externalPath,
 			watching,
 			watchNote,
-			opened,
 			openNote,
 		});
 	},

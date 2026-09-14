@@ -11,7 +11,6 @@ export function publishResult({
 	externalPath,
 	watching,
 	watchNote,
-	opened,
 	openNote,
 }: {
 	page: { title: string; version: number; url: string } & Record<
@@ -26,7 +25,6 @@ export function publishResult({
 	externalPath: string | null;
 	watching: boolean;
 	watchNote: string | null;
-	opened: boolean;
 	openNote: string | null;
 }): { data: Record<string, unknown>; message: string } {
 	const lines = [`Published "${page.title}" v${page.version}`, page.url];
@@ -54,7 +52,6 @@ export function publishResult({
 			...page,
 			watching,
 			...(watchNote ? { watchNote } : {}),
-			opened,
 			...(openNote ? { openNote } : {}),
 			assets: { uploaded: assets.uploaded, reused: assets.reused },
 		},
