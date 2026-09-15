@@ -322,6 +322,12 @@ msgstr "{0} achter je"
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} kan nog niet op deze manier worden ingelogd."
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} reageerde op {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} developers zijn gerangschikt op agentgebruik. Je laatste 30 dagen zijn al meegeteld, alleen verborgen. Alleen tokenaantallen en modelnamen, geen repo-namen, bestandspaden of prompts."
@@ -768,9 +774,6 @@ msgstr "{months}mnd"
 msgid "{months}mo ago"
 msgstr "{months}mnd geleden"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "Bij {myFailedCount} van je automatiseringen is de laatste run mislukt"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} is ingebouwd en kan niet worden verwijderd"
@@ -797,6 +800,9 @@ msgstr "{offlineHostCount, plural, one {# apparaat is offline en behoudt zijn ko
 
 msgid "{openCount} open"
 msgstr "{openCount} open"
+
+msgid "{overflow} more new comment(s)"
+msgstr "Nog {overflow} nieuwe reactie(s)"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} gedeeltelijk"
@@ -2136,6 +2142,9 @@ msgstr "Zoals laatst gemeld. De host moet online zijn om bij te werken."
 msgid "ascending"
 msgstr "oplopend"
 
+msgid "Ask agent"
+msgstr "Agent vragen"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Vraag een agent om er een te publiceren vanuit de desktop-app."
 
@@ -2147,6 +2156,9 @@ msgstr "Vraag het de agent…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Vraag de AI iets over deze regels…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Vraag het de AI of plaats een reactie op GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Vraag het de AI…"
@@ -2337,17 +2349,11 @@ msgstr "Titel van automatisering"
 msgid "Automations"
 msgstr "Automatiseringen"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Automatiseringen ({myFailedCount} mislukt)"
-
 msgid "Automations & event triggers"
 msgstr "Automatiseringen en event-triggers"
 
 msgid "Automations require the Pro plan."
 msgstr "Automatiseringen vereisen het Pro-abonnement."
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Automatiseringen, {myFailedCount} mislukt"
 
 msgid "Autonomous"
 msgstr "Autonoom"
@@ -3503,6 +3509,9 @@ msgstr "Collapsible"
 msgid "Collapsible thinking block with duration label"
 msgstr "Inklapbaar denkblok met duurlabel"
 
+msgid "Collecting memory history…"
+msgstr "Geheugengeschiedenis verzamelen…"
+
 msgid "Collecting…"
 msgstr "Verzamelen…"
 
@@ -3572,8 +3581,14 @@ msgstr "Opmerking niet gevonden"
 msgid "Comment not posted"
 msgstr "Opmerking niet geplaatst"
 
+msgid "Comment on GitHub"
+msgstr "Reageren op GitHub"
+
 msgid "Comment on this page"
 msgstr "Reageren op deze pagina"
+
+msgid "Comment posted"
+msgstr "Reactie geplaatst"
 
 msgid "Commented"
 msgstr "Opmerking geplaatst"
@@ -3695,6 +3710,9 @@ msgstr "Run-commando van werkruimte configureren"
 
 msgid "Confirm before quitting"
 msgstr "Bevestigen voor afsluiten"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Conflicterende merges zijn teruggedraaid — die worktrees zijn ongewijzigd."
 
 msgid "Connect"
 msgstr "Verbinden"
@@ -4379,6 +4397,9 @@ msgstr "Kan pull request niet mergen"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Kan deze diff niet parsen: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Kan reactie niet plaatsen"
 
 msgid "Couldn't post reply"
 msgstr "Kan antwoord niet plaatsen"
@@ -5796,6 +5817,9 @@ msgstr "Elke woensdag om 9 uur: bekijk de gemergede PR's van deze week en werk d
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Elke werkdag om 9 uur: lees nieuwe GitHub-issues, plaats labels en stel een eerste antwoord op voor mijn review."
+
+msgid "Every worktree was already up to date"
+msgstr "Alle worktrees waren al up-to-date"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Iedereen discussieert over de vraag of dit generaliseert. Die discussie is het teken dat het niveau is bereikt."
@@ -8382,6 +8406,9 @@ msgstr "Lokaal apparaat"
 msgid "Local First"
 msgstr "Local first"
 
+msgid "Local host service is not running"
+msgstr "De lokale host-service draait niet"
+
 msgid "Local Network"
 msgstr "Lokaal netwerk"
 
@@ -8642,6 +8669,9 @@ msgstr "Geheugen"
 msgid "Memory share"
 msgstr "Geheugenaandeel"
 
+msgid "Memory, last hour"
+msgstr "Geheugen, afgelopen uur"
+
 msgid "Menu"
 msgstr "Menu"
 
@@ -8683,6 +8713,12 @@ msgstr "Gemerged"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Gemerged door {0}"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "Samengevoegd in {merged} worktree(s)"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "Samengevoegd in {merged} worktree(s). Vereist aandacht: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Gemerged, maar de PR-status kon niet worden ververst — probeer het zo opnieuw"
@@ -9715,6 +9751,9 @@ msgstr "Nog geen werkruimtes op deze host"
 msgid "No workspaces yet"
 msgstr "Nog geen werkruimtes"
 
+msgid "No worktrees to sync"
+msgstr "Geen worktrees om te synchroniseren"
+
 msgid "No-Prompt Launch"
 msgstr "Start zonder prompt"
 
@@ -10364,6 +10403,9 @@ msgstr "Pull request-opties openen"
 
 msgid "Open pull requests"
 msgstr "Open pull requests"
+
+msgid "Open Pull requests to read them."
+msgstr "Open Pull requests om ze te lezen."
 
 msgid "Open recent"
 msgstr "Recent openen"
@@ -13573,6 +13615,10 @@ msgstr "Update simuleren: fout"
 msgid "Simulate update: ready"
 msgstr "Update simuleren: gereed"
 
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "sinds {0}"
+
 msgid "Since 2025"
 msgstr "Sinds 2025"
 
@@ -13629,6 +13675,9 @@ msgstr "Nu overslaan"
 
 msgid "Skipped"
 msgstr "Overgeslagen"
+
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Worktrees met niet-vastgelegde wijzigingen overgeslagen."
 
 msgid "Slack Account Linked"
 msgstr "Slack-account gekoppeld"
@@ -14379,6 +14428,9 @@ msgstr "Synchroniseer issues beide kanten op met Linear."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Synchroniseer issues beide kanten op met Linear. Maak taken in Superset die in Linear verschijnen, of importeer bestaande Linear-issues."
 
+msgid "Sync main into all worktrees"
+msgstr "main in alle worktrees samenvoegen"
+
 msgid "Sync Repositories"
 msgstr "Repository's synchroniseren"
 
@@ -14390,6 +14442,9 @@ msgstr "Synchroniseren met remote"
 
 msgid "Syncing..."
 msgstr "Synchroniseren..."
+
+msgid "Syncing…"
+msgstr "Synchroniseren…"
 
 msgid "System"
 msgstr "Systeem"

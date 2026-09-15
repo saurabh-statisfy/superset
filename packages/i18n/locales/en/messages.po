@@ -322,6 +322,12 @@ msgstr "{0} behind you"
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} cannot be signed in this way yet."
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} commented on {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
@@ -768,9 +774,6 @@ msgstr "{months}mo"
 msgid "{months}mo ago"
 msgstr "{months}mo ago"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "{myFailedCount} of your automations failed their last run"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} is built in and cannot be removed"
@@ -797,6 +800,9 @@ msgstr "{offlineHostCount, plural, one {# device is offline and keeps its copy.}
 
 msgid "{openCount} open"
 msgstr "{openCount} open"
+
+msgid "{overflow} more new comment(s)"
+msgstr "{overflow} more new comment(s)"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} partial"
@@ -2136,6 +2142,9 @@ msgstr "As last reported. The host must be online to update."
 msgid "ascending"
 msgstr "ascending"
 
+msgid "Ask agent"
+msgstr "Ask agent"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Ask an agent to publish one from the desktop app."
 
@@ -2147,6 +2156,9 @@ msgstr "Ask the agent…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Ask the AI about these lines…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Ask the AI, or comment on GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Ask the AI…"
@@ -2337,17 +2349,11 @@ msgstr "Automation title"
 msgid "Automations"
 msgstr "Automations"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Automations ({myFailedCount} failing)"
-
 msgid "Automations & event triggers"
 msgstr "Automations & event triggers"
 
 msgid "Automations require the Pro plan."
 msgstr "Automations require the Pro plan."
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Automations, {myFailedCount} failing"
 
 msgid "Autonomous"
 msgstr "Autonomous"
@@ -3503,6 +3509,9 @@ msgstr "Collapsible"
 msgid "Collapsible thinking block with duration label"
 msgstr "Collapsible thinking block with duration label"
 
+msgid "Collecting memory history…"
+msgstr "Collecting memory history…"
+
 msgid "Collecting…"
 msgstr "Collecting…"
 
@@ -3572,8 +3581,14 @@ msgstr "Comment not found"
 msgid "Comment not posted"
 msgstr "Comment not posted"
 
+msgid "Comment on GitHub"
+msgstr "Comment on GitHub"
+
 msgid "Comment on this page"
 msgstr "Comment on this page"
+
+msgid "Comment posted"
+msgstr "Comment posted"
 
 msgid "Commented"
 msgstr "Commented"
@@ -3695,6 +3710,9 @@ msgstr "Configure workspace run command"
 
 msgid "Confirm before quitting"
 msgstr "Confirm before quitting"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Conflicting merges were rolled back — those worktrees are unchanged."
 
 msgid "Connect"
 msgstr "Connect"
@@ -4379,6 +4397,9 @@ msgstr "Couldn't merge pull request"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Couldn't parse this diff: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Couldn't post comment"
 
 msgid "Couldn't post reply"
 msgstr "Couldn't post reply"
@@ -5796,6 +5817,9 @@ msgstr "Every Wednesday at 9am, review this week's merged PRs and update any doc
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
+
+msgid "Every worktree was already up to date"
+msgstr "Every worktree was already up to date"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
@@ -8382,6 +8406,9 @@ msgstr "Local Device"
 msgid "Local First"
 msgstr "Local First"
 
+msgid "Local host service is not running"
+msgstr "Local host service is not running"
+
 msgid "Local Network"
 msgstr "Local Network"
 
@@ -8642,6 +8669,9 @@ msgstr "Memory"
 msgid "Memory share"
 msgstr "Memory share"
 
+msgid "Memory, last hour"
+msgstr "Memory, last hour"
+
 msgid "Menu"
 msgstr "Menu"
 
@@ -8683,6 +8713,12 @@ msgstr "Merged"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Merged by {0}"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "Merged into {merged} worktree(s)"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "Merged into {merged} worktree(s). Needs attention: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Merged, but couldn't refresh PR state — try again in a moment"
@@ -9715,6 +9751,9 @@ msgstr "No workspaces on this host yet"
 msgid "No workspaces yet"
 msgstr "No workspaces yet"
 
+msgid "No worktrees to sync"
+msgstr "No worktrees to sync"
+
 msgid "No-Prompt Launch"
 msgstr "No-Prompt Launch"
 
@@ -10364,6 +10403,9 @@ msgstr "Open pull request options"
 
 msgid "Open pull requests"
 msgstr "Open pull requests"
+
+msgid "Open Pull requests to read them."
+msgstr "Open Pull requests to read them."
 
 msgid "Open recent"
 msgstr "Open recent"
@@ -13573,6 +13615,10 @@ msgstr "Simulate update: error"
 msgid "Simulate update: ready"
 msgstr "Simulate update: ready"
 
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "since {0}"
+
 msgid "Since 2025"
 msgstr "Since 2025"
 
@@ -13629,6 +13675,9 @@ msgstr "Skip for now"
 
 msgid "Skipped"
 msgstr "Skipped"
+
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Skipped worktrees with uncommitted changes."
 
 msgid "Slack Account Linked"
 msgstr "Slack Account Linked"
@@ -14379,6 +14428,9 @@ msgstr "Sync issues bidirectionally with Linear."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 
+msgid "Sync main into all worktrees"
+msgstr "Sync main into all worktrees"
+
 msgid "Sync Repositories"
 msgstr "Sync Repositories"
 
@@ -14390,6 +14442,9 @@ msgstr "Syncing with remote"
 
 msgid "Syncing..."
 msgstr "Syncing..."
+
+msgid "Syncing…"
+msgstr "Syncing…"
 
 msgid "System"
 msgstr "System"

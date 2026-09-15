@@ -322,6 +322,12 @@ msgstr "{0} di belakang Anda"
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} belum bisa masuk dengan cara ini."
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} mengomentari {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} developer diperingkat berdasarkan penggunaan agen. 30 hari terakhir Anda sudah dihitung, hanya disembunyikan. Hanya jumlah token dan nama model, tanpa nama repo, path file, atau prompt."
@@ -768,9 +774,6 @@ msgstr "{months}bln"
 msgid "{months}mo ago"
 msgstr "{months}bln lalu"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "{myFailedCount} otomatisasi Anda gagal pada run terakhirnya"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} bawaan dan tidak dapat dihapus"
@@ -797,6 +800,9 @@ msgstr "{offlineHostCount, plural, one {# perangkat sedang offline dan tetap men
 
 msgid "{openCount} open"
 msgstr "{openCount} terbuka"
+
+msgid "{overflow} more new comment(s)"
+msgstr "{overflow} komentar baru lagi"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} sebagian"
@@ -2136,6 +2142,9 @@ msgstr "Sesuai laporan terakhir. Host harus online untuk memperbarui."
 msgid "ascending"
 msgstr "menaik"
 
+msgid "Ask agent"
+msgstr "Tanya agen"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Minta agen untuk memublikasikan satu dari aplikasi desktop."
 
@@ -2147,6 +2156,9 @@ msgstr "Tanya agennya…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Tanya AI tentang baris-baris ini…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Tanya AI, atau komentari di GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Tanya AI…"
@@ -2337,17 +2349,11 @@ msgstr "Judul otomatisasi"
 msgid "Automations"
 msgstr "Otomatisasi"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Otomatisasi ({myFailedCount} gagal)"
-
 msgid "Automations & event triggers"
 msgstr "Otomatisasi & pemicu event"
 
 msgid "Automations require the Pro plan."
 msgstr "Otomatisasi memerlukan paket Pro."
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Otomatisasi, {myFailedCount} gagal"
 
 msgid "Autonomous"
 msgstr "Otonom"
@@ -3503,6 +3509,9 @@ msgstr "Collapsible"
 msgid "Collapsible thinking block with duration label"
 msgstr "Blok berpikir yang bisa diciutkan dengan label durasi"
 
+msgid "Collecting memory history…"
+msgstr "Mengumpulkan riwayat memori…"
+
 msgid "Collecting…"
 msgstr "Mengumpulkan…"
 
@@ -3572,8 +3581,14 @@ msgstr "Komentar tidak ditemukan"
 msgid "Comment not posted"
 msgstr "Komentar tidak terkirim"
 
+msgid "Comment on GitHub"
+msgstr "Komentari di GitHub"
+
 msgid "Comment on this page"
 msgstr "Komentari halaman ini"
+
+msgid "Comment posted"
+msgstr "Komentar terkirim"
 
 msgid "Commented"
 msgstr "Dikomentari"
@@ -3695,6 +3710,9 @@ msgstr "Atur perintah run workspace"
 
 msgid "Confirm before quitting"
 msgstr "Konfirmasi sebelum keluar"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Penggabungan yang konflik telah dibatalkan — worktree tersebut tidak berubah."
 
 msgid "Connect"
 msgstr "Hubungkan"
@@ -4379,6 +4397,9 @@ msgstr "Tidak bisa merge pull request"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Tidak bisa mengurai diff ini: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Tidak bisa mengirim komentar"
 
 msgid "Couldn't post reply"
 msgstr "Tidak bisa mengirim balasan"
@@ -5796,6 +5817,9 @@ msgstr "Tiap Rabu jam 9 pagi, tinjau PR yang di-merge minggu ini dan perbarui do
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Tiap hari kerja jam 9 pagi, baca issue GitHub baru, terapkan label, dan susun draf balasan pertama untuk saya review."
+
+msgid "Every worktree was already up to date"
+msgstr "Semua worktree sudah mutakhir"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Semua orang berdebat apakah ini bisa digeneralisasi. Perdebatan itu justru tanda bahwa levelnya sudah tercapai."
@@ -8382,6 +8406,9 @@ msgstr "Perangkat Lokal"
 msgid "Local First"
 msgstr "Local First"
 
+msgid "Local host service is not running"
+msgstr "host-service lokal tidak berjalan"
+
 msgid "Local Network"
 msgstr "Local Network"
 
@@ -8642,6 +8669,9 @@ msgstr "Memori"
 msgid "Memory share"
 msgstr "Porsi memori"
 
+msgid "Memory, last hour"
+msgstr "Memori, satu jam terakhir"
+
 msgid "Menu"
 msgstr "Menu"
 
@@ -8683,6 +8713,12 @@ msgstr "Di-merge"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Di-merge oleh {0}"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "Digabungkan ke {merged} worktree"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "Digabungkan ke {merged} worktree. Perlu perhatian: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Sudah di-merge, tapi status PR tidak bisa disegarkan — coba lagi sebentar lagi"
@@ -9715,6 +9751,9 @@ msgstr "Belum ada workspace di host ini"
 msgid "No workspaces yet"
 msgstr "Belum ada workspace"
 
+msgid "No worktrees to sync"
+msgstr "Tidak ada worktree untuk disinkronkan"
+
 msgid "No-Prompt Launch"
 msgstr "Peluncuran Tanpa Prompt"
 
@@ -10364,6 +10403,9 @@ msgstr "Buka opsi pull request"
 
 msgid "Open pull requests"
 msgstr "Pull request terbuka"
+
+msgid "Open Pull requests to read them."
+msgstr "Buka Pull requests untuk membacanya."
 
 msgid "Open recent"
 msgstr "Buka yang terbaru"
@@ -13573,6 +13615,10 @@ msgstr "Simulasikan pembaruan: kesalahan"
 msgid "Simulate update: ready"
 msgstr "Simulasikan pembaruan: siap"
 
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "sejak {0}"
+
 msgid "Since 2025"
 msgstr "Sejak 2025"
 
@@ -13629,6 +13675,9 @@ msgstr "Lewati dulu"
 
 msgid "Skipped"
 msgstr "Dilewati"
+
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Worktree dengan perubahan yang belum di-commit dilewati."
 
 msgid "Slack Account Linked"
 msgstr "Akun Slack Tertaut"
@@ -14379,6 +14428,9 @@ msgstr "Sinkronkan issue dua arah dengan Linear."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Sinkronkan issue dua arah dengan Linear. Buat tugas di Superset dan tugas itu muncul di Linear, atau impor issue Linear yang sudah ada."
 
+msgid "Sync main into all worktrees"
+msgstr "Gabungkan main ke semua worktree"
+
 msgid "Sync Repositories"
 msgstr "Sinkronkan Repositori"
 
@@ -14390,6 +14442,9 @@ msgstr "Menyinkronkan dengan remote"
 
 msgid "Syncing..."
 msgstr "Menyinkronkan..."
+
+msgid "Syncing…"
+msgstr "Menyinkronkan…"
 
 msgid "System"
 msgstr "Sistem"

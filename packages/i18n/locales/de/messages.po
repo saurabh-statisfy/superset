@@ -322,6 +322,12 @@ msgstr "{0} hinter dir"
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} kann so noch nicht angemeldet werden."
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} hat {1}#{2} kommentiert"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} Entwickler sind nach Agent-Nutzung platziert. Deine letzten 30 Tage werden bereits gezählt, nur verborgen. Nur Token-Zahlen und Modellnamen, keine Repo-Namen, Dateipfade oder Prompts."
@@ -768,9 +774,6 @@ msgstr "{months} Mon."
 msgid "{months}mo ago"
 msgstr "vor {months} Mon."
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "Bei {myFailedCount} deiner Automatisierungen ist der letzte Lauf fehlgeschlagen"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} ist integriert und kann nicht entfernt werden"
@@ -797,6 +800,9 @@ msgstr "{offlineHostCount, plural, one {# Gerät ist offline und behält seine K
 
 msgid "{openCount} open"
 msgstr "{openCount} offen"
+
+msgid "{overflow} more new comment(s)"
+msgstr "{overflow} weitere neue Kommentare"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} teilweise"
@@ -2136,6 +2142,9 @@ msgstr "Zuletzt gemeldet. Der Host muss online sein, um aktualisiert zu werden."
 msgid "ascending"
 msgstr "aufsteigend"
 
+msgid "Ask agent"
+msgstr "Agenten fragen"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Bitte einen Agenten, eine aus der Desktop-App zu veröffentlichen."
 
@@ -2147,6 +2156,9 @@ msgstr "Frag den Agenten…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Frag die KI zu diesen Zeilen…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Die KI fragen oder auf GitHub kommentieren …"
 
 msgid "Ask the AI…"
 msgstr "Frag die KI…"
@@ -2337,17 +2349,11 @@ msgstr "Titel der Automatisierung"
 msgid "Automations"
 msgstr "Automatisierungen"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Automatisierungen ({myFailedCount} fehlgeschlagen)"
-
 msgid "Automations & event triggers"
 msgstr "Automatisierungen & Ereignis-Trigger"
 
 msgid "Automations require the Pro plan."
 msgstr "Automatisierungen erfordern den Pro-Plan."
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Automatisierungen, {myFailedCount} fehlgeschlagen"
 
 msgid "Autonomous"
 msgstr "Autonom"
@@ -3503,6 +3509,9 @@ msgstr "Collapsible"
 msgid "Collapsible thinking block with duration label"
 msgstr "Einklappbarer Denkblock mit Dauerangabe"
 
+msgid "Collecting memory history…"
+msgstr "Speicherverlauf wird erfasst…"
+
 msgid "Collecting…"
 msgstr "Wird erfasst…"
 
@@ -3572,8 +3581,14 @@ msgstr "Kommentar nicht gefunden"
 msgid "Comment not posted"
 msgstr "Kommentar nicht veröffentlicht"
 
+msgid "Comment on GitHub"
+msgstr "Auf GitHub kommentieren"
+
 msgid "Comment on this page"
 msgstr "Diese Seite kommentieren"
+
+msgid "Comment posted"
+msgstr "Kommentar veröffentlicht"
 
 msgid "Commented"
 msgstr "Kommentiert"
@@ -3695,6 +3710,9 @@ msgstr "Run-Befehl des Arbeitsbereichs konfigurieren"
 
 msgid "Confirm before quitting"
 msgstr "Vor dem Beenden bestätigen"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Konfliktbehaftete Merges wurden zurückgenommen — diese Worktrees sind unverändert."
 
 msgid "Connect"
 msgstr "Verbinden"
@@ -4379,6 +4397,9 @@ msgstr "Pull Request konnte nicht zusammengeführt werden"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Dieser Diff konnte nicht geparst werden: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Kommentar konnte nicht veröffentlicht werden"
 
 msgid "Couldn't post reply"
 msgstr "Antwort konnte nicht gesendet werden"
@@ -5796,6 +5817,9 @@ msgstr "Jeden Mittwoch um 9 Uhr die diese Woche gemergten PRs durchsehen und die
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Jeden Werktag um 9 Uhr neue GitHub-Issues lesen, Labels vergeben und eine erste Antwort für mein Review entwerfen."
+
+msgid "Every worktree was already up to date"
+msgstr "Alle Worktrees waren bereits aktuell"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Alle streiten darüber, ob sich das verallgemeinern lässt. Genau dieser Streit ist das Zeichen, dass die Stufe erreicht wurde."
@@ -8382,6 +8406,9 @@ msgstr "Lokales Gerät"
 msgid "Local First"
 msgstr "Local First"
 
+msgid "Local host service is not running"
+msgstr "Der lokale host-service läuft nicht"
+
 msgid "Local Network"
 msgstr "Lokales Netzwerk"
 
@@ -8642,6 +8669,9 @@ msgstr "Speicher"
 msgid "Memory share"
 msgstr "Speicheranteil"
 
+msgid "Memory, last hour"
+msgstr "Speicher, letzte Stunde"
+
 msgid "Menu"
 msgstr "Menü"
 
@@ -8683,6 +8713,12 @@ msgstr "Zusammengeführt"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Zusammengeführt von {0}"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "In {merged} Worktree(s) gemerged"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "In {merged} Worktree(s) gemerged. Benötigt Aufmerksamkeit: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Zusammengeführt, aber der PR-Status konnte nicht aktualisiert werden — versuch es gleich noch einmal"
@@ -9715,6 +9751,9 @@ msgstr "Noch keine Arbeitsbereiche auf diesem Host"
 msgid "No workspaces yet"
 msgstr "Noch keine Arbeitsbereiche"
 
+msgid "No worktrees to sync"
+msgstr "Keine Worktrees zum Synchronisieren"
+
 msgid "No-Prompt Launch"
 msgstr "Start ohne Prompt"
 
@@ -10364,6 +10403,9 @@ msgstr "Pull-Request-Optionen öffnen"
 
 msgid "Open pull requests"
 msgstr "Offene Pull Requests"
+
+msgid "Open Pull requests to read them."
+msgstr "Öffne Pull Requests, um sie zu lesen."
 
 msgid "Open recent"
 msgstr "Zuletzt geöffnet"
@@ -13573,6 +13615,10 @@ msgstr "Update simulieren: Fehler"
 msgid "Simulate update: ready"
 msgstr "Update simulieren: bereit"
 
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "seit {0}"
+
 msgid "Since 2025"
 msgstr "Seit 2025"
 
@@ -13629,6 +13675,9 @@ msgstr "Vorerst überspringen"
 
 msgid "Skipped"
 msgstr "Übersprungen"
+
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Worktrees mit nicht committeten Änderungen übersprungen."
 
 msgid "Slack Account Linked"
 msgstr "Slack-Konto verknüpft"
@@ -14379,6 +14428,9 @@ msgstr "Issues bidirektional mit Linear synchronisieren."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Synchronisiere Issues bidirektional mit Linear. Erstelle Aufgaben in Superset, die in Linear erscheinen, oder importiere vorhandene Linear-Issues."
 
+msgid "Sync main into all worktrees"
+msgstr "main in alle Worktrees mergen"
+
 msgid "Sync Repositories"
 msgstr "Repositories synchronisieren"
 
@@ -14390,6 +14442,9 @@ msgstr "Wird mit Remote synchronisiert"
 
 msgid "Syncing..."
 msgstr "Wird synchronisiert..."
+
+msgid "Syncing…"
+msgstr "Wird synchronisiert…"
 
 msgid "System"
 msgstr "System"

@@ -543,7 +543,8 @@ export const gitRouter = router({
 							mergeError instanceof Error ? mergeError.message : null;
 					}
 				} catch (error) {
-					record.detail = error instanceof Error ? error.message : String(error);
+					record.detail =
+						error instanceof Error ? error.message : String(error);
 				}
 				results.push(record);
 			}

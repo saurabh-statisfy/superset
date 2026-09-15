@@ -322,6 +322,12 @@ msgstr "{0} za vámi"
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} se zatím nedá přihlásit tímto způsobem."
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} okomentoval(a) {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "Počet vývojářů v žebříčku podle využití agentů: {0}. Vašich posledních 30 dní se už počítá, jen je skryto. Pouze počty tokenů a názvy modelů, žádné názvy repozitářů, cesty k souborům ani prompty."
@@ -768,9 +774,6 @@ msgstr "{months} měs."
 msgid "{months}mo ago"
 msgstr "před {months} měs."
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "U {myFailedCount} vašich automatizací selhal poslední běh"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} je vestavěný a nelze jej odebrat"
@@ -797,6 +800,9 @@ msgstr "{offlineHostCount, plural, one {# zařízení je offline a ponechá si s
 
 msgid "{openCount} open"
 msgstr "{openCount} otevřených"
+
+msgid "{overflow} more new comment(s)"
+msgstr "Dalších {overflow} nových komentářů"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} částečně"
@@ -2136,6 +2142,9 @@ msgstr "Podle posledního hlášení. Hostitel musí být online, aby se mohl ak
 msgid "ascending"
 msgstr "vzestupně"
 
+msgid "Ask agent"
+msgstr "Zeptat se agenta"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Požádejte agenta, aby nějakou publikoval z desktopové aplikace."
 
@@ -2147,6 +2156,9 @@ msgstr "Zeptejte se agenta…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Zeptejte se AI na tyto řádky…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Zeptejte se AI nebo okomentujte na GitHubu…"
 
 msgid "Ask the AI…"
 msgstr "Zeptejte se AI…"
@@ -2337,17 +2349,11 @@ msgstr "Název automatizace"
 msgid "Automations"
 msgstr "Automatizace"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Automatizace (selhává: {myFailedCount})"
-
 msgid "Automations & event triggers"
 msgstr "Automatizace a spouštěče událostí"
 
 msgid "Automations require the Pro plan."
 msgstr "Automatizace vyžadují tarif Pro."
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Automatizace, selhává: {myFailedCount}"
 
 msgid "Autonomous"
 msgstr "Autonomní"
@@ -3503,6 +3509,9 @@ msgstr "Sbalitelný panel"
 msgid "Collapsible thinking block with duration label"
 msgstr "Sbalitelný blok přemýšlení s údajem o trvání"
 
+msgid "Collecting memory history…"
+msgstr "Sbírání historie paměti…"
+
 msgid "Collecting…"
 msgstr "Sbírám data…"
 
@@ -3572,8 +3581,14 @@ msgstr "Komentář nenalezen"
 msgid "Comment not posted"
 msgstr "Komentář se nepodařilo odeslat"
 
+msgid "Comment on GitHub"
+msgstr "Okomentovat na GitHubu"
+
 msgid "Comment on this page"
 msgstr "Okomentovat tuto stránku"
+
+msgid "Comment posted"
+msgstr "Komentář byl zveřejněn"
 
 msgid "Commented"
 msgstr "Okomentováno"
@@ -3695,6 +3710,9 @@ msgstr "Nastavit spouštěcí příkaz pracovního prostoru"
 
 msgid "Confirm before quitting"
 msgstr "Potvrdit před ukončením"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Konfliktní sloučení byla vrácena zpět — tyto worktree jsou beze změny."
 
 msgid "Connect"
 msgstr "Připojit"
@@ -4379,6 +4397,9 @@ msgstr "Pull request se nepodařilo sloučit"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Tento diff se nepodařilo zpracovat: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Komentář se nepodařilo zveřejnit"
 
 msgid "Couldn't post reply"
 msgstr "Nepodařilo se odeslat odpověď"
@@ -5796,6 +5817,9 @@ msgstr "Každou středu v 9:00 projdi sloučené PR za tento týden a aktualizuj
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Každý všední den v 9:00 přečti nové GitHub issues, přiřaď štítky a připrav první odpověď ke kontrole."
+
+msgid "Every worktree was already up to date"
+msgstr "Všechny worktree už byly aktuální"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Všichni se dohadují, jestli se to dá zobecnit. Právě ten spor je známkou toho, že úroveň byla dosažena."
@@ -8382,6 +8406,9 @@ msgstr "Lokální zařízení"
 msgid "Local First"
 msgstr "Lokálně na prvním místě"
 
+msgid "Local host service is not running"
+msgstr "Místní host-service neběží"
+
 msgid "Local Network"
 msgstr "Místní síť"
 
@@ -8642,6 +8669,9 @@ msgstr "Paměť"
 msgid "Memory share"
 msgstr "Podíl paměti"
 
+msgid "Memory, last hour"
+msgstr "Paměť, poslední hodina"
+
 msgid "Menu"
 msgstr "Nabídka"
 
@@ -8683,6 +8713,12 @@ msgstr "Sloučený"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Sloučil {0}"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "Sloučeno do {merged} worktree"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "Sloučeno do {merged} worktree. Vyžaduje pozornost: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Sloučeno, ale nepodařilo se obnovit stav PR — zkuste to za chvíli znovu"
@@ -9715,6 +9751,9 @@ msgstr "Na tomto hostu zatím nejsou žádné pracovní prostory"
 msgid "No workspaces yet"
 msgstr "Zatím žádné pracovní prostory"
 
+msgid "No worktrees to sync"
+msgstr "Žádné worktree k synchronizaci"
+
 msgid "No-Prompt Launch"
 msgstr "Spuštění bez promptu"
 
@@ -10364,6 +10403,9 @@ msgstr "Otevřít možnosti pull requestu"
 
 msgid "Open pull requests"
 msgstr "Otevřené pull requesty"
+
+msgid "Open Pull requests to read them."
+msgstr "Otevři Pull requests a přečti si je."
 
 msgid "Open recent"
 msgstr "Otevřít nedávné"
@@ -13573,6 +13615,10 @@ msgstr "Simulovat aktualizaci: chyba"
 msgid "Simulate update: ready"
 msgstr "Simulovat aktualizaci: připraveno"
 
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "od {0}"
+
 msgid "Since 2025"
 msgstr "Od roku 2025"
 
@@ -13629,6 +13675,9 @@ msgstr "Zatím přeskočit"
 
 msgid "Skipped"
 msgstr "Přeskočeno"
+
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Worktree s nezapsanými změnami byly přeskočeny."
 
 msgid "Slack Account Linked"
 msgstr "Účet Slack propojen"
@@ -14379,6 +14428,9 @@ msgstr "Synchronizujte issues s Linearem oběma směry."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Synchronizujte issues obousměrně s Linearem. Vytvářejte úkoly v Superset a nechte je objevit se v Linearu, nebo importujte stávající issues z Linearu."
 
+msgid "Sync main into all worktrees"
+msgstr "Sloučit main do všech worktree"
+
 msgid "Sync Repositories"
 msgstr "Synchronizovat repozitáře"
 
@@ -14390,6 +14442,9 @@ msgstr "Synchronizuji se vzdáleným repozitářem"
 
 msgid "Syncing..."
 msgstr "Synchronizuji..."
+
+msgid "Syncing…"
+msgstr "Synchronizace…"
 
 msgid "System"
 msgstr "Systémový"

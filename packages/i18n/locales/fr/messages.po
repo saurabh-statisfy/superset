@@ -322,6 +322,12 @@ msgstr "{0} derrière vous"
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} ne peut pas encore se connecter de cette façon."
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} a commenté {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} développeurs sont classés selon leur usage des agents. Vos 30 derniers jours sont déjà comptabilisés, simplement masqués. Uniquement le nombre de tokens et les noms de modèles, aucun nom de dépôt, chemin de fichier ni prompt."
@@ -768,9 +774,6 @@ msgstr "{months} mois"
 msgid "{months}mo ago"
 msgstr "il y a {months} mois"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "{myFailedCount} de vos automatisations ont échoué lors de leur dernière exécution"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} est intégré et ne peut pas être supprimé"
@@ -797,6 +800,9 @@ msgstr "{offlineHostCount, plural, one {# appareil est hors ligne et conserve sa
 
 msgid "{openCount} open"
 msgstr "{openCount} ouvertes"
+
+msgid "{overflow} more new comment(s)"
+msgstr "{overflow} nouveau(x) commentaire(s) de plus"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} partielles"
@@ -2136,6 +2142,9 @@ msgstr "Dernière valeur signalée. L'hôte doit être en ligne pour être mis �
 msgid "ascending"
 msgstr "croissant"
 
+msgid "Ask agent"
+msgstr "Demander à l'agent"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Demandez à un agent d'en publier une depuis l'application de bureau."
 
@@ -2147,6 +2156,9 @@ msgstr "Demandez à l'agent…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Interroger l'IA sur ces lignes…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Demandez à l'IA ou commentez sur GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Demandez à l'IA…"
@@ -2337,17 +2349,11 @@ msgstr "Titre de l'automatisation"
 msgid "Automations"
 msgstr "Automatisations"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Automatisations ({myFailedCount} en échec)"
-
 msgid "Automations & event triggers"
 msgstr "Automatisations et déclencheurs d'événements"
 
 msgid "Automations require the Pro plan."
 msgstr "Les automatisations nécessitent le forfait Pro."
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Automatisations, {myFailedCount} en échec"
 
 msgid "Autonomous"
 msgstr "Autonome"
@@ -3503,6 +3509,9 @@ msgstr "Collapsible"
 msgid "Collapsible thinking block with duration label"
 msgstr "Bloc de réflexion repliable avec libellé de durée"
 
+msgid "Collecting memory history…"
+msgstr "Collecte de l'historique mémoire…"
+
 msgid "Collecting…"
 msgstr "Collecte…"
 
@@ -3572,8 +3581,14 @@ msgstr "Commentaire introuvable"
 msgid "Comment not posted"
 msgstr "Commentaire non publié"
 
+msgid "Comment on GitHub"
+msgstr "Commenter sur GitHub"
+
 msgid "Comment on this page"
 msgstr "Commenter cette page"
+
+msgid "Comment posted"
+msgstr "Commentaire publié"
 
 msgid "Commented"
 msgstr "Commentée"
@@ -3695,6 +3710,9 @@ msgstr "Configurer la commande d'exécution de l'espace de travail"
 
 msgid "Confirm before quitting"
 msgstr "Confirmer avant de quitter"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Les fusions en conflit ont été annulées — ces arbres de travail sont inchangés."
 
 msgid "Connect"
 msgstr "Connecter"
@@ -4379,6 +4397,9 @@ msgstr "Impossible de fusionner la pull request"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Impossible d'analyser ce diff : {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Impossible de publier le commentaire"
 
 msgid "Couldn't post reply"
 msgstr "Impossible de publier la réponse"
@@ -5796,6 +5817,9 @@ msgstr "Chaque mercredi à 9 h, passe en revue les pull requests fusionnées cet
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Chaque jour ouvré à 9 h, lis les nouvelles issues GitHub, applique des labels et rédige une première réponse pour ma revue."
+
+msgid "Every worktree was already up to date"
+msgstr "Tous les arbres de travail étaient déjà à jour"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Tout le monde débat de savoir si cela se généralise. Ce débat est le signe que le niveau est atteint."
@@ -8382,6 +8406,9 @@ msgstr "Appareil local"
 msgid "Local First"
 msgstr "Le local d'abord"
 
+msgid "Local host service is not running"
+msgstr "Le host-service local n'est pas démarré"
+
 msgid "Local Network"
 msgstr "Réseau local"
 
@@ -8642,6 +8669,9 @@ msgstr "Mémoire"
 msgid "Memory share"
 msgstr "Part de mémoire"
 
+msgid "Memory, last hour"
+msgstr "Mémoire, dernière heure"
+
 msgid "Menu"
 msgstr "Menu"
 
@@ -8683,6 +8713,12 @@ msgstr "Fusionnée"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Fusionnée par {0}"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "Fusionné dans {merged} arbre(s) de travail"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "Fusionné dans {merged} arbre(s) de travail. À vérifier : {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Fusionnée, mais impossible d'actualiser l'état de la pull request — réessayez dans un instant"
@@ -9715,6 +9751,9 @@ msgstr "Aucun espace de travail sur cet hôte pour l'instant"
 msgid "No workspaces yet"
 msgstr "Aucun espace de travail pour le moment"
 
+msgid "No worktrees to sync"
+msgstr "Aucun arbre de travail à synchroniser"
+
 msgid "No-Prompt Launch"
 msgstr "Lancement sans prompt"
 
@@ -10364,6 +10403,9 @@ msgstr "Ouvrir les options de la pull request"
 
 msgid "Open pull requests"
 msgstr "Pull requests ouvertes"
+
+msgid "Open Pull requests to read them."
+msgstr "Ouvrez Pull requests pour les lire."
 
 msgid "Open recent"
 msgstr "Ouvrir récent"
@@ -13573,6 +13615,10 @@ msgstr "Simuler une mise à jour : erreur"
 msgid "Simulate update: ready"
 msgstr "Simuler une mise à jour : prête"
 
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "depuis {0}"
+
 msgid "Since 2025"
 msgstr "Depuis 2025"
 
@@ -13629,6 +13675,9 @@ msgstr "Passer pour l'instant"
 
 msgid "Skipped"
 msgstr "Ignorée"
+
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Arbres de travail avec des modifications non validées ignorés."
 
 msgid "Slack Account Linked"
 msgstr "Compte Slack associé"
@@ -14379,6 +14428,9 @@ msgstr "Synchronisez les issues dans les deux sens avec Linear."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Synchronisez les issues dans les deux sens avec Linear. Créez des tâches dans Superset et retrouvez-les dans Linear, ou importez des issues Linear existantes."
 
+msgid "Sync main into all worktrees"
+msgstr "Fusionner main dans tous les arbres de travail"
+
 msgid "Sync Repositories"
 msgstr "Synchroniser les dépôts"
 
@@ -14390,6 +14442,9 @@ msgstr "Synchronisation avec le dépôt distant"
 
 msgid "Syncing..."
 msgstr "Synchronisation..."
+
+msgid "Syncing…"
+msgstr "Synchronisation…"
 
 msgid "System"
 msgstr "Système"

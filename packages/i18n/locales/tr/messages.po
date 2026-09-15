@@ -322,6 +322,12 @@ msgstr "{0} arkanızda"
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} henüz bu şekilde oturum açamıyor."
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0}, {1}#{2} üzerine yorum yaptı"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0} geliştirici ajan kullanımına göre sıralanıyor. Son 30 gününüz zaten sayılıyor, yalnızca gizli. Yalnızca token sayıları ve model adları; repo adları, dosya yolları veya prompt'lar yok."
@@ -768,9 +774,6 @@ msgstr "{months}ay"
 msgid "{months}mo ago"
 msgstr "{months}ay önce"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "Otomasyonlarınızdan {myFailedCount} tanesi son çalıştırmasında başarısız oldu"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} yerleşiktir ve kaldırılamaz"
@@ -797,6 +800,9 @@ msgstr "{offlineHostCount, plural, one {# cihaz çevrimdışı ve kopyasını ko
 
 msgid "{openCount} open"
 msgstr "{openCount} açık"
+
+msgid "{overflow} more new comment(s)"
+msgstr "{overflow} yeni yorum daha"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} kısmi"
@@ -2136,6 +2142,9 @@ msgstr "Son bildirildiği gibi. Güncellemek için ana makine çevrimiçi olmal�
 msgid "ascending"
 msgstr "artan"
 
+msgid "Ask agent"
+msgstr "Ajana sor"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Bir ajandan masaüstü uygulamasından bir tane yayımlamasını isteyin."
 
@@ -2147,6 +2156,9 @@ msgstr "Ajana sorun…"
 
 msgid "Ask the AI about these lines…"
 msgstr "AI'a bu satırlar hakkında sorun…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Yapay zekâya sorun veya GitHub'da yorum yapın…"
 
 msgid "Ask the AI…"
 msgstr "AI'a sorun…"
@@ -2337,17 +2349,11 @@ msgstr "Otomasyon başlığı"
 msgid "Automations"
 msgstr "Otomasyonlar"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Otomasyonlar ({myFailedCount} başarısız)"
-
 msgid "Automations & event triggers"
 msgstr "Otomasyonlar ve olay tetikleyicileri"
 
 msgid "Automations require the Pro plan."
 msgstr "Otomasyonlar Pro planı gerektirir."
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Otomasyonlar, {myFailedCount} başarısız"
 
 msgid "Autonomous"
 msgstr "Otonom"
@@ -3503,6 +3509,9 @@ msgstr "Daraltılabilir"
 msgid "Collapsible thinking block with duration label"
 msgstr "Süre etiketli, daraltılabilir düşünme bloğu"
 
+msgid "Collecting memory history…"
+msgstr "Bellek geçmişi toplanıyor…"
+
 msgid "Collecting…"
 msgstr "Toplanıyor…"
 
@@ -3572,8 +3581,14 @@ msgstr "Yorum bulunamadı"
 msgid "Comment not posted"
 msgstr "Yorum gönderilmedi"
 
+msgid "Comment on GitHub"
+msgstr "GitHub'da yorum yap"
+
 msgid "Comment on this page"
 msgstr "Bu sayfaya yorum yap"
+
+msgid "Comment posted"
+msgstr "Yorum gönderildi"
 
 msgid "Commented"
 msgstr "Yorum yapıldı"
@@ -3695,6 +3710,9 @@ msgstr "Çalışma alanı çalıştırma komutunu yapılandır"
 
 msgid "Confirm before quitting"
 msgstr "Çıkmadan önce onay iste"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Çakışan birleştirmeler geri alındı — bu worktree'ler değişmedi."
 
 msgid "Connect"
 msgstr "Bağla"
@@ -4379,6 +4397,9 @@ msgstr "Pull request birleştirilemedi"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Bu fark ayrıştırılamadı: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Yorum gönderilemedi"
 
 msgid "Couldn't post reply"
 msgstr "Yanıt gönderilemedi"
@@ -5796,6 +5817,9 @@ msgstr "Her çarşamba 09.00'da bu haftanın birleştirilen PR'larını incele v
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Her hafta içi 09.00'da yeni GitHub issue'larını oku, etiket uygula ve incelemem için ilk yanıt taslağını hazırla."
+
+msgid "Every worktree was already up to date"
+msgstr "Tüm worktree'ler zaten günceldi"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Herkes bunun genellenebilir olup olmadığını tartışır. Bu tartışma, düzeye ulaşıldığının işaretidir."
@@ -8382,6 +8406,9 @@ msgstr "Yerel cihaz"
 msgid "Local First"
 msgstr "Yerel öncelikli"
 
+msgid "Local host service is not running"
+msgstr "Yerel host-service çalışmıyor"
+
 msgid "Local Network"
 msgstr "Yerel ağ"
 
@@ -8642,6 +8669,9 @@ msgstr "Bellek"
 msgid "Memory share"
 msgstr "Bellek payı"
 
+msgid "Memory, last hour"
+msgstr "Bellek, son bir saat"
+
 msgid "Menu"
 msgstr "Menü"
 
@@ -8683,6 +8713,12 @@ msgstr "Birleştirildi"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "{0} birleştirdi"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "{merged} worktree'ye birleştirildi"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "{merged} worktree'ye birleştirildi. İlgilenilmesi gerekenler: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Birleştirildi, ancak PR durumu yenilenemedi — birazdan yeniden deneyin"
@@ -9715,6 +9751,9 @@ msgstr "Bu host'ta henüz çalışma alanı yok"
 msgid "No workspaces yet"
 msgstr "Henüz çalışma alanı yok"
 
+msgid "No worktrees to sync"
+msgstr "Senkronize edilecek worktree yok"
+
 msgid "No-Prompt Launch"
 msgstr "İstemsiz başlatma"
 
@@ -10364,6 +10403,9 @@ msgstr "Pull request seçeneklerini aç"
 
 msgid "Open pull requests"
 msgstr "Açık pull request'ler"
+
+msgid "Open Pull requests to read them."
+msgstr "Okumak için Pull requests'i aç."
 
 msgid "Open recent"
 msgstr "Son kullanılanı aç"
@@ -13573,6 +13615,10 @@ msgstr "Güncellemeyi simüle et: hata"
 msgid "Simulate update: ready"
 msgstr "Güncellemeyi simüle et: hazır"
 
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "{0}'dan beri"
+
 msgid "Since 2025"
 msgstr "2025'ten beri"
 
@@ -13629,6 +13675,9 @@ msgstr "Şimdilik atla"
 
 msgid "Skipped"
 msgstr "Atlandı"
+
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Kaydedilmemiş değişiklikleri olan worktree'ler atlandı."
 
 msgid "Slack Account Linked"
 msgstr "Slack hesabı bağlandı"
@@ -14379,6 +14428,9 @@ msgstr "Issue'ları Linear ile çift yönlü eşitleyin."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Issue'ları Linear ile çift yönlü eşitleyin. Superset'te görev oluşturup Linear'da görünmesini sağlayın veya mevcut Linear issue'larını içe aktarın."
 
+msgid "Sync main into all worktrees"
+msgstr "main'i tüm worktree'lere birleştir"
+
 msgid "Sync Repositories"
 msgstr "Depoları eşitle"
 
@@ -14390,6 +14442,9 @@ msgstr "Uzak depo ile eşitleniyor"
 
 msgid "Syncing..."
 msgstr "Eşitleniyor..."
+
+msgid "Syncing…"
+msgstr "Senkronize ediliyor…"
 
 msgid "System"
 msgstr "Sistem"

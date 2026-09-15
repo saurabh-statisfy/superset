@@ -322,6 +322,12 @@ msgstr "{0} 차이로 뒤"
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0}은(는) 아직 이 방식으로 로그인할 수 없습니다."
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0}님이 {1}#{2}에 댓글을 남겼습니다"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "{0}명의 개발자가 에이전트 사용량으로 순위에 올라 있습니다. 최근 30일 사용량은 이미 집계되어 있고 숨겨져 있을 뿐입니다. 토큰 수와 모델 이름만 공개되며 저장소 이름, 파일 경로, 프롬프트는 포함되지 않습니다."
@@ -768,9 +774,6 @@ msgstr "{months}개월"
 msgid "{months}mo ago"
 msgstr "{months}개월 전"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "내 자동화 {myFailedCount}개가 마지막 실행에 실패했습니다"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name}은(는) 기본 제공이라 제거할 수 없습니다"
@@ -797,6 +800,9 @@ msgstr "{offlineHostCount, plural, one {기기 #대가 오프라인 상태이며
 
 msgid "{openCount} open"
 msgstr "{openCount}개 열림"
+
+msgid "{overflow} more new comment(s)"
+msgstr "새 댓글 {overflow}개 더"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount}개 부분 달성"
@@ -2136,6 +2142,9 @@ msgstr "마지막으로 보고된 값입니다. 업데이트하려면 호스트�
 msgid "ascending"
 msgstr "오름차순"
 
+msgid "Ask agent"
+msgstr "에이전트에 질문"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "데스크톱 앱에서 에이전트에게 게시를 요청하세요."
 
@@ -2147,6 +2156,9 @@ msgstr "에이전트에게 물어보세요…"
 
 msgid "Ask the AI about these lines…"
 msgstr "이 줄에 대해 AI에게 질문…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "AI에 질문하거나 GitHub에 댓글 달기…"
 
 msgid "Ask the AI…"
 msgstr "AI에게 질문…"
@@ -2337,17 +2349,11 @@ msgstr "자동화 제목"
 msgid "Automations"
 msgstr "자동화"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "자동화 ({myFailedCount}개 실패)"
-
 msgid "Automations & event triggers"
 msgstr "자동화 및 이벤트 트리거"
 
 msgid "Automations require the Pro plan."
 msgstr "자동화에는 Pro 플랜이 필요합니다."
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "자동화, {myFailedCount}개 실패"
 
 msgid "Autonomous"
 msgstr "자율"
@@ -3503,6 +3509,9 @@ msgstr "접이식 영역"
 msgid "Collapsible thinking block with duration label"
 msgstr "소요 시간 레이블이 있는 접을 수 있는 사고 블록"
 
+msgid "Collecting memory history…"
+msgstr "메모리 기록 수집 중…"
+
 msgid "Collecting…"
 msgstr "수집하는 중…"
 
@@ -3572,8 +3581,14 @@ msgstr "코멘트를 찾을 수 없습니다"
 msgid "Comment not posted"
 msgstr "코멘트를 게시하지 못했습니다"
 
+msgid "Comment on GitHub"
+msgstr "GitHub에 댓글 달기"
+
 msgid "Comment on this page"
 msgstr "이 페이지에 댓글 달기"
+
+msgid "Comment posted"
+msgstr "댓글을 게시했습니다"
 
 msgid "Commented"
 msgstr "댓글 남김"
@@ -3695,6 +3710,9 @@ msgstr "워크스페이스 실행 명령 구성"
 
 msgid "Confirm before quitting"
 msgstr "종료 전 확인"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "충돌한 병합은 되돌렸습니다 — 해당 워크트리는 변경되지 않았습니다."
 
 msgid "Connect"
 msgstr "연결"
@@ -4379,6 +4397,9 @@ msgstr "풀 리퀘스트를 머지하지 못했습니다"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "이 차이를 해석하지 못했습니다: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "댓글을 게시하지 못했습니다"
 
 msgid "Couldn't post reply"
 msgstr "답글을 게시하지 못했습니다"
@@ -5796,6 +5817,9 @@ msgstr "매주 수요일 오전 9시에 이번 주 머지된 PR을 검토하고,
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "평일 오전 9시마다 새 GitHub 이슈를 읽고, 라벨을 적용하고, 검토용 첫 답변 초안을 작성합니다."
+
+msgid "Every worktree was already up to date"
+msgstr "모든 워크트리가 이미 최신 상태입니다"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "이것이 일반화될 수 있는지를 두고 모두가 논쟁합니다. 그 논쟁 자체가 해당 단계에 도달했다는 신호입니다."
@@ -8382,6 +8406,9 @@ msgstr "로컬 기기"
 msgid "Local First"
 msgstr "로컬 우선"
 
+msgid "Local host service is not running"
+msgstr "로컬 host-service가 실행 중이 아닙니다"
+
 msgid "Local Network"
 msgstr "로컬 네트워크"
 
@@ -8642,6 +8669,9 @@ msgstr "메모리"
 msgid "Memory share"
 msgstr "메모리 점유율"
 
+msgid "Memory, last hour"
+msgstr "메모리, 지난 1시간"
+
 msgid "Menu"
 msgstr "메뉴"
 
@@ -8683,6 +8713,12 @@ msgstr "머지됨"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "{0}이(가) 머지함"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "{merged}개 워크트리에 병합했습니다"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "{merged}개 워크트리에 병합했습니다. 확인 필요: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "머지했지만 PR 상태를 새로 고치지 못했습니다 — 잠시 후 다시 시도하세요"
@@ -9715,6 +9751,9 @@ msgstr "아직 이 호스트에 워크스페이스가 없습니다"
 msgid "No workspaces yet"
 msgstr "아직 워크스페이스가 없습니다"
 
+msgid "No worktrees to sync"
+msgstr "동기화할 워크트리가 없습니다"
+
 msgid "No-Prompt Launch"
 msgstr "프롬프트 없는 실행"
 
@@ -10364,6 +10403,9 @@ msgstr "풀 리퀘스트 옵션 열기"
 
 msgid "Open pull requests"
 msgstr "열린 풀 리퀘스트"
+
+msgid "Open Pull requests to read them."
+msgstr "Pull requests에서 확인하세요."
 
 msgid "Open recent"
 msgstr "최근 항목 열기"
@@ -13573,6 +13615,10 @@ msgstr "업데이트 시뮬레이션: 오류"
 msgid "Simulate update: ready"
 msgstr "업데이트 시뮬레이션: 준비 완료"
 
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "{0}부터"
+
 msgid "Since 2025"
 msgstr "2025년부터"
 
@@ -13629,6 +13675,9 @@ msgstr "지금은 건너뛰기"
 
 msgid "Skipped"
 msgstr "건너뜀"
+
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "커밋되지 않은 변경 사항이 있는 워크트리를 건너뛰었습니다."
 
 msgid "Slack Account Linked"
 msgstr "Slack 계정 연결됨"
@@ -14379,6 +14428,9 @@ msgstr "Linear와 이슈를 양방향으로 동기화합니다."
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Linear와 이슈를 양방향으로 동기화하세요. Superset에서 만든 작업을 Linear에 나타나게 하거나 기존 Linear 이슈를 가져올 수 있습니다."
 
+msgid "Sync main into all worktrees"
+msgstr "main을 모든 워크트리에 병합"
+
 msgid "Sync Repositories"
 msgstr "리포지토리 동기화"
 
@@ -14390,6 +14442,9 @@ msgstr "원격과 동기화하는 중"
 
 msgid "Syncing..."
 msgstr "동기화하는 중..."
+
+msgid "Syncing…"
+msgstr "동기화 중…"
 
 msgid "System"
 msgstr "시스템"

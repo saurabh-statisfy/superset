@@ -322,6 +322,12 @@ msgstr "{0} позади вас"
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0} пока нельзя подключить таким способом."
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} прокомментировал(а) {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "Разработчиков в рейтинге по использованию агентов: {0}. Ваши последние 30 дней уже учтены — просто скрыты. Только количество токенов и названия моделей, без имён репозиториев, путей к файлам и промптов."
@@ -768,9 +774,6 @@ msgstr "{months} мес."
 msgid "{months}mo ago"
 msgstr "{months} мес. назад"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "Последний запуск завершился ошибкой у {myFailedCount} ваших автоматизаций"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} встроен и не может быть удалён"
@@ -797,6 +800,9 @@ msgstr "{offlineHostCount, plural, one {# устройство офлайн и �
 
 msgid "{openCount} open"
 msgstr "{openCount} открыто"
+
+msgid "{overflow} more new comment(s)"
+msgstr "Ещё {overflow} новых комментариев"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount} частично"
@@ -2136,6 +2142,9 @@ msgstr "По последним данным. Для обновления хос
 msgid "ascending"
 msgstr "по возрастанию"
 
+msgid "Ask agent"
+msgstr "Спросить агента"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Попросите агента опубликовать её из десктопного приложения."
 
@@ -2147,6 +2156,9 @@ msgstr "Спросите агента…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Спросите AI об этих строках…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Спросите ИИ или оставьте комментарий в GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Спросите AI…"
@@ -2337,17 +2349,11 @@ msgstr "Название автоматизации"
 msgid "Automations"
 msgstr "Автоматизации"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "Автоматизации (с ошибкой: {myFailedCount})"
-
 msgid "Automations & event triggers"
 msgstr "Автоматизации и триггеры по событиям"
 
 msgid "Automations require the Pro plan."
 msgstr "Для автоматизаций нужен план Pro."
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "Автоматизации, с ошибкой: {myFailedCount}"
 
 msgid "Autonomous"
 msgstr "Автономно"
@@ -3503,6 +3509,9 @@ msgstr "Сворачиваемый блок"
 msgid "Collapsible thinking block with duration label"
 msgstr "Сворачиваемый блок размышлений с меткой длительности"
 
+msgid "Collecting memory history…"
+msgstr "Сбор истории памяти…"
+
 msgid "Collecting…"
 msgstr "Сбор данных…"
 
@@ -3572,8 +3581,14 @@ msgstr "Комментарий не найден"
 msgid "Comment not posted"
 msgstr "Комментарий не отправлен"
 
+msgid "Comment on GitHub"
+msgstr "Комментировать в GitHub"
+
 msgid "Comment on this page"
 msgstr "Комментировать эту страницу"
+
+msgid "Comment posted"
+msgstr "Комментарий опубликован"
 
 msgid "Commented"
 msgstr "Прокомментировано"
@@ -3695,6 +3710,9 @@ msgstr "Настроить команду запуска рабочей обла
 
 msgid "Confirm before quitting"
 msgstr "Подтверждать выход"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "Конфликтующие слияния отменены — эти рабочие деревья не изменились."
 
 msgid "Connect"
 msgstr "Подключить"
@@ -4379,6 +4397,9 @@ msgstr "Не удалось объединить пул-реквест"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Не удалось разобрать этот diff: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Не удалось опубликовать комментарий"
 
 msgid "Couldn't post reply"
 msgstr "Не удалось отправить ответ"
@@ -5796,6 +5817,9 @@ msgstr "Каждую среду в 9:00 просматривай объедин�
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "Каждый будний день в 9:00 читай новые задачи GitHub, расставляй метки и готовь первый черновик ответа мне на проверку."
+
+msgid "Every worktree was already up to date"
+msgstr "Все рабочие деревья уже актуальны"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "Все спорят, обобщается ли это. Сам спор — признак того, что уровень достигнут."
@@ -8382,6 +8406,9 @@ msgstr "Локальное устройство"
 msgid "Local First"
 msgstr "Сначала локально"
 
+msgid "Local host service is not running"
+msgstr "Локальный host-service не запущен"
+
 msgid "Local Network"
 msgstr "Локальная сеть"
 
@@ -8642,6 +8669,9 @@ msgstr "Память"
 msgid "Memory share"
 msgstr "Доля памяти"
 
+msgid "Memory, last hour"
+msgstr "Память, последний час"
+
 msgid "Menu"
 msgstr "Меню"
 
@@ -8683,6 +8713,12 @@ msgstr "Объединён"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "Объединил {0}"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "Влито в {merged} рабочих дерева"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "Влито в {merged} рабочих дерева. Требуют внимания: {names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "Объединено, но не удалось обновить состояние PR — повторите через мгновение"
@@ -9715,6 +9751,9 @@ msgstr "На этом хосте пока нет рабочих областей
 msgid "No workspaces yet"
 msgstr "Рабочих областей пока нет"
 
+msgid "No worktrees to sync"
+msgstr "Нет рабочих деревьев для синхронизации"
+
 msgid "No-Prompt Launch"
 msgstr "Запуск без промпта"
 
@@ -10364,6 +10403,9 @@ msgstr "Открыть параметры пул-реквеста"
 
 msgid "Open pull requests"
 msgstr "Открытые пул-реквесты"
+
+msgid "Open Pull requests to read them."
+msgstr "Откройте Pull requests, чтобы прочитать их."
 
 msgid "Open recent"
 msgstr "Открыть недавние"
@@ -13573,6 +13615,10 @@ msgstr "Симуляция обновления: ошибка"
 msgid "Simulate update: ready"
 msgstr "Симуляция обновления: готово"
 
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "с {0}"
+
 msgid "Since 2025"
 msgstr "С 2025 года"
 
@@ -13629,6 +13675,9 @@ msgstr "Пока пропустить"
 
 msgid "Skipped"
 msgstr "Пропущено"
+
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "Рабочие деревья с незафиксированными изменениями пропущены."
 
 msgid "Slack Account Linked"
 msgstr "Аккаунт Slack связан"
@@ -14379,6 +14428,9 @@ msgstr "Двусторонняя синхронизация задач с Linear
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "Двусторонняя синхронизация задач с Linear. Создавайте задачи в Superset — они появятся в Linear, или импортируйте существующие задачи Linear."
 
+msgid "Sync main into all worktrees"
+msgstr "Влить main во все рабочие деревья"
+
 msgid "Sync Repositories"
 msgstr "Синхронизировать репозитории"
 
@@ -14390,6 +14442,9 @@ msgstr "Синхронизация с удалённым репозиторие�
 
 msgid "Syncing..."
 msgstr "Синхронизация..."
+
+msgid "Syncing…"
+msgstr "Синхронизация…"
 
 msgid "System"
 msgstr "Системная"

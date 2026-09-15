@@ -322,6 +322,12 @@ msgstr "落後你 {0}"
 msgid "{0} cannot be signed in this way yet."
 msgstr "{0}還不能用這種方式登入。"
 
+#. placeholder {0}: comment.author
+#. placeholder {1}: comment.repo
+#. placeholder {2}: comment.prNumber
+msgid "{0} commented on {1}#{2}"
+msgstr "{0} 評論了 {1}#{2}"
+
 #. placeholder {0}: formatNumber(participants)
 msgid "{0} developers are ranked by agent usage. Your last 30 days are already counted, just hidden. Token counts and model names only, no repo names, file paths or prompts."
 msgstr "已有 {0} 位開發者依 agent 用量排名。你最近 30 天的資料已計入，只是尚未公開。僅包含 token 數量與模型名稱，不含儲存庫名稱、檔案路徑或提示詞。"
@@ -768,9 +774,6 @@ msgstr "{months}個月"
 msgid "{months}mo ago"
 msgstr "{months}個月前"
 
-msgid "{myFailedCount} of your automations failed their last run"
-msgstr "你有{myFailedCount}個自動化上次執行失敗"
-
 #. js-lingui-explicit-id
 msgid "serverError.plugins.marketplaceBuiltinRemove"
 msgstr "{name} 是內建的，無法移除"
@@ -797,6 +800,9 @@ msgstr "{offlineHostCount, plural, one {# 台裝置處於離線狀態，將保�
 
 msgid "{openCount} open"
 msgstr "{openCount}項已開啟"
+
+msgid "{overflow} more new comment(s)"
+msgstr "還有 {overflow} 則新評論"
 
 msgid "{partialCount} partial"
 msgstr "{partialCount}項部分開啟"
@@ -2136,6 +2142,9 @@ msgstr "上次回報的版本。主機必須在線上才能更新。"
 msgid "ascending"
 msgstr "升序"
 
+msgid "Ask agent"
+msgstr "詢問代理程式"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "請代理程式從桌面應用程式發佈一個頁面。"
 
@@ -2147,6 +2156,9 @@ msgstr "向代理程式提問…"
 
 msgid "Ask the AI about these lines…"
 msgstr "就這幾行向AI提問…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "詢問 AI，或在 GitHub 上留言…"
 
 msgid "Ask the AI…"
 msgstr "問問AI…"
@@ -2337,17 +2349,11 @@ msgstr "自動化標題"
 msgid "Automations"
 msgstr "自動化"
 
-msgid "Automations ({myFailedCount} failing)"
-msgstr "自動化（{myFailedCount}個失敗）"
-
 msgid "Automations & event triggers"
 msgstr "自動化與事件觸發"
 
 msgid "Automations require the Pro plan."
 msgstr "自動化需要Pro方案。"
-
-msgid "Automations, {myFailedCount} failing"
-msgstr "自動化，{myFailedCount}個失敗"
 
 msgid "Autonomous"
 msgstr "自主"
@@ -3503,6 +3509,9 @@ msgstr "可摺疊面板"
 msgid "Collapsible thinking block with duration label"
 msgstr "可摺疊的思考塊，帶時長標籤"
 
+msgid "Collecting memory history…"
+msgstr "正在收集記憶體記錄…"
+
 msgid "Collecting…"
 msgstr "正在收集…"
 
@@ -3572,8 +3581,14 @@ msgstr "未找到評論"
 msgid "Comment not posted"
 msgstr "評論未發布"
 
+msgid "Comment on GitHub"
+msgstr "在 GitHub 上留言"
+
 msgid "Comment on this page"
 msgstr "評論這個頁面"
+
+msgid "Comment posted"
+msgstr "留言已發布"
 
 msgid "Commented"
 msgstr "已評論"
@@ -3695,6 +3710,9 @@ msgstr "配置工作區執行命令"
 
 msgid "Confirm before quitting"
 msgstr "退出前確認"
+
+msgid "Conflicting merges were rolled back — those worktrees are unchanged."
+msgstr "有衝突的合併已回復 — 這些工作樹未變更。"
 
 msgid "Connect"
 msgstr "連線"
@@ -4379,6 +4397,9 @@ msgstr "無法合併拉取請求"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "無法解析這個差異：{patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "無法發布留言"
 
 msgid "Couldn't post reply"
 msgstr "無法釋出回覆"
@@ -5796,6 +5817,9 @@ msgstr "每週三上午9點，回顧本週合併的PR，更新被它們改過時
 
 msgid "Every weekday at 9am, read new GitHub issues, apply labels, and draft a first reply for my review."
 msgstr "每個工作日上午9點，閱讀新的GitHub議題，打上標籤，並起草初步回覆供我審閱。"
+
+msgid "Every worktree was already up to date"
+msgstr "所有工作樹都已是最新"
 
 msgid "Everyone argues about whether this generalizes. That argument is the sign the level was reached."
 msgstr "所有人都在爭論這能否推廣。這場爭論本身就說明這一級別已經達到了。"
@@ -8382,6 +8406,9 @@ msgstr "本地裝置"
 msgid "Local First"
 msgstr "本地優先"
 
+msgid "Local host service is not running"
+msgstr "本機 host-service 未執行"
+
 msgid "Local Network"
 msgstr "本地網路"
 
@@ -8642,6 +8669,9 @@ msgstr "記憶體"
 msgid "Memory share"
 msgstr "記憶體佔比"
 
+msgid "Memory, last hour"
+msgstr "記憶體，過去一小時"
+
 msgid "Menu"
 msgstr "選單"
 
@@ -8683,6 +8713,12 @@ msgstr "已合併"
 #. placeholder {0}: mergedBy.login
 msgid "Merged by {0}"
 msgstr "由{0}合併"
+
+msgid "Merged into {merged} worktree(s)"
+msgstr "已合併至 {merged} 個工作樹"
+
+msgid "Merged into {merged} worktree(s). Needs attention: {names}"
+msgstr "已合併至 {merged} 個工作樹。需要處理：{names}"
 
 msgid "Merged, but couldn't refresh PR state — try again in a moment"
 msgstr "已合併，但無法重新整理PR狀態 — 請稍後重試"
@@ -9715,6 +9751,9 @@ msgstr "此主機上還沒有工作區"
 msgid "No workspaces yet"
 msgstr "暫無工作區"
 
+msgid "No worktrees to sync"
+msgstr "沒有可同步的工作樹"
+
 msgid "No-Prompt Launch"
 msgstr "無提示詞啟動"
 
@@ -10364,6 +10403,9 @@ msgstr "開啟拉取請求選項"
 
 msgid "Open pull requests"
 msgstr "開啟的拉取請求"
+
+msgid "Open Pull requests to read them."
+msgstr "開啟 Pull requests 查看。"
 
 msgid "Open recent"
 msgstr "開啟最近使用"
@@ -13573,6 +13615,10 @@ msgstr "模擬更新：錯誤"
 msgid "Simulate update: ready"
 msgstr "模擬更新：就緒"
 
+#. placeholder {0}: formatClock(chart.from)
+msgid "since {0}"
+msgstr "自 {0}"
+
 msgid "Since 2025"
 msgstr "自2025年起"
 
@@ -13629,6 +13675,9 @@ msgstr "暫時跳過"
 
 msgid "Skipped"
 msgstr "已跳過"
+
+msgid "Skipped worktrees with uncommitted changes."
+msgstr "已略過有未提交變更的工作樹。"
 
 msgid "Slack Account Linked"
 msgstr "Slack帳戶已關聯"
@@ -14379,6 +14428,9 @@ msgstr "與Linear雙向同步議題。"
 msgid "Sync issues bidirectionally with Linear. Create tasks in Superset and have them appear in Linear, or import existing Linear issues."
 msgstr "與Linear雙向同步議題。在Superset中建立任務並讓它們出現在Linear裡，也可以匯入已有的Linear議題。"
 
+msgid "Sync main into all worktrees"
+msgstr "將 main 合併至所有工作樹"
+
 msgid "Sync Repositories"
 msgstr "同步儲存庫"
 
@@ -14390,6 +14442,9 @@ msgstr "正在與遠端同步"
 
 msgid "Syncing..."
 msgstr "正在同步..."
+
+msgid "Syncing…"
+msgstr "正在同步…"
 
 msgid "System"
 msgstr "跟隨系統"
