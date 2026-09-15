@@ -1,5 +1,9 @@
 import { describe, expect, it } from "bun:test";
-import { type KnownHostRow, resolveKnownHosts } from "./useKnownHosts.utils";
+import {
+	isKnownHostsSettled,
+	type KnownHostRow,
+	resolveKnownHosts,
+} from "./useKnownHosts.utils";
 
 const ORG = "org-1";
 
@@ -45,5 +49,27 @@ describe("resolveKnownHosts", () => {
 	it("returns empty when both sources are empty", () => {
 		expect(resolveKnownHosts([], undefined, false)).toEqual([]);
 		expect(resolveKnownHosts([], [], true)).toEqual([]);
+	});
+});
+
+describe("isKnownHostsSettled", () => {
+	const base = {
+		liveReady: false,
+		hasSnapshot: false,
+		isOffline: false,
+		isError: false,
+	};
+
+	it("settles offline once the cloud read has failed", () => {
+		expect(isKnownHostsSettled({ ...base, isOffline: true })).toBe(false);
+		expect(
+			isKnownHostsSettled({ ...base, isOffline: true, isError: true }),
+		).toBe(true);
+	});
+
+	it("never settles online on a failed read alone", () => {
+		expect(isKnownHostsSettled({ ...base, isError: true })).toBe(false);
+		expect(isKnownHostsSettled({ ...base, liveReady: true })).toBe(true);
+		expect(isKnownHostsSettled({ ...base, hasSnapshot: true })).toBe(true);
 	});
 });

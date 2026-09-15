@@ -67,3 +67,26 @@ export function saveKnownHostsSnapshot(
 		});
 	});
 }
+
+/**
+ * Whether the host list is as trustworthy as it will get.
+ *
+ * Offline builds (SUPERSET_OFFLINE) talk to no cloud, so `v2Host.list` can
+ * only ever fail and nothing is ever persisted to fall back on. Without the
+ * last clause every `isReady` gate downstream (projects, workspaces, tag
+ * folders) stays false for the life of the process — a "Loading
+ * repositories…" that never resolves.
+ */
+export function isKnownHostsSettled({
+	liveReady,
+	hasSnapshot,
+	isOffline,
+	isError,
+}: {
+	liveReady: boolean;
+	hasSnapshot: boolean;
+	isOffline: boolean;
+	isError: boolean;
+}): boolean {
+	return liveReady || hasSnapshot || (isOffline && isError);
+}

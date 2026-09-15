@@ -225,5 +225,22 @@ export function useHostProjects(): UseHostProjectsResult {
 				snapshots.has(targets[index]?.machineId ?? ""),
 		);
 
+	// Offline diagnostics: the host fan-out is the only source of v2 projects,
+	// so when a surface says "No projects available" this says which host
+	// answered what.
+	useEffect(() => {
+		if (!env.SKIP_ENV_VALIDATION) return;
+		console.log("[offline-projects] host fan-out", {
+			isReady,
+			targets: targets.map((target) => ({
+				machineId: target.machineId,
+				organizationId: target.organizationId,
+				hostUrl: target.hostUrl,
+			})),
+			rowsPerHost: hostResults.map((result) => result.rows?.length ?? null),
+			projects: projects.map((project) => project.name),
+		});
+	}, [isReady, targets, hostResults, projects]);
+
 	return { projects, hostResults, isReady };
 }

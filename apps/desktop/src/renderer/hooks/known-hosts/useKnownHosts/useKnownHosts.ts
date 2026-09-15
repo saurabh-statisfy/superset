@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { env } from "renderer/env.renderer";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { useHostsPresence } from "renderer/hooks/useHostsPresence";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import {
+	isKnownHostsSettled,
 	type KnownHostRow,
 	loadKnownHostsSnapshot,
 	resolveKnownHosts,
@@ -113,9 +115,12 @@ export function useKnownHosts(): {
 		}));
 	}, [hosts, presence]);
 
-	const settled =
-		liveReady ||
-		(snapshot !== null && snapshot.organizationId === organizationId);
+	const settled = isKnownHostsSettled({
+		liveReady,
+		hasSnapshot: snapshot !== null && snapshot.organizationId === organizationId,
+		isOffline: env.SKIP_ENV_VALIDATION,
+		isError: hostsQuery.isError,
+	});
 
 	return { hosts: hostsWithPresence, organizationId, settled };
 }

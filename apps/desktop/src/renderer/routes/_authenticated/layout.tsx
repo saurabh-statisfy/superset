@@ -30,6 +30,7 @@ import { DaemonAutoUpdateFailureDialog } from "renderer/routes/_authenticated/co
 import { DiffThemeSync } from "renderer/routes/_authenticated/components/DiffThemeSync";
 import { LeaderboardAutoPublish } from "renderer/routes/_authenticated/components/LeaderboardAutoPublish";
 import { LeaderboardFirstRunDialog } from "renderer/routes/_authenticated/components/LeaderboardFirstRunDialog";
+import { OfflineV1ProjectMirror } from "renderer/routes/_authenticated/components/OfflineV1ProjectMirror";
 import { PendingDeletionScreen } from "renderer/routes/_authenticated/components/PendingDeletionScreen";
 import { PullRequestCommentNotifier } from "renderer/routes/_authenticated/components/PullRequestCommentNotifier";
 import { StarNagObserver } from "renderer/routes/_authenticated/components/StarNagObserver";
@@ -333,6 +334,7 @@ function AuthenticatedLayout() {
 									<V1FlipNotice />
 								)}
 								<V1AutoMigration />
+								<OfflineV1ProjectMirror />
 								<WorkspaceInitEffects />
 								{/* v2 creates from the /new-workspace route; only v1 has a modal. */}
 								{!isV2CloudEnabled && <NewWorkspaceModal />}
