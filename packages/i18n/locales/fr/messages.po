@@ -2076,6 +2076,9 @@ msgstr "Dernière valeur signalée. L'hôte doit être en ligne pour être mis �
 msgid "ascending"
 msgstr "croissant"
 
+msgid "Ask agent"
+msgstr "Demander à l'agent"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Demandez à un agent d'en publier une depuis l'application de bureau."
 
@@ -2087,6 +2090,9 @@ msgstr "Demandez à l'agent…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Interroger l'IA sur ces lignes…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Demandez à l'IA ou commentez sur GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Demandez à l'IA…"
@@ -3496,8 +3502,14 @@ msgstr "Commentaire introuvable"
 msgid "Comment not posted"
 msgstr "Commentaire non publié"
 
+msgid "Comment on GitHub"
+msgstr "Commenter sur GitHub"
+
 msgid "Comment on this page"
 msgstr "Commenter cette page"
+
+msgid "Comment posted"
+msgstr "Commentaire publié"
 
 msgid "Commented"
 msgstr "Commentée"
@@ -4267,6 +4279,9 @@ msgstr "Impossible de fusionner la pull request"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Impossible d'analyser ce diff : {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Impossible de publier le commentaire"
 
 msgid "Couldn't post reply"
 msgstr "Impossible de publier la réponse"

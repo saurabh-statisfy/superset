@@ -2076,6 +2076,9 @@ msgstr "最後に報告された値です。更新するにはホストがオン
 msgid "ascending"
 msgstr "昇順"
 
+msgid "Ask agent"
+msgstr "エージェントに聞く"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "デスクトップアプリからエージェントに公開してもらいましょう。"
 
@@ -2087,6 +2090,9 @@ msgstr "エージェントに質問…"
 
 msgid "Ask the AI about these lines…"
 msgstr "これらの行についてAIに質問…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "AI に聞く、または GitHub にコメント…"
 
 msgid "Ask the AI…"
 msgstr "AIに質問…"
@@ -3496,8 +3502,14 @@ msgstr "コメントが見つかりません"
 msgid "Comment not posted"
 msgstr "コメントを投稿できませんでした"
 
+msgid "Comment on GitHub"
+msgstr "GitHub にコメント"
+
 msgid "Comment on this page"
 msgstr "このページにコメント"
+
+msgid "Comment posted"
+msgstr "コメントを投稿しました"
 
 msgid "Commented"
 msgstr "コメント"
@@ -4267,6 +4279,9 @@ msgstr "プルリクエストをマージできませんでした"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "この差分を解析できませんでした: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "コメントを投稿できませんでした"
 
 msgid "Couldn't post reply"
 msgstr "返信を投稿できませんでした"

@@ -2076,6 +2076,9 @@ msgstr "Zoals laatst gemeld. De host moet online zijn om bij te werken."
 msgid "ascending"
 msgstr "oplopend"
 
+msgid "Ask agent"
+msgstr "Agent vragen"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Vraag een agent om er een te publiceren vanuit de desktop-app."
 
@@ -2087,6 +2090,9 @@ msgstr "Vraag het de agent…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Vraag de AI iets over deze regels…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Vraag het de AI of plaats een reactie op GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Vraag het de AI…"
@@ -3496,8 +3502,14 @@ msgstr "Opmerking niet gevonden"
 msgid "Comment not posted"
 msgstr "Opmerking niet geplaatst"
 
+msgid "Comment on GitHub"
+msgstr "Reageren op GitHub"
+
 msgid "Comment on this page"
 msgstr "Reageren op deze pagina"
+
+msgid "Comment posted"
+msgstr "Reactie geplaatst"
 
 msgid "Commented"
 msgstr "Opmerking geplaatst"
@@ -4267,6 +4279,9 @@ msgstr "Kan pull request niet mergen"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Kan deze diff niet parsen: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Kan reactie niet plaatsen"
 
 msgid "Couldn't post reply"
 msgstr "Kan antwoord niet plaatsen"

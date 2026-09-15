@@ -437,6 +437,50 @@ export function PullRequestCodeTab({
 	const linkedWorkspaceId = linkedWorkspaceData?.workspaceId ?? null;
 	const { submit: submitWorkspaceCreate } = useWorkspaceCreates();
 
+	// The other half of the composer: post the text to GitHub as a new review
+	// thread instead of handing it to an agent. replyToThread only appends to
+	// threads that already exist, so without this a line with no conversation
+	// on it yet could only be talked about with the AI.
+	const postReviewComment = useMutation({
+		mutationFn: async (input: {
+			comment: string;
+			path: string;
+			startLine: number;
+			endLine: number;
+			side: AgentPromptFileSide;
+		}) => {
+			const client = getHostServiceClientByUrl(hostUrl);
+			return client.pullRequests.createReviewComment.mutate({
+				projectId,
+				prNumber,
+				path: input.path,
+				startLine: input.startLine,
+				endLine: input.endLine,
+				side: input.side,
+				body: input.comment,
+			});
+		},
+		onSuccess: () => {
+			void queryClient.invalidateQueries({ queryKey: threadsQueryKey });
+			toast.success(
+				t({
+					message: "Comment posted",
+				}),
+			);
+			closeComposer();
+		},
+		onError: (mutationError) => {
+			toast.error(
+				t({
+					message: "Couldn't post comment",
+				}),
+				{
+					description: errorMessage(mutationError),
+				},
+			);
+		},
+	});
+
 	// Mirrors DiffPane's split between "send to an existing terminal" and
 	// "create a new agent session", but the PR tab has no fixed workspace to
 	// launch a new session *in* — when no workspace is linked to this PR yet,
@@ -950,14 +994,21 @@ export function PullRequestCodeTab({
 										hostUrl={hostUrl}
 										linkedWorkspaceId={linkedWorkspaceId}
 										onCancel={closeComposer}
-										onSubmit={async ({ comment, target }) => {
-											await sendCommentToAgent.mutateAsync({
-												comment,
-												target,
+										onSubmit={async (submission) => {
+											const anchor = {
+												comment: submission.comment,
 												path: metadata.path,
 												startLine: metadata.startLine,
 												endLine: metadata.endLine,
 												side: rangeSide(metadata.startSide, metadata.endSide),
+											};
+											if (submission.destination === "github") {
+												await postReviewComment.mutateAsync(anchor);
+												return;
+											}
+											await sendCommentToAgent.mutateAsync({
+												...anchor,
+												target: submission.target,
 											});
 										}}
 									/>

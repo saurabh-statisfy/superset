@@ -2076,6 +2076,9 @@ msgstr "По последним данным. Для обновления хос
 msgid "ascending"
 msgstr "по возрастанию"
 
+msgid "Ask agent"
+msgstr "Спросить агента"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Попросите агента опубликовать её из десктопного приложения."
 
@@ -2087,6 +2090,9 @@ msgstr "Спросите агента…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Спросите AI об этих строках…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Спросите ИИ или оставьте комментарий в GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Спросите AI…"
@@ -3496,8 +3502,14 @@ msgstr "Комментарий не найден"
 msgid "Comment not posted"
 msgstr "Комментарий не отправлен"
 
+msgid "Comment on GitHub"
+msgstr "Комментировать в GitHub"
+
 msgid "Comment on this page"
 msgstr "Комментировать эту страницу"
+
+msgid "Comment posted"
+msgstr "Комментарий опубликован"
 
 msgid "Commented"
 msgstr "Прокомментировано"
@@ -4267,6 +4279,9 @@ msgstr "Не удалось объединить пул-реквест"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Не удалось разобрать этот diff: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Не удалось опубликовать комментарий"
 
 msgid "Couldn't post reply"
 msgstr "Не удалось отправить ответ"

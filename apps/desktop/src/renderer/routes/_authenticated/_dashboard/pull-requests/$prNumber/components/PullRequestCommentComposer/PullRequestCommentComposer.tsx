@@ -25,10 +25,11 @@ interface PullRequestCommentComposerProps {
 	 *  create, not just a new terminal in an existing one). */
 	linkedWorkspaceId: string | null;
 	onCancel: () => void;
-	onSubmit: (input: {
-		comment: string;
-		target: AgentTarget;
-	}) => void | Promise<void>;
+	onSubmit: (
+		input:
+			| { destination: "agent"; comment: string; target: AgentTarget }
+			| { destination: "github"; comment: string },
+	) => void | Promise<void>;
 }
 
 // A twin of the v2-workspace DiffPane's AgentCommentComposer: same popover
@@ -61,7 +62,7 @@ export function PullRequestCommentComposer({
 	});
 
 	const [comment, setComment] = useState("");
-	const [submitting, setSubmitting] = useState(false);
+	const [submitting, setSubmitting] = useState<"agent" | "github" | null>(null);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	useEffect(() => {
@@ -72,21 +73,30 @@ export function PullRequestCommentComposer({
 		el.setSelectionRange(len, len);
 	}, []);
 
-	const canSubmit =
-		comment.trim().length > 0 && !submitting && resolved != null;
+	const hasText = comment.trim().length > 0;
+	const canSubmit = hasText && submitting == null && resolved != null;
+	const canPostToGithub = hasText && submitting == null;
 
-	const handleSubmit = async () => {
-		if (!canSubmit || !resolved) return;
-		setSubmitting(true);
+	const handleSubmit = async (destination: "agent" | "github") => {
+		if (!hasText || submitting != null) return;
+		const body = comment.trim();
+		const submission =
+			destination === "github"
+				? ({ destination: "github", comment: body } as const)
+				: resolved
+					? ({ destination: "agent", comment: body, target: resolved } as const)
+					: null;
+		if (!submission) return;
+		setSubmitting(destination);
 		try {
-			await onSubmit({ comment: comment.trim(), target: resolved });
+			await onSubmit(submission);
 		} catch (error) {
 			// User-facing errors are the caller's responsibility (toasted from
 			// the mutation's onError) — just don't let a rejection leak out of
 			// this form's synchronous handlers.
 			console.error("[PullRequestCommentComposer] submit failed", error);
 		} finally {
-			setSubmitting(false);
+			setSubmitting(null);
 		}
 	};
 
@@ -95,7 +105,7 @@ export function PullRequestCommentComposer({
 			className="pr-diff-comment mx-3 my-1.5 overflow-hidden rounded-lg border border-border/80 bg-popover font-sans text-popover-foreground shadow-[0_4px_16px_-4px_rgba(0,0,0,0.12),0_2px_4px_-2px_rgba(0,0,0,0.06)]"
 			onSubmit={(e) => {
 				e.preventDefault();
-				void handleSubmit();
+				void handleSubmit("agent");
 			}}
 			onKeyDown={(e) => {
 				if (e.key === "Escape") {
@@ -104,7 +114,7 @@ export function PullRequestCommentComposer({
 				}
 				if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && canSubmit) {
 					e.preventDefault();
-					void handleSubmit();
+					void handleSubmit("agent");
 				}
 			}}
 		>
@@ -122,7 +132,7 @@ export function PullRequestCommentComposer({
 					value={comment}
 					onChange={(e) => setComment(e.target.value)}
 					placeholder={t({
-						message: "Ask the AI…",
+						message: "Ask the AI, or comment on GitHub…",
 					})}
 					rows={3}
 					className={cn(
@@ -145,10 +155,25 @@ export function PullRequestCommentComposer({
 						size="xs"
 						variant="ghost"
 						onClick={onCancel}
-						disabled={submitting}
+						disabled={submitting != null}
 						className="h-7 px-2 text-[11px] text-muted-foreground hover:text-foreground"
 					>
 						<Trans>Cancel</Trans>
+					</Button>
+					<Button
+						type="button"
+						size="xs"
+						variant="outline"
+						disabled={!canPostToGithub}
+						onClick={() => void handleSubmit("github")}
+						className="h-7 gap-1.5 px-2.5 text-[11px] font-medium disabled:opacity-40"
+					>
+						{submitting === "github" && (
+							<LuLoaderCircle className="size-3 animate-spin" />
+						)}
+						<span>
+							<Trans>Comment on GitHub</Trans>
+						</span>
 					</Button>
 					<Button
 						type="submit"
@@ -156,9 +181,15 @@ export function PullRequestCommentComposer({
 						disabled={!canSubmit}
 						className="h-7 gap-1.5 px-2.5 text-[11px] font-medium disabled:opacity-40"
 					>
-						{submitting && <LuLoaderCircle className="size-3 animate-spin" />}
+						{submitting === "agent" && (
+							<LuLoaderCircle className="size-3 animate-spin" />
+						)}
 						<span>
-							{submitting ? <Trans>Sending…</Trans> : <Trans>Comment</Trans>}
+							{submitting === "agent" ? (
+								<Trans>Sending…</Trans>
+							) : (
+								<Trans>Ask agent</Trans>
+							)}
 						</span>
 					</Button>
 				</div>

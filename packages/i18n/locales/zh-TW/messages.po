@@ -2076,6 +2076,9 @@ msgstr "上次回報的版本。主機必須在線上才能更新。"
 msgid "ascending"
 msgstr "升序"
 
+msgid "Ask agent"
+msgstr "詢問代理程式"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "請代理程式從桌面應用程式發佈一個頁面。"
 
@@ -2087,6 +2090,9 @@ msgstr "向代理程式提問…"
 
 msgid "Ask the AI about these lines…"
 msgstr "就這幾行向AI提問…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "詢問 AI，或在 GitHub 上留言…"
 
 msgid "Ask the AI…"
 msgstr "問問AI…"
@@ -3496,8 +3502,14 @@ msgstr "未找到評論"
 msgid "Comment not posted"
 msgstr "評論未發布"
 
+msgid "Comment on GitHub"
+msgstr "在 GitHub 上留言"
+
 msgid "Comment on this page"
 msgstr "評論這個頁面"
+
+msgid "Comment posted"
+msgstr "留言已發布"
 
 msgid "Commented"
 msgstr "已評論"
@@ -4267,6 +4279,9 @@ msgstr "無法合併拉取請求"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "無法解析這個差異：{patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "無法發布留言"
 
 msgid "Couldn't post reply"
 msgstr "無法釋出回覆"

@@ -2076,6 +2076,9 @@ msgstr "Conforme o último relato. O host precisa estar online para atualizar."
 msgid "ascending"
 msgstr "crescente"
 
+msgid "Ask agent"
+msgstr "Perguntar ao agente"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Peça a um agente para publicar uma no aplicativo para desktop."
 
@@ -2087,6 +2090,9 @@ msgstr "Pergunte ao agente…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Pergunte à IA sobre estas linhas…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Pergunte à IA ou comente no GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Pergunte à IA…"
@@ -3496,8 +3502,14 @@ msgstr "Comentário não encontrado"
 msgid "Comment not posted"
 msgstr "Comentário não publicado"
 
+msgid "Comment on GitHub"
+msgstr "Comentar no GitHub"
+
 msgid "Comment on this page"
 msgstr "Comentar nesta página"
+
+msgid "Comment posted"
+msgstr "Comentário publicado"
 
 msgid "Commented"
 msgstr "Comentada"
@@ -4267,6 +4279,9 @@ msgstr "Não foi possível fazer o merge do pull request"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Não foi possível interpretar este diff: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Não foi possível publicar o comentário"
 
 msgid "Couldn't post reply"
 msgstr "Não foi possível publicar a resposta"

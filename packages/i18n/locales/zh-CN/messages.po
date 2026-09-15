@@ -2076,6 +2076,9 @@ msgstr "上次报告的版本。主机必须在线才能更新。"
 msgid "ascending"
 msgstr "升序"
 
+msgid "Ask agent"
+msgstr "询问智能体"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "让智能体从桌面应用中发布一个页面。"
 
@@ -2087,6 +2090,9 @@ msgstr "向智能体提问…"
 
 msgid "Ask the AI about these lines…"
 msgstr "就这几行向AI提问…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "询问 AI，或在 GitHub 上评论…"
 
 msgid "Ask the AI…"
 msgstr "问问AI…"
@@ -3496,8 +3502,14 @@ msgstr "未找到评论"
 msgid "Comment not posted"
 msgstr "评论未发布"
 
+msgid "Comment on GitHub"
+msgstr "在 GitHub 上评论"
+
 msgid "Comment on this page"
 msgstr "评论这个页面"
+
+msgid "Comment posted"
+msgstr "评论已发布"
 
 msgid "Commented"
 msgstr "已评论"
@@ -4267,6 +4279,9 @@ msgstr "无法合并拉取请求"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "无法解析这个差异：{patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "无法发布评论"
 
 msgid "Couldn't post reply"
 msgstr "无法发布回复"

@@ -2076,6 +2076,9 @@ msgstr "Theo báo cáo gần nhất. Máy chủ phải trực tuyến để cậ
 msgid "ascending"
 msgstr "tăng dần"
 
+msgid "Ask agent"
+msgstr "Hỏi agent"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Hãy nhờ một agent xuất bản một trang từ ứng dụng máy tính."
 
@@ -2087,6 +2090,9 @@ msgstr "Hỏi agent…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Hỏi AI về những dòng này…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Hỏi AI, hoặc bình luận trên GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Hỏi AI…"
@@ -3496,8 +3502,14 @@ msgstr "Không tìm thấy bình luận"
 msgid "Comment not posted"
 msgstr "Chưa đăng được bình luận"
 
+msgid "Comment on GitHub"
+msgstr "Bình luận trên GitHub"
+
 msgid "Comment on this page"
 msgstr "Bình luận về trang này"
+
+msgid "Comment posted"
+msgstr "Đã đăng bình luận"
 
 msgid "Commented"
 msgstr "Đã bình luận"
@@ -4267,6 +4279,9 @@ msgstr "Không thể merge pull request"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Không thể phân tích diff này: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Không thể đăng bình luận"
 
 msgid "Couldn't post reply"
 msgstr "Không thể đăng trả lời"

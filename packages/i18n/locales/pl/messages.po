@@ -2076,6 +2076,9 @@ msgstr "Według ostatniego zgłoszenia. Host musi być online, aby się zaktuali
 msgid "ascending"
 msgstr "rosnąco"
 
+msgid "Ask agent"
+msgstr "Zapytaj agenta"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Poproś agenta, aby opublikował jakąś z aplikacji na komputer."
 
@@ -2087,6 +2090,9 @@ msgstr "Zapytaj agenta…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Zapytaj AI o te wiersze…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Zapytaj SI lub skomentuj na GitHubie…"
 
 msgid "Ask the AI…"
 msgstr "Zapytaj AI…"
@@ -3496,8 +3502,14 @@ msgstr "Nie znaleziono komentarza"
 msgid "Comment not posted"
 msgstr "Komentarz nie został opublikowany"
 
+msgid "Comment on GitHub"
+msgstr "Skomentuj na GitHubie"
+
 msgid "Comment on this page"
 msgstr "Skomentuj tę stronę"
+
+msgid "Comment posted"
+msgstr "Opublikowano komentarz"
 
 msgid "Commented"
 msgstr "Skomentowany"
@@ -4267,6 +4279,9 @@ msgstr "Nie udało się scalić pull requesta"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Nie udało się przetworzyć tych różnic: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Nie udało się opublikować komentarza"
 
 msgid "Couldn't post reply"
 msgstr "Nie udało się opublikować odpowiedzi"

@@ -2076,6 +2076,9 @@ msgstr "Sesuai laporan terakhir. Host harus online untuk memperbarui."
 msgid "ascending"
 msgstr "menaik"
 
+msgid "Ask agent"
+msgstr "Tanya agen"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Minta agen untuk memublikasikan satu dari aplikasi desktop."
 
@@ -2087,6 +2090,9 @@ msgstr "Tanya agennya…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Tanya AI tentang baris-baris ini…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Tanya AI, atau komentari di GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Tanya AI…"
@@ -3496,8 +3502,14 @@ msgstr "Komentar tidak ditemukan"
 msgid "Comment not posted"
 msgstr "Komentar tidak terkirim"
 
+msgid "Comment on GitHub"
+msgstr "Komentari di GitHub"
+
 msgid "Comment on this page"
 msgstr "Komentari halaman ini"
+
+msgid "Comment posted"
+msgstr "Komentar terkirim"
 
 msgid "Commented"
 msgstr "Dikomentari"
@@ -4267,6 +4279,9 @@ msgstr "Tidak bisa merge pull request"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Tidak bisa mengurai diff ini: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Tidak bisa mengirim komentar"
 
 msgid "Couldn't post reply"
 msgstr "Tidak bisa mengirim balasan"

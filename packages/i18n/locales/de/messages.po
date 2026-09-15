@@ -2076,6 +2076,9 @@ msgstr "Zuletzt gemeldet. Der Host muss online sein, um aktualisiert zu werden."
 msgid "ascending"
 msgstr "aufsteigend"
 
+msgid "Ask agent"
+msgstr "Agenten fragen"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Bitte einen Agenten, eine aus der Desktop-App zu veröffentlichen."
 
@@ -2087,6 +2090,9 @@ msgstr "Frag den Agenten…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Frag die KI zu diesen Zeilen…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Die KI fragen oder auf GitHub kommentieren …"
 
 msgid "Ask the AI…"
 msgstr "Frag die KI…"
@@ -3496,8 +3502,14 @@ msgstr "Kommentar nicht gefunden"
 msgid "Comment not posted"
 msgstr "Kommentar nicht veröffentlicht"
 
+msgid "Comment on GitHub"
+msgstr "Auf GitHub kommentieren"
+
 msgid "Comment on this page"
 msgstr "Diese Seite kommentieren"
+
+msgid "Comment posted"
+msgstr "Kommentar veröffentlicht"
 
 msgid "Commented"
 msgstr "Kommentiert"
@@ -4267,6 +4279,9 @@ msgstr "Pull Request konnte nicht zusammengeführt werden"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Dieser Diff konnte nicht geparst werden: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Kommentar konnte nicht veröffentlicht werden"
 
 msgid "Couldn't post reply"
 msgstr "Antwort konnte nicht gesendet werden"

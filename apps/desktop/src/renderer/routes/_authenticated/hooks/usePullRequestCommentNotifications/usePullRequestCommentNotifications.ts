@@ -65,6 +65,11 @@ export function usePullRequestCommentNotifications(): void {
 		queryKey: ["pr-comment-notifications", activeHostUrl],
 		enabled: !!activeHostUrl,
 		refetchInterval: POLL_INTERVAL_MS,
+		// The whole point is to hear about a comment while you are doing
+		// something else, and TanStack pauses `refetchInterval` by default
+		// once the window loses focus — which is exactly then. Without this
+		// the poll only runs while the app is already in front of you.
+		refetchIntervalInBackground: true,
 		queryFn: async () => {
 			if (!activeHostUrl) return null;
 			return getHostServiceClientByUrl(

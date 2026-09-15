@@ -2076,6 +2076,9 @@ msgstr "Son bildirildiği gibi. Güncellemek için ana makine çevrimiçi olmal�
 msgid "ascending"
 msgstr "artan"
 
+msgid "Ask agent"
+msgstr "Ajana sor"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Bir ajandan masaüstü uygulamasından bir tane yayımlamasını isteyin."
 
@@ -2087,6 +2090,9 @@ msgstr "Ajana sorun…"
 
 msgid "Ask the AI about these lines…"
 msgstr "AI'a bu satırlar hakkında sorun…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Yapay zekâya sorun veya GitHub'da yorum yapın…"
 
 msgid "Ask the AI…"
 msgstr "AI'a sorun…"
@@ -3496,8 +3502,14 @@ msgstr "Yorum bulunamadı"
 msgid "Comment not posted"
 msgstr "Yorum gönderilmedi"
 
+msgid "Comment on GitHub"
+msgstr "GitHub'da yorum yap"
+
 msgid "Comment on this page"
 msgstr "Bu sayfaya yorum yap"
+
+msgid "Comment posted"
+msgstr "Yorum gönderildi"
 
 msgid "Commented"
 msgstr "Yorum yapıldı"
@@ -4267,6 +4279,9 @@ msgstr "Pull request birleştirilemedi"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Bu fark ayrıştırılamadı: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Yorum gönderilemedi"
 
 msgid "Couldn't post reply"
 msgstr "Yanıt gönderilemedi"

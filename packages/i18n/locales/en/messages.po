@@ -2076,6 +2076,9 @@ msgstr "As last reported. The host must be online to update."
 msgid "ascending"
 msgstr "ascending"
 
+msgid "Ask agent"
+msgstr "Ask agent"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Ask an agent to publish one from the desktop app."
 
@@ -2087,6 +2090,9 @@ msgstr "Ask the agent…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Ask the AI about these lines…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Ask the AI, or comment on GitHub…"
 
 msgid "Ask the AI…"
 msgstr "Ask the AI…"
@@ -3496,8 +3502,14 @@ msgstr "Comment not found"
 msgid "Comment not posted"
 msgstr "Comment not posted"
 
+msgid "Comment on GitHub"
+msgstr "Comment on GitHub"
+
 msgid "Comment on this page"
 msgstr "Comment on this page"
+
+msgid "Comment posted"
+msgstr "Comment posted"
 
 msgid "Commented"
 msgstr "Commented"
@@ -4267,6 +4279,9 @@ msgstr "Couldn't merge pull request"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Couldn't parse this diff: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Couldn't post comment"
 
 msgid "Couldn't post reply"
 msgstr "Couldn't post reply"

@@ -2076,6 +2076,9 @@ msgstr "Podle posledního hlášení. Hostitel musí být online, aby se mohl ak
 msgid "ascending"
 msgstr "vzestupně"
 
+msgid "Ask agent"
+msgstr "Zeptat se agenta"
+
 msgid "Ask an agent to publish one from the desktop app."
 msgstr "Požádejte agenta, aby nějakou publikoval z desktopové aplikace."
 
@@ -2087,6 +2090,9 @@ msgstr "Zeptejte se agenta…"
 
 msgid "Ask the AI about these lines…"
 msgstr "Zeptejte se AI na tyto řádky…"
+
+msgid "Ask the AI, or comment on GitHub…"
+msgstr "Zeptejte se AI nebo okomentujte na GitHubu…"
 
 msgid "Ask the AI…"
 msgstr "Zeptejte se AI…"
@@ -3496,8 +3502,14 @@ msgstr "Komentář nenalezen"
 msgid "Comment not posted"
 msgstr "Komentář se nepodařilo odeslat"
 
+msgid "Comment on GitHub"
+msgstr "Okomentovat na GitHubu"
+
 msgid "Comment on this page"
 msgstr "Okomentovat tuto stránku"
+
+msgid "Comment posted"
+msgstr "Komentář byl zveřejněn"
 
 msgid "Commented"
 msgstr "Okomentováno"
@@ -4267,6 +4279,9 @@ msgstr "Pull request se nepodařilo sloučit"
 
 msgid "Couldn't parse this diff: {patchParseError}"
 msgstr "Tento diff se nepodařilo zpracovat: {patchParseError}"
+
+msgid "Couldn't post comment"
+msgstr "Komentář se nepodařilo zveřejnit"
 
 msgid "Couldn't post reply"
 msgstr "Nepodařilo se odeslat odpověď"
