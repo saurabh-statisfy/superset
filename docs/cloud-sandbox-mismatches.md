@@ -118,12 +118,32 @@ a Claude subscription token counts as Anthropic being provided, since a rule
 would otherwise add a second, conflicting auth header to its requests.
 
 **The firewall terminates TLS for the domains it rewrites, and the terminal
-must trust its CA.** The platform mounts a per-sandbox CA and points
-`NODE_EXTRA_CA_CERTS`, `SSL_CERT_FILE` and friends at the system bundle.
+must trust its CA.** The CA is in the image's system bundle, which curl, git,
+gh, python and bun read. Node does not read it, and the platform sets no CA
+variable of its own, so `superset-boot` defaults `NODE_EXTRA_CA_CERTS` to that
+bundle before it builds host-service's environment.
 host-service builds PTY env from a login-shell snapshot, never from its own
 process env, so those variables would be lost and every model call from a
 terminal would fail with a certificate error; the sandbox-mode passthrough
 forwards them (`SANDBOX_FIREWALL_CA_KEYS`).
+
+**`superset` in a box is the workspace, not a person.** The CLI ships as its
+own image asset and sits on PATH. It holds no credential: the firewall adds
+`x-superset-sandbox-credential` to requests for the API the way it adds the
+model and GitHub ones, the API resolves that to the workspace's creator, and
+`SANDBOX_ALLOWED_PROCEDURES` is the list of things it may then call. A header
+rule applies to every process in the box, so that list is the boundary —
+widen it deliberately, and never to a procedure that can grant more access.
+
+**Docker is installed but not started.** An environment whose repository needs
+containers starts it from its own `start` command, which is also where it
+waits for the daemon:
+
+```json
+{ "start": ["sudo dockerd >/var/log/dockerd.log 2>&1 &",
+            "until docker info >/dev/null 2>&1; do sleep 0.2; done",
+            "docker compose up"] }
+```
 
 ## Runtime environment
 
@@ -172,9 +192,11 @@ id, the others get ids derived from it and the path, so anything keyed on the cl
 desktop route, the agent launch, the terminals) lands in the primary and the rest are
 siblings. The `start` hook runs in the hooks repository's checkout, not in `/workspace`.
 
-**The checkout is the workspace.** No worktrees, no base repo, no branch
-creation — anything assuming a worktree can be created or discarded next to a
-main checkout has nothing to work with.
+**The checkout is the workspace.** No worktrees and no base repo — anything
+assuming a worktree can be created or discarded next to a main checkout has
+nothing to work with. Boot does cut the workspace's own branch: each checkout
+fetches its `baseBranch` and lands on `branch` (`superset/<slug>-<id>`), so an
+agent is never sitting on `main`, and the base is what a pull request targets.
 
 **There is no clipboard where the PTY runs.** Pasting an image into a terminal
 forwards Ctrl+V and lets the TUI (Claude Code, Codex) read the image from the
@@ -188,6 +210,20 @@ composer use — mobile proved the pattern) and pastes the worktree-relative
 path instead (`setImagePasteOverride` in the terminal runtime registry).
 Chosen over a new host endpoint because deployed sandboxes never update
 their baked host-service.
+
+**A URL launcher succeeds and reaches nobody.** The image ships `xdg-utils`
+(`packages/sandbox/bundle/rootfs/usr/local/share/superset/desktop.Aptfile`)
+and `/etc/profile.d/superset.sh` exports `DISPLAY`, so `xdg-open` spawns
+cleanly and exits 0 — on a display no one is looking at. Nothing in the spawn
+result distinguishes that from a browser opening on the user's laptop, so a
+CLI that opens a URL as a side effect (`pages publish` opening the page it
+created, `auth login` opening the consent screen) has to rule the sandbox out
+before spawning rather than react to a failure. `canReachDesktop()` in
+`packages/cli/src/lib/open-url.ts` is that check: `IS_SANDBOX` (set by
+host-service in sandbox-mode PTY env), `SSH_CONNECTION` or `SSH_TTY`. It is
+deliberately not `shouldOpenBrowser()` from `lib/auth.ts`, whose extra TTY
+test is right for an interactive login prompt and wrong for an agent running
+the CLI with piped stdout.
 
 ## Lifecycle
 

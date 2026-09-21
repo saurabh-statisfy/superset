@@ -35,7 +35,12 @@ import { DashboardSidebarProjectSection } from "./components/DashboardSidebarPro
 import { DashboardSidebarSectionRenameProvider } from "./components/DashboardSidebarSectionRenameContext";
 import { DashboardSidebarSessionsSection } from "./components/DashboardSidebarSessionsSection";
 import { DashboardSidebarWorkspacesHeader } from "./components/DashboardSidebarWorkspacesHeader";
+import { useGettingStartedCard } from "./components/GettingStartedCard";
 import { useV2SetupScriptCard } from "./components/V2SetupScriptCard";
+import {
+	getBlockedDragProps,
+	useBlockedDragNotice,
+} from "./hooks/useBlockedDragNotice";
 import { useDashboardSidebarData } from "./hooks/useDashboardSidebarData";
 import { useDashboardSidebarShortcuts } from "./hooks/useDashboardSidebarShortcuts";
 import { useMigrateLegacySidebarFolders } from "./hooks/useMigrateLegacySidebarFolders";
@@ -123,6 +128,7 @@ const SortableProjectWrapper = memo(function SortableProjectWrapper({
 				transition,
 				opacity: isDragging ? 0.5 : undefined,
 			}}
+			{...getBlockedDragProps(isDragDisabled)}
 		>
 			{section}
 		</div>
@@ -215,6 +221,11 @@ export function DashboardSidebar({
 	// hides projects outright, makes a project drop unsafe to commit.
 	const isProjectDragDisabled = isFilterActive;
 	const isChildDragDisabled = sortMode !== "manual" || isFilterActive;
+	useBlockedDragNotice({
+		reason: isFilterActive ? "filter" : sortMode !== "manual" ? "sort" : null,
+		onSwitchToManualOrder: () => setSidebarProjectSortMode("manual"),
+		onClearFilter: () => setProjectFilterQuery(""),
+	});
 
 	// Sorted but unfiltered, so ⌘1–⌘9 targets stay put while typing a query.
 	// The filtered view expands matches through derived objects, so a jump
@@ -311,6 +322,7 @@ export function DashboardSidebar({
 		projectId: activeV2Project?.id ?? null,
 		projectName: activeV2Project?.name ?? null,
 	});
+	const gettingStartedCard = useGettingStartedCard();
 	const starNagCard = useStarNagCard({ isCollapsed });
 	const hiringCard = useHiringCard({ surface: "v2" });
 
@@ -428,6 +440,7 @@ export function DashboardSidebar({
 										entries={[
 											paymentFailedCard,
 											setupScriptCard,
+											gettingStartedCard,
 											starNagCard,
 											hiringCard,
 										]}

@@ -1,4 +1,9 @@
 export { mintSandboxGateAccess, sandboxHostSecretFor } from "./access";
+export {
+	resolveSandboxCaller,
+	SANDBOX_ALLOWED_PROCEDURES,
+	type SandboxCaller,
+} from "./api-credential";
 export { buildSandboxClaim } from "./claim";
 export { deriveSandboxCredentials } from "./credentials";
 export {
@@ -23,10 +28,10 @@ export {
 	sortRepositories,
 	toSandboxRepositories,
 	type WorkspaceRepository,
+	workspaceBranchName,
 	workspaceRepositories,
 } from "./repositories";
 export {
-	DESKTOP_PORT,
 	deleteSandbox,
 	describeSandbox,
 	HOST_SERVICE_PORT,

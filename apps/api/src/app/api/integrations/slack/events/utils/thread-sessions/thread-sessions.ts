@@ -1,13 +1,13 @@
 import { db } from "@superset/db/client";
 import {
-	integrationConnections,
 	type SelectSlackThreadSession,
 	type SlackQueuedEvent,
 	type SlackThreadEntity,
 	slackThreadSessions,
 } from "@superset/db/schema";
 import { FEATURE_FLAGS } from "@superset/shared/constants";
-import { and, desc, eq, isNull, lt, or, sql } from "drizzle-orm";
+import { accountConnection } from "@superset/trpc/connectors";
+import { and, eq, isNull, lt, or, sql } from "drizzle-orm";
 import { posthog } from "@/lib/analytics";
 import type { AgentAction } from "../slack-blocks";
 
@@ -29,7 +29,7 @@ interface ThreadKey {
 	threadTs: string;
 }
 
-export type ThreadCommand = "mute" | "unmute";
+export type ThreadCommand = "mute" | "unmute" | "stop";
 
 /**
  * Explicit commands only. Intent phrased in prose ("only reply when I
@@ -43,7 +43,55 @@ export function parseThreadCommand(text: string): ThreadCommand | null {
 		.toLowerCase();
 	if (/^!(mute|quiet)\b/.test(stripped)) return "mute";
 	if (/^!(unmute|unquiet)\b/.test(stripped)) return "unmute";
+	if (/^!(stop|cancel)\b/.test(stripped)) return "stop";
 	return null;
+}
+
+/**
+ * Ask the running turn to stop at its next step. Stamped with the stop
+ * message's own Slack time, so it can be ordered against the message that
+ * started a turn: a stop sent after that message applies to the turn, even
+ * one still in preflight without a session row; a stop sent before it was
+ * aimed at an earlier turn. Returns whether a turn was running.
+ */
+export async function requestThreadStop(
+	key: ThreadKey,
+	stopTs: string,
+): Promise<boolean> {
+	const stampedAt = sql`to_timestamp(${stopTs}::numeric)`;
+	const [row] = await db
+		.insert(slackThreadSessions)
+		.values({
+			organizationId: key.organizationId,
+			teamId: key.teamId,
+			channelId: key.channelId,
+			threadTs: key.threadTs,
+			stopRequestedAt: stampedAt,
+		})
+		.onConflictDoUpdate({
+			target: THREAD_CONFLICT_TARGET,
+			// Two stops can arrive out of order; the newer one must win.
+			set: {
+				stopRequestedAt: sql`GREATEST(${slackThreadSessions.stopRequestedAt}, ${stampedAt})`,
+			},
+		})
+		.returning({ status: slackThreadSessions.status });
+	return row?.status === "running";
+}
+
+/** Whether a stop newer than the turn's own message has been requested. */
+export async function threadStopRequested(
+	id: string,
+	messageTs: string,
+): Promise<boolean> {
+	const row = await db.query.slackThreadSessions.findFirst({
+		where: eq(slackThreadSessions.id, id),
+		columns: { stopRequestedAt: true },
+	});
+	return (
+		row?.stopRequestedAt != null &&
+		row.stopRequestedAt.getTime() > Number(messageTs) * 1000
+	);
 }
 
 const flagCache = new Map<string, { enabled: boolean; expiresAt: number }>();
@@ -114,18 +162,7 @@ export async function threadFollowUpTarget(key: {
 	threadTs: string;
 }): Promise<SelectSlackThreadSession | null> {
 	if (!(await threadFollowUpsEnabled(key.teamId))) return null;
-	const connection = await db.query.integrationConnections.findFirst({
-		where: and(
-			eq(integrationConnections.provider, "slack"),
-			eq(integrationConnections.externalOrgId, key.teamId),
-			isNull(integrationConnections.disconnectedAt),
-		),
-		orderBy: [
-			desc(integrationConnections.updatedAt),
-			desc(integrationConnections.id),
-		],
-		columns: { organizationId: true },
-	});
+	const connection = await accountConnection("slack", key.teamId);
 	if (!connection) return null;
 	const session = await db.query.slackThreadSessions.findFirst({
 		where: whereThread({ ...key, organizationId: connection.organizationId }),
@@ -187,7 +224,12 @@ export async function beginThreadRun(
 		const now = new Date();
 		const [claimed] = await db
 			.update(slackThreadSessions)
-			.set({ status: "running", lastActivityAt: now })
+			.set({
+				status: "running",
+				lastActivityAt: now,
+				// A stop sent after this turn's message was meant for it.
+				stopRequestedAt: sql`CASE WHEN ${slackThreadSessions.stopRequestedAt} > to_timestamp(${key.event.ts}::numeric) THEN ${slackThreadSessions.stopRequestedAt} ELSE NULL END`,
+			})
 			.where(
 				and(
 					whereThread(key),
@@ -332,6 +374,7 @@ export async function finishThreadRun(params: {
 		.update(slackThreadSessions)
 		.set({
 			status: "idle",
+			stopRequestedAt: null,
 			lastContextTs: params.lastContextTs,
 			lastActivityAt: new Date(),
 			...(entities.length > 0

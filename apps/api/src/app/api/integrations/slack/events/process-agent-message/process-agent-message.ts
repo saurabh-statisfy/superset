@@ -1,7 +1,11 @@
 import { db } from "@superset/db/client";
-import { integrationConnections, subscriptions } from "@superset/db/schema";
+import { subscriptions } from "@superset/db/schema";
+import {
+	accountConnection,
+	connectionBotToken,
+} from "@superset/trpc/connectors";
 import { Client as QStash } from "@upstash/qstash";
-import { and, desc, eq, isNull } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { env } from "@/env";
 import { posthog } from "@/lib/analytics";
 import { findSlackUserLink } from "../../lib/find-slack-user-link";
@@ -13,6 +17,7 @@ import {
 import { generateConnectUrl } from "../utils/generate-connect-url";
 import {
 	formatErrorForSlack,
+	mentionsPlugin,
 	resolveUserMentions,
 	runSlackAgent,
 	SlackAgentError,
@@ -37,9 +42,11 @@ import {
 	finishThreadRun,
 	parseThreadCommand,
 	renderThreadMemory,
+	requestThreadStop,
 	setThreadQuiet,
 	takeQueuedEvents,
 	threadFollowUpsEnabled,
+	threadStopRequested,
 } from "../utils/thread-sessions";
 
 import { splitMarkdown } from "./utils/split-markdown";
@@ -58,6 +65,8 @@ const LOST_TRACK_TEXT =
 const QUIETED_TEXT =
 	"Got it. I'll stay out of this thread unless someone mentions me.";
 const UNQUIETED_TEXT = "Got it. I'll answer replies in this thread again.";
+const STOPPING_TEXT = "Stopping.";
+const NOTHING_RUNNING_TEXT = "Nothing is running in this thread.";
 const JOB_URLS = {
 	mention: `${env.NEXT_PUBLIC_API_URL}/api/integrations/slack/jobs/process-mention`,
 	assistant: `${env.NEXT_PUBLIC_API_URL}/api/integrations/slack/jobs/process-assistant-message`,
@@ -104,17 +113,7 @@ export async function processAgentMessage({
 		user: event.user,
 	});
 
-	const connection = await db.query.integrationConnections.findFirst({
-		where: and(
-			eq(integrationConnections.provider, "slack"),
-			eq(integrationConnections.externalOrgId, teamId),
-			isNull(integrationConnections.disconnectedAt),
-		),
-		orderBy: [
-			desc(integrationConnections.updatedAt),
-			desc(integrationConnections.id),
-		],
-	});
+	const connection = await accountConnection("slack", teamId);
 
 	if (!connection) {
 		console.error(
@@ -124,7 +123,8 @@ export async function processAgentMessage({
 		return;
 	}
 
-	const slack = createSlackClient(connection.accessToken);
+	const botToken = await connectionBotToken(connection);
+	const slack = createSlackClient(botToken);
 
 	const [slackUserLink, activeSubscription] = await Promise.all([
 		event.user
@@ -252,17 +252,18 @@ export async function processAgentMessage({
 	// closed since, and the unflagged path never runs the agent for one.
 	const isFollowUp = event.type === "message" && !isDm;
 	if (isFollowUp && !sessions) return;
-	// Every DM already reaches the agent, so quieting means nothing there.
-	const command =
-		sessions && !isDm ? parseThreadCommand(event.text ?? "") : null;
+	// Every DM already reaches the agent, so quieting means nothing there;
+	// stopping a turn does.
+	const parsed = sessions ? parseThreadCommand(event.text ?? "") : null;
+	const command = isDm && parsed !== "stop" ? null : parsed;
 	// assistant.threads.setStatus only works in assistant (DM) threads; Slack
 	// answers method_not_supported_for_channel_type anywhere else. Channels get
 	// a placeholder message that carries progress and is removed once the final
 	// reply exists, so the thread ends with one notifying message.
 	const deadline = Date.now() + RUN_BUDGET_MS;
-	const run = createSlackClient(connection.accessToken, { deadline });
+	const run = createSlackClient(botToken, { deadline });
 	const replyDeadline = deadline + REPLY_BUDGET_MS;
-	const reply = createSlackClient(connection.accessToken, {
+	const reply = createSlackClient(botToken, {
 		deadline: replyDeadline,
 	});
 	let placeholderTs: string | undefined;
@@ -344,11 +345,19 @@ export async function processAgentMessage({
 	if (command) {
 		let applied = false;
 		try {
-			await setThreadQuiet({ ...threadKey, quiet: command === "mute" });
+			let text: string;
+			if (command === "stop") {
+				text = (await requestThreadStop(threadKey, event.ts))
+					? STOPPING_TEXT
+					: NOTHING_RUNNING_TEXT;
+			} else {
+				await setThreadQuiet({ ...threadKey, quiet: command === "mute" });
+				text = command === "mute" ? QUIETED_TEXT : UNQUIETED_TEXT;
+			}
 			await reply.chat.postMessage({
 				channel: event.channel,
 				thread_ts: threadTs,
-				text: command === "mute" ? QUIETED_TEXT : UNQUIETED_TEXT,
+				text,
 			});
 			applied = true;
 		} finally {
@@ -380,7 +389,7 @@ export async function processAgentMessage({
 		const imageAssets = await extractSlackImageAssets({
 			eventFiles: event.files,
 			slack: run,
-			slackToken: connection.accessToken,
+			slackToken: botToken,
 			deadline,
 		});
 
@@ -423,7 +432,7 @@ export async function processAgentMessage({
 			messageTs: event.ts,
 			organizationId: connection.organizationId,
 			userId: slackUserLink.userId,
-			slackToken: connection.accessToken,
+			slackToken: botToken,
 			model: slackUserLink.modelPreference ?? undefined,
 			images: imageAssets,
 			deadline,
@@ -431,6 +440,7 @@ export async function processAgentMessage({
 				? {
 						threadMemory: renderThreadMemory(threadSession.entityLog),
 						lastContextTs: threadSession.lastContextTs ?? undefined,
+						shouldStop: () => threadStopRequested(threadSession.id, event.ts),
 						...(isDm
 							? {}
 							: {
@@ -490,6 +500,42 @@ export async function processAgentMessage({
 			} catch (err) {
 				console.error(
 					"[slack/process-agent-message] Failed to post side effects:",
+					err,
+				);
+			}
+		}
+
+		const toConnect = (result.unconnectedPlugins ?? []).filter((plugin) =>
+			mentionsPlugin(result.text, plugin),
+		);
+		if (toConnect.length > 0) {
+			const names = toConnect.map((plugin) => plugin.displayName).join(" and ");
+			const text = `${names} ${toConnect.length === 1 ? "isn't" : "aren't"} connected to your Superset account yet.`;
+			try {
+				await reply.chat.postMessage({
+					channel: event.channel,
+					thread_ts: threadTs,
+					text,
+					blocks: [
+						{ type: "section", text: { type: "mrkdwn", text } },
+						{
+							type: "actions",
+							elements: toConnect.map((plugin) => ({
+								type: "button",
+								text: {
+									type: "plain_text",
+									text: `Connect ${plugin.displayName}`,
+									emoji: true,
+								},
+								url: `${env.NEXT_PUBLIC_WEB_URL}/plugins`,
+								style: "primary",
+							})),
+						},
+					],
+				});
+			} catch (err) {
+				console.error(
+					"[slack/process-agent-message] Failed to post connect prompt:",
 					err,
 				);
 			}

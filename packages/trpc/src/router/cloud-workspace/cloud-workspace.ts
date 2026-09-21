@@ -6,11 +6,10 @@ import {
 	githubRepositories,
 } from "@superset/db/schema";
 import { isCloudAgentId } from "@superset/shared/cloud-agent-launch";
-import { SHARED_ENVIRONMENT_ORGANIZATION_ID } from "@superset/shared/constants";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
 import { Client } from "@upstash/qstash";
-import { and, asc, desc, eq, inArray, isNull, ne } from "drizzle-orm";
+import { and, asc, desc, eq, isNull, ne } from "drizzle-orm";
 import { z } from "zod";
 import { env } from "../../env";
 import { assertCloudAccess, assertMember } from "../../lib/cloud-guards";
@@ -21,7 +20,6 @@ import {
 import { nudge } from "../../lib/realtime";
 import {
 	buildSandboxClaim,
-	DESKTOP_PORT,
 	deleteSandbox,
 	describeSandbox,
 	environmentRepositoryRows,
@@ -218,6 +216,12 @@ export const cloudWorkspaceRouter = {
 				model: z.string().min(1).optional(),
 				effort: z.string().min(1).optional(),
 				mode: z.string().min(1).optional(),
+				/**
+				 * Cloud uploads to hand the agent with `prompt`. The box pulls the
+				 * bytes once it is up; the same cap `attachments.importFromCloud`
+				 * takes, since that is what runs in there.
+				 */
+				attachmentFileIds: z.array(z.string().uuid()).max(10).optional(),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
@@ -235,10 +239,7 @@ export const cloudWorkspaceRouter = {
 			const environment = await db.query.environments.findFirst({
 				where: and(
 					eq(environments.id, input.environmentId),
-					inArray(environments.organizationId, [
-						input.organizationId,
-						SHARED_ENVIRONMENT_ORGANIZATION_ID,
-					]),
+					eq(environments.organizationId, input.organizationId),
 					isNull(environments.archivedAt),
 				),
 			});
@@ -331,6 +332,7 @@ export const cloudWorkspaceRouter = {
 								model: input.model,
 								effort: input.effort,
 								mode: input.mode,
+								attachmentFileIds: input.attachmentFileIds,
 							},
 						}
 					: {}),
@@ -434,7 +436,6 @@ export const cloudWorkspaceRouter = {
 			const row = await loadReadyWorkspace(ctx, input.id);
 			let address: {
 				hostTarget: string;
-				desktopTarget: string;
 				running: boolean;
 			};
 			try {
@@ -480,26 +481,20 @@ export const cloudWorkspaceRouter = {
 					cause: { kind: "CLOUD_WORKSPACE_NOT_READY", status: "failed" },
 				});
 			}
-			const [host, desktop] = await Promise.all([
-				mintSandboxGateAccess({
-					workspaceId: row.id,
-					userId: ctx.userId,
-					port: HOST_SERVICE_PORT,
-					target: address.hostTarget,
-				}),
-				mintSandboxGateAccess({
-					workspaceId: row.id,
-					userId: ctx.userId,
-					port: DESKTOP_PORT,
-					target: address.desktopTarget,
-				}),
-			]);
+			const host = await mintSandboxGateAccess({
+				workspaceId: row.id,
+				userId: ctx.userId,
+				port: HOST_SERVICE_PORT,
+				target: address.hostTarget,
+			});
 			return {
 				url: host.url,
 				token: host.token,
 				expiresAt: host.expiresAt,
 				running: address.running,
-				desktop: { url: desktop.url, token: desktop.token },
+				// The display is served by host-service too: same address, same
+				// ticket. The sandbox's own desktop port is not published.
+				desktop: { url: host.url, token: host.token },
 			};
 		}),
 
