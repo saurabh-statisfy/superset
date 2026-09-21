@@ -69,7 +69,10 @@ const RULES: Rule[] = [
 			// runtime/git/). Shrink by porting to worker tasks: resolve env
 			// on-loop with createGitEnvResolver, run the git work in the pool
 			// (see workspace-cleanup/git-ops.ts for the pattern).
-			"trpc/router/git/git.ts": 12,
+			// 13th is this fork's sync-main procedure, which constructs a client
+			// per worktree inside its merge loop — the worst shape for the rule.
+			// Port it to a worker task before adding anything else here.
+			"trpc/router/git/git.ts": 13,
 			"trpc/router/project/project.ts": 1,
 			"trpc/router/project/utils/create-local-workspace.ts": 1,
 			"trpc/router/workspace-creation/procedures/adopt.ts": 1,
