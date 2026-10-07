@@ -1,6 +1,6 @@
 import { Database } from "bun:sqlite";
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
-import { mkdirSync, mkdtempSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, realpathSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { TRPCError } from "@trpc/server";
@@ -10,11 +10,14 @@ import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import type { HostDb } from "../../../db";
 import * as schema from "../../../db/schema";
 import { TerminalAgentStore } from "../../../terminal-agents";
+import { claudeProjectDirName } from "../../../terminal-agents/harness-sessions/claude";
 import { setDefaultAccountSelection } from "../usage/default-account";
 import {
 	bindResumedSession,
 	buildAgentCommandString,
 	buildTerminalAgentLaunch,
+	chatContinuationTarget,
+	chatLaunchTarget,
 	continuationTarget,
 	validateAgentEffortSelection,
 	validateAgentForkSelection,
@@ -348,11 +351,12 @@ describe("buildTerminalAgentLaunch", () => {
 		// visible and holds no such session, so the fixture has to provide one.
 		// Pinning the agent to a temp CLAUDE_CONFIG_DIR keeps it out of ~/.claude.
 		const configDir = mkdtempSync(join(tmpdir(), "fork-preflight-"));
-		const worktreePath = mkdtempSync(join(tmpdir(), "fork-worktree-"));
-		mkdirSync(
-			join(configDir, "projects", worktreePath.replaceAll(/[/.]/g, "-")),
-			{ recursive: true },
+		const worktreePath = realpathSync(
+			mkdtempSync(join(tmpdir(), "fork-worktree-")),
 		);
+		mkdirSync(join(configDir, "projects", claudeProjectDirName(worktreePath)), {
+			recursive: true,
+		});
 		db.insert(schema.workspaces)
 			.values({
 				id: "11111111-1111-1111-1111-111111111111",
@@ -365,8 +369,8 @@ describe("buildTerminalAgentLaunch", () => {
 			.set({ envJson: JSON.stringify({ CLAUDE_CONFIG_DIR: configDir }) })
 			.where(eq(schema.hostAgentConfigs.presetId, "claude"))
 			.run();
-		// The claude locator reads ~/.claude/projects/<encoded cwd>/<id>.jsonl,
-		// and this workspace has no such file, so the answer is a confident no.
+		// The encoded project directory exists and no project holds the id,
+		// so the answer is a confident no.
 		expect(() =>
 			buildTerminalAgentLaunch(db, {
 				workspaceId: "11111111-1111-1111-1111-111111111111",
@@ -1033,6 +1037,45 @@ describe("continuationTarget", () => {
 				...run,
 				workspaceId: "33333333-3333-3333-3333-333333333333",
 			}),
+		).toBeNull();
+	});
+	it("continues a chat bound to the terminal while its session is alive", () => {
+		const db = createTestDb();
+		seedClaude(db);
+		const store = new TerminalAgentStore();
+		store.recordChatEvent({
+			terminalId,
+			workspaceId,
+			eventType: "Stop",
+			agentId: "claude",
+			chatSessionId: "chat-1",
+			occurredAt: Date.now(),
+		});
+		const live = (status: string) => ({ get: () => ({ state: { status } }) });
+
+		expect(chatContinuationTarget(db, store, live("idle"), run)).toEqual({
+			terminalId,
+			chatSessionId: "chat-1",
+			label: "Claude",
+		});
+		expect(chatContinuationTarget(db, store, live("dead"), run)).toBeNull();
+	});
+
+	it("launches a chat only when asked for one with an ACP harness", () => {
+		const db = createTestDb();
+		seedClaude(db);
+		const launch = { workspaceId, agent: "claude", prompt: "go" };
+
+		expect(
+			chatLaunchTarget(db, { ...launch, surface: "chat", mode: "plan" }),
+		).toEqual({
+			harness: "claude-acp",
+			label: "Claude",
+			attachments: [],
+		});
+		expect(chatLaunchTarget(db, launch)).toBeNull();
+		expect(
+			chatLaunchTarget(db, { ...launch, surface: "chat", effort: "high" }),
 		).toBeNull();
 	});
 });

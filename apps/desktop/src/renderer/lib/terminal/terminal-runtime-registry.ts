@@ -3,6 +3,7 @@ import type { SearchAddon } from "@xterm/addon-search";
 import { DEFAULT_TERMINAL_PARKED_RUNTIME_CAP } from "shared/constants";
 import type { TerminalAppearance } from "./appearance";
 import { runWhenParserIdle } from "./parser-idle-gate";
+import { getTerminalSelectionForCopy } from "./terminal-copy";
 import type { ImagePasteOverride } from "./terminal-image-paste-fallback";
 import {
 	type LinkHoverInfo,
@@ -36,6 +37,7 @@ import {
 	getPersistableSeqAnchor,
 	park,
 	reconnect,
+	sendColors,
 	sendDispose,
 	sendResize,
 	setVisible,
@@ -443,6 +445,11 @@ class TerminalRuntimeRegistryImpl {
 
 		// The refit may defer until the parser drains; the callback reports it.
 		const transport = entry.transport;
+		sendColors(
+			entry.transport,
+			appearance.theme,
+			entry.runtime.terminal.options.theme !== appearance.theme,
+		);
 		updateRuntimeAppearance(entry.runtime, appearance, () => {
 			const runtime = entry.runtime;
 			if (!runtime) return;
@@ -454,6 +461,11 @@ class TerminalRuntimeRegistryImpl {
 	updateAllAppearances(appearance: TerminalAppearance) {
 		for (const entry of this.entries.values()) {
 			if (!entry.runtime) continue;
+			sendColors(
+				entry.transport,
+				appearance.theme,
+				entry.runtime.terminal.options.theme !== appearance.theme,
+			);
 			updateRuntimeAppearance(entry.runtime, appearance, () => {
 				const runtime = entry.runtime;
 				if (!runtime) return;
@@ -546,7 +558,9 @@ class TerminalRuntimeRegistryImpl {
 
 	getSelection(terminalId: string, instanceId?: string): string {
 		const entry = this.getEntry(terminalId, instanceId);
-		return entry?.runtime?.terminal.getSelection() ?? "";
+		return entry?.runtime
+			? getTerminalSelectionForCopy(entry.runtime.terminal)
+			: "";
 	}
 
 	clear(terminalId: string, instanceId?: string): void {
@@ -658,6 +672,25 @@ class TerminalRuntimeRegistryImpl {
 		return (
 			this.getEntry(terminalId, instanceId)?.transport._terminated ?? false
 		);
+	}
+
+	isNarrowedByOtherClient(terminalId: string, instanceId?: string): boolean {
+		return (
+			this.getEntry(terminalId, instanceId)?.transport.narrowedByOtherClient ??
+			false
+		);
+	}
+
+	onNarrowedChange(
+		terminalId: string,
+		listener: () => void,
+		instanceId = terminalId,
+	): () => void {
+		const entry = this.getOrCreateEntry(terminalId, instanceId);
+		entry.transport.narrowedListeners.add(listener);
+		return () => {
+			entry.transport.narrowedListeners.delete(listener);
+		};
 	}
 
 	isSessionEnded(terminalId: string, instanceId?: string): boolean {

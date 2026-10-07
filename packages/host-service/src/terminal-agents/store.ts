@@ -1,12 +1,13 @@
 import { EventEmitter } from "node:events";
+import type { BackgroundTask } from "@superset/chat/protocol";
 import type { AgentDefinitionId } from "@superset/shared/agent-catalog";
 import {
 	getSubagentHarness,
-	isTrustedTranscriptPath,
 	readSubagentTranscript,
 	type SubagentTranscriptHint,
 } from "./subagent-harnesses";
 import type { SubagentTranscript } from "./subagent-transcript";
+import { isTrustedTranscriptPath } from "./transcript-path";
 import type {
 	TerminalAgentBinding,
 	TerminalAgentEndReason,
@@ -133,6 +134,7 @@ export interface TerminalAgentBindingPersistence {
  */
 export class TerminalAgentStore extends EventEmitter {
 	private readonly byTerminal = new Map<string, TerminalAgentBinding>();
+	private readonly chatByTerminal = new Map<string, TerminalAgentBinding>();
 	private readonly subagentsByTerminal = new Map<
 		string,
 		Map<string, TerminalSubagent>
@@ -165,24 +167,22 @@ export class TerminalAgentStore extends EventEmitter {
 			return;
 		}
 
-		const existing = this.byTerminal.get(terminalId);
+		const ended = this.persistence?.getEnded?.(terminalId);
+		const existing = ended ? undefined : this.byTerminal.get(terminalId);
 		if (!agentId && !existing) return;
 
 		// A late event for a dead terminal must not resurrect its ended row
 		// (the upsert would clear the resume state). Revive only on a fresh
 		// session start, a different agent session id, or an event well past
 		// the end (an agent without SessionStart hooks launched later).
-		if (!existing && this.persistence?.getEnded) {
-			const ended = this.persistence.getEnded(terminalId);
-			if (
-				ended !== undefined &&
-				eventType !== "Attached" &&
-				(agentSessionId === undefined ||
-					agentSessionId === ended.agentSessionId) &&
-				occurredAt - ended.endedAt <= END_STRAGGLER_WINDOW_MS
-			) {
-				return;
-			}
+		if (
+			ended !== undefined &&
+			eventType !== "Attached" &&
+			(agentSessionId === undefined ||
+				agentSessionId === ended.agentSessionId) &&
+			occurredAt - ended.endedAt <= END_STRAGGLER_WINDOW_MS
+		) {
+			return;
 		}
 
 		const nextAgentId = agentId ?? existing?.agentId;
@@ -241,6 +241,71 @@ export class TerminalAgentStore extends EventEmitter {
 		this.byTerminal.set(terminalId, next);
 		this.persistence?.upsert(next);
 		this.emit("change", workspaceId);
+	}
+
+	recordChatEvent(
+		input: RecordEventInput & {
+			agentId: TerminalAgentId;
+			chatSessionId: string;
+		},
+	): void {
+		const prior = this.chatByTerminal.get(input.terminalId);
+		const sameSession =
+			prior !== undefined &&
+			prior.agentId === input.agentId &&
+			(input.agentSessionId === undefined ||
+				prior.agentSessionId === undefined ||
+				prior.agentSessionId === input.agentSessionId);
+		this.chatByTerminal.set(input.terminalId, {
+			terminalId: input.terminalId,
+			workspaceId: input.workspaceId,
+			agentId: input.agentId,
+			agentSessionId: input.agentSessionId ?? prior?.agentSessionId,
+			account: input.account ?? (sameSession ? prior.account : undefined),
+			startedAt: sameSession ? prior.startedAt : input.occurredAt,
+			lastEventAt: input.occurredAt,
+			lastEventType: input.eventType,
+			chatSessionId: input.chatSessionId,
+			...(prior?.chatSessionId === input.chatSessionId
+				? {
+						...(prior.backgroundTasks
+							? { backgroundTasks: prior.backgroundTasks }
+							: {}),
+						...(prior.queuedPrompts
+							? { queuedPrompts: prior.queuedPrompts }
+							: {}),
+					}
+				: {}),
+		});
+		this.emit("change", input.workspaceId);
+	}
+
+	updateChat(
+		terminalId: string,
+		patch: { backgroundTasks?: BackgroundTask[]; queuedPrompts?: number },
+	): void {
+		const prior = this.chatByTerminal.get(terminalId);
+		if (!prior) return;
+		const next: TerminalAgentBinding = { ...prior, ...patch };
+		if (next.backgroundTasks?.length === 0) delete next.backgroundTasks;
+		if (next.queuedPrompts === 0) delete next.queuedPrompts;
+		this.chatByTerminal.set(terminalId, next);
+		this.emit("change", prior.workspaceId);
+	}
+
+	endChat(terminalId: string): void {
+		const prior = this.chatByTerminal.get(terminalId);
+		if (!prior) return;
+		this.chatByTerminal.delete(terminalId);
+		this.emit("change", prior.workspaceId);
+	}
+
+	getChat(terminalId: string): TerminalAgentBinding | undefined {
+		return this.chatByTerminal.get(terminalId);
+	}
+
+	hasChat(terminalId: string): boolean {
+		return this.chatByTerminal.has(terminalId);
 	}
 
 	/**
@@ -410,10 +475,26 @@ export class TerminalAgentStore extends EventEmitter {
 			this.persistence?.upsert(next);
 			changed = true;
 		}
+		for (const [terminalId, binding] of this.chatByTerminal) {
+			if (binding.workspaceId !== workspaceId) continue;
+			if (onlyTerminalId !== undefined && terminalId !== onlyTerminalId)
+				continue;
+			if (
+				binding.lastEventType === "Stop" ||
+				binding.lastEventType === "Failed"
+			)
+				continue;
+			this.chatByTerminal.set(terminalId, {
+				...binding,
+				lastEventType: "Stop",
+			});
+			changed = true;
+		}
 		if (changed) this.emit("change", workspaceId);
 	}
 
 	get(terminalId: string): TerminalAgentBinding | undefined {
+		if (this.persistence?.getEnded?.(terminalId)) return undefined;
 		const binding = this.byTerminal.get(terminalId);
 		return binding && this.withRuntimeState(binding);
 	}
@@ -422,31 +503,54 @@ export class TerminalAgentStore extends EventEmitter {
 		workspaceId: string,
 		filter?: TerminalAgentBindingListFilter,
 	): TerminalAgentBinding[] {
+		const matches = (binding: TerminalAgentBinding) =>
+			binding.workspaceId === workspaceId &&
+			(!filter?.agentId || binding.agentId === filter.agentId) &&
+			(!filter?.definitionId || binding.definitionId === filter.definitionId);
+		const chats = [...this.chatByTerminal.values()].filter(matches);
 		if (this.persistence?.listLiveByWorkspace) {
-			return this.persistence
-				.listLiveByWorkspace(workspaceId, filter)
-				.map((binding) => this.withRuntimeState(binding));
+			return this.withChats(
+				this.persistence
+					.listLiveByWorkspace(workspaceId, filter)
+					.map((binding) => this.withRuntimeState(binding)),
+				chats,
+			);
 		}
-		const out: TerminalAgentBinding[] = [];
-		for (const binding of this.byTerminal.values()) {
-			if (binding.workspaceId !== workspaceId) continue;
-			if (filter?.agentId && binding.agentId !== filter.agentId) continue;
-			if (filter?.definitionId && binding.definitionId !== filter.definitionId)
-				continue;
-			out.push(this.withRuntimeState(binding));
-		}
-		return out;
+		return this.withChats(
+			[...this.byTerminal.values()]
+				.filter(matches)
+				.map((binding) => this.withRuntimeState(binding)),
+			chats,
+		);
 	}
 
 	list(): TerminalAgentBinding[] {
+		const chats = [...this.chatByTerminal.values()];
 		if (this.persistence?.listLive) {
-			return this.persistence
-				.listLive()
-				.map((binding) => this.withRuntimeState(binding));
+			return this.withChats(
+				this.persistence
+					.listLive()
+					.map((binding) => this.withRuntimeState(binding)),
+				chats,
+			);
 		}
-		return [...this.byTerminal.values()].map((binding) =>
-			this.withRuntimeState(binding),
+		return this.withChats(
+			[...this.byTerminal.values()].map((binding) =>
+				this.withRuntimeState(binding),
+			),
+			chats,
 		);
+	}
+
+	private withChats(
+		bindings: TerminalAgentBinding[],
+		chats: TerminalAgentBinding[],
+	): TerminalAgentBinding[] {
+		const terminals = new Set(bindings.map((binding) => binding.terminalId));
+		return [
+			...bindings,
+			...chats.filter((chat) => !terminals.has(chat.terminalId)),
+		];
 	}
 
 	/**

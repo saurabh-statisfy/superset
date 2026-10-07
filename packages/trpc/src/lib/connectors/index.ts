@@ -386,38 +386,234 @@ export interface ConnectorIdentity {
 	user: { id: string; label: string | null } | null;
 }
 
+interface JsonRpcMessage {
+	id?: number | string;
+	method?: string;
+	result?: Record<string, unknown>;
+	error?: { message?: string };
+}
+
+const isJsonRpcResponse = (message: JsonRpcMessage): boolean =>
+	message.result !== undefined || message.error !== undefined;
+
+function readJsonRpc(text: string, id: number): JsonRpcMessage {
+	const messages: JsonRpcMessage[] = [];
+	const consider = (candidate: string) => {
+		if (!candidate) return;
+		try {
+			messages.push(JSON.parse(candidate) as JsonRpcMessage);
+		} catch {}
+	};
+
+	const trimmed = text.trim();
+	if (trimmed.startsWith("{")) {
+		consider(trimmed);
+	} else {
+		for (const event of text.split(/\r?\n\r?\n/)) {
+			consider(
+				event
+					.split(/\r?\n/)
+					.filter((line) => line.startsWith("data:"))
+					.map((line) => line.slice(5).replace(/^ /, ""))
+					.join("\n"),
+			);
+		}
+	}
+
+	const match =
+		messages.find(
+			(message) =>
+				isJsonRpcResponse(message) &&
+				message.id !== undefined &&
+				String(message.id) === String(id),
+		) ?? messages.filter(isJsonRpcResponse).at(-1);
+	if (!match)
+		throw new Error(`no JSON-RPC response in a ${text.length}-byte body`);
+	return match;
+}
+
+async function mcpIdentity(
+	slug: string,
+	probe: { mcp: string; tool: string; arguments: Record<string, unknown> },
+	accessToken: string,
+): Promise<Record<string, unknown>> {
+	let session: string | null = null;
+	let protocolVersion: string | null = null;
+	let requestId = 0;
+
+	const post = async (body: Record<string, unknown>) => {
+		const response = await credentialFetch(
+			probe.mcp,
+			{
+				method: "POST",
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					"Content-Type": "application/json",
+					Accept: "application/json, text/event-stream",
+					...(session ? { "Mcp-Session-Id": session } : {}),
+					...(protocolVersion
+						? { "MCP-Protocol-Version": protocolVersion }
+						: {}),
+				},
+				body: JSON.stringify(body),
+			},
+			`Connector "${slug}" identity`,
+		);
+		session = response.headers.get("mcp-session-id") ?? session;
+		return response;
+	};
+
+	const request = async (
+		method: string,
+		params: Record<string, unknown>,
+	): Promise<Record<string, unknown>> => {
+		const id = ++requestId;
+		const response = await post({ jsonrpc: "2.0", id, method, params });
+		const text = await response.text();
+		if (!response.ok)
+			throw new Error(
+				`Connector "${slug}" identity probe failed at ${method}: ${response.status} ${text.slice(0, 200)}`,
+			);
+		const message = readJsonRpc(text, id);
+		if (message.error)
+			throw new Error(
+				`Connector "${slug}" identity probe failed at ${method}: ${message.error.message}`,
+			);
+		return message.result ?? {};
+	};
+
+	try {
+		const init = await request("initialize", {
+			protocolVersion: "2025-06-18",
+			capabilities: {},
+			clientInfo: { name: "superset-connectors", version: "1.0.0" },
+		});
+		if (typeof init.protocolVersion === "string")
+			protocolVersion = init.protocolVersion;
+		await post({ jsonrpc: "2.0", method: "notifications/initialized" });
+
+		const result = (await request("tools/call", {
+			name: probe.tool,
+			arguments: probe.arguments,
+		}).catch(async (error: unknown) => {
+			const listed = await request("tools/list", {}).then(
+				(tools) =>
+					(tools.tools as { name?: string; inputSchema?: unknown }[]).map(
+						(tool) =>
+							tool.name === probe.tool
+								? `${tool.name} ${JSON.stringify(tool.inputSchema)}`
+								: tool.name,
+					),
+				(listError: unknown) => [
+					`tools/list failed: ${listError instanceof Error ? listError.message : String(listError)}`,
+				],
+			);
+			throw new Error(
+				`${error instanceof Error ? error.message : String(error)}; server said ${JSON.stringify(init).slice(0, 1500)}; tools: ${listed.join(", ").slice(0, 1500)}`,
+			);
+		})) as {
+			structuredContent?: Record<string, unknown>;
+			content?: { type: string; text?: string }[];
+			isError?: boolean;
+		};
+
+		const firstText = result.content?.find(
+			(item) => typeof item.text === "string",
+		)?.text;
+		if (result.isError)
+			throw new Error(
+				`Connector "${slug}" identity tool errored: ${firstText?.slice(0, 200) ?? "no detail"}`,
+			);
+		if (result.structuredContent) return result.structuredContent;
+		if (!firstText)
+			throw new Error(`Connector "${slug}" identity tool returned no content.`);
+		try {
+			return JSON.parse(firstText) as Record<string, unknown>;
+		} catch {
+			throw new Error(
+				`Connector "${slug}" identity tool returned text that is not JSON: ${firstText.slice(0, 400)}`,
+			);
+		}
+	} finally {
+		if (session)
+			await credentialFetch(
+				probe.mcp,
+				{
+					method: "DELETE",
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+						"Mcp-Session-Id": session,
+						...(protocolVersion
+							? { "MCP-Protocol-Version": protocolVersion }
+							: {}),
+					},
+				},
+				`Connector "${slug}" identity`,
+			).catch(() => {});
+	}
+}
+
+/** A value's keys and types without its contents, so an error can show what came back and leak nothing. */
+function shapeOf(value: unknown): unknown {
+	if (Array.isArray(value)) return value.slice(0, 1).map(shapeOf);
+	if (value && typeof value === "object")
+		return Object.fromEntries(
+			Object.entries(value).map(([key, entry]) => [key, shapeOf(entry)]),
+		);
+	return typeof value;
+}
+
 export async function probeIdentity(
 	slug: string,
 	method: ConnectorMethod,
 	accessToken: string,
 	params?: Record<string, string | undefined>,
+	tokenPayload?: Record<string, unknown>,
 ): Promise<ConnectorIdentity> {
 	const env = connectorEnv(slug, method);
 	const scope = { env, params, config: { access_token: accessToken } };
 	const probe = method.identity;
 
-	const url = resolveConnectorTemplate(probe.url, scope);
-	const headers = Object.fromEntries(
-		Object.entries(probe.headers ?? {}).map(([key, value]) => [
-			key,
-			resolveConnectorTemplate(value, scope),
-		]),
-	);
-
-	const response = await credentialFetch(
-		url,
-		{
-			method: probe.method,
-			headers,
-			body: probe.body ? JSON.stringify(probe.body) : undefined,
-		},
-		`Connector "${slug}" identity`,
-	);
-	const payload = (await response.json()) as Record<string, unknown>;
-	if (!response.ok)
-		throw new Error(
-			`Connector "${slug}" identity probe failed: ${response.status}`,
+	let payload: Record<string, unknown>;
+	if ("url" in probe) {
+		const url = resolveConnectorTemplate(probe.url, scope);
+		const headers = Object.fromEntries(
+			Object.entries(probe.headers ?? {}).map(([key, value]) => [
+				key,
+				resolveConnectorTemplate(value, scope),
+			]),
 		);
+
+		const response = await credentialFetch(
+			url,
+			{
+				method: probe.method,
+				headers,
+				body: probe.body ? JSON.stringify(probe.body) : undefined,
+			},
+			`Connector "${slug}" identity`,
+		);
+		const text = await response.text();
+		if (!response.ok)
+			throw new Error(
+				`Connector "${slug}" identity probe failed: ${response.status} ${text.slice(0, 200)}`,
+			);
+		try {
+			payload = JSON.parse(text) as Record<string, unknown>;
+		} catch {
+			throw new Error(
+				`Connector "${slug}" identity probe returned a non-JSON body: ${text.slice(0, 200)}`,
+			);
+		}
+	} else if ("mcp" in probe) {
+		payload = await mcpIdentity(slug, probe, accessToken);
+	} else {
+		if (!tokenPayload)
+			throw new Error(
+				`Connector "${slug}" reads its identity from the token response, which this flow does not have.`,
+			);
+		payload = tokenPayload;
+	}
 
 	const read = (path: string): string | null => {
 		const value = readPath(payload, path);
@@ -427,7 +623,7 @@ export async function probeIdentity(
 	const accountId = read(probe.account.id);
 	if (!accountId)
 		throw new Error(
-			`Connector "${slug}" identity probe returned nothing at ${probe.account.id}.`,
+			`Connector "${slug}" identity probe returned nothing at ${probe.account.id}. The result has the shape ${JSON.stringify(shapeOf(payload)).slice(0, 800)}`,
 		);
 
 	const userId = probe.user ? read(probe.user.id) : null;

@@ -12,7 +12,7 @@ import {
 import { Input } from "@superset/ui/input";
 import { Label } from "@superset/ui/label";
 import { toast } from "@superset/ui/sonner";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LuFolderOpen, LuLoaderCircle } from "react-icons/lu";
 import { useIsV2CloudEnabled } from "renderer/hooks/useIsV2CloudEnabled";
 import { electronTrpc } from "renderer/lib/electron-trpc";
@@ -23,6 +23,7 @@ import {
 	useFinalizeProjectSetup,
 } from "renderer/react-query/projects";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
+import { GitHubRepositoryPicker } from "./components/GitHubRepositoryPicker";
 
 interface NewProjectModalProps {
 	open: boolean;
@@ -60,7 +61,11 @@ export function NewProjectModal({
 	const [url, setUrl] = useState("");
 	const [name, setName] = useState("");
 	const [nameTouched, setNameTouched] = useState(false);
+	const [selectedRepository, setSelectedRepository] = useState<string | null>(
+		null,
+	);
 	const [working, setWorking] = useState(false);
+	const cloneAbortRef = useRef<AbortController | null>(null);
 
 	useEffect(() => {
 		if (parentDir || !homeDir) return;
@@ -76,12 +81,15 @@ export function NewProjectModal({
 		setUrl("");
 		setName("");
 		setNameTouched(false);
+		setSelectedRepository(null);
 		setWorking(false);
 	};
 
 	const handleOpenChange = (next: boolean) => {
-		if (!next && working) return;
-		if (!next) reset();
+		if (!next) {
+			cloneAbortRef.current?.abort();
+			reset();
+		}
 		onOpenChange(next);
 	};
 
@@ -121,6 +129,8 @@ export function NewProjectModal({
 			return;
 		}
 
+		const abort = new AbortController();
+		cloneAbortRef.current = abort;
 		setWorking(true);
 		try {
 			if (!isV2CloudEnabled) {
@@ -150,15 +160,19 @@ export function NewProjectModal({
 				return;
 			}
 			const client = getHostServiceClientByUrl(activeHostUrl);
-			const result = await client.project.create.mutate({
-				name: trimmedName,
-				mode: { kind: "clone", parentDir: trimmedParent, url: trimmedUrl },
-			});
+			const result = await client.project.create.mutate(
+				{
+					name: trimmedName,
+					mode: { kind: "clone", parentDir: trimmedParent, url: trimmedUrl },
+				},
+				{ signal: abort.signal },
+			);
 			finalizeSetup(activeHostUrl, result);
 			onSuccess?.({ projectId: result.projectId });
 			reset();
 			onOpenChange(false);
 		} catch (err) {
+			if (abort.signal.aborted) return;
 			const raw = rawErrorMessage(err);
 			// Drizzle / pg errors arrive as "Failed query: insert into ..."
 			// which is useless to a user. Hide that envelope in favor of a
@@ -198,6 +212,20 @@ export function NewProjectModal({
 				</DialogHeader>
 
 				<div className="flex flex-col gap-4">
+					{isV2CloudEnabled && (
+						<GitHubRepositoryPicker
+							disabled={working}
+							hostUrl={activeHostUrl}
+							onSelect={(repository) => {
+								setUrl(repository.cloneUrl);
+								setName(deriveProjectNameFromUrl(repository.cloneUrl));
+								setNameTouched(false);
+								setSelectedRepository(repository.fullName);
+							}}
+							selectedFullName={selectedRepository}
+						/>
+					)}
+
 					<div className="flex flex-col gap-1.5">
 						<Label htmlFor="clone-url" className="text-xs">
 							<Trans>Repository URL or path</Trans>
@@ -205,7 +233,10 @@ export function NewProjectModal({
 						<Input
 							id="clone-url"
 							value={url}
-							onChange={(e) => setUrl(e.target.value)}
+							onChange={(e) => {
+								setUrl(e.target.value);
+								setSelectedRepository(null);
+							}}
 							placeholder={t({
 								message: "https://github.com/owner/repo.git or /path/to/repo",
 							})}
@@ -271,7 +302,6 @@ export function NewProjectModal({
 						type="button"
 						variant="ghost"
 						onClick={() => handleOpenChange(false)}
-						disabled={working}
 					>
 						<Trans>Cancel</Trans>
 					</Button>

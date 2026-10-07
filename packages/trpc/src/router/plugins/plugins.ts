@@ -20,6 +20,7 @@ import {
 	installRecord,
 } from "./connections";
 import {
+	installConnector,
 	type PluginManifest,
 	pluginConnector,
 	pluginNeedsConnection,
@@ -47,6 +48,14 @@ function ambiguous(error: unknown): never {
 		});
 	}
 	throw error;
+}
+
+function accountLabels(
+	held: { account: string | null; user: string | null }[],
+): string[] {
+	return held
+		.map((connection) => connection.user ?? connection.account)
+		.filter((account): account is string => account !== null);
 }
 
 function notInstalled(name: string): TRPCError {
@@ -232,7 +241,7 @@ const connectionsRouter = {
 						() => null,
 					)
 				: null;
-			const wanted = install ? pluginConnector(install.manifest) : undefined;
+			const wanted = install?.connector;
 
 			const rows = await db
 				.select({
@@ -325,7 +334,7 @@ export const pluginsRouter = createTRPCRouter({
 		}
 
 		const installed = installs.map((row) => {
-			const slug = pluginConnector(row.manifest as PluginManifest);
+			const slug = installConnector(row);
 			const held_ = slug ? (held.get(slug) ?? []) : [];
 			const published =
 				row.marketplace === FIRST_PARTY
@@ -333,14 +342,13 @@ export const pluginsRouter = createTRPCRouter({
 					: undefined;
 			return {
 				...describe(row.manifest as PluginManifest, row.marketplace),
+				connector: slug ?? null,
 				installed: true,
 				enabled: row.enabled,
 				installedAt: row.installedAt as Date | null,
 				latestVersion: published ?? null,
 				connections: held_,
-				accounts: held_
-					.map((connection) => connection.user ?? connection.account)
-					.filter((account): account is string => account !== null),
+				accounts: accountLabels(held_),
 			};
 		});
 
@@ -350,51 +358,35 @@ export const pluginsRouter = createTRPCRouter({
 
 		const claimed = new Set(
 			installs
-				.map((row) => pluginConnector(row.manifest as PluginManifest))
+				.map((row) => installConnector(row))
 				.filter((slug): slug is string => slug !== undefined),
 		);
-
-		const orphaned = [...held.entries()]
-			.filter(([slug]) => !claimed.has(slug))
-			.map(([slug, rows]) => ({
-				name: slug,
-				version: "",
-				description: "",
-				marketplace: FIRST_PARTY,
-				displayName: slug,
-				category: "Developer tools",
-				icon: undefined,
-				connector: slug,
-				mcpUrl: null,
-				skills: [] as { name: string; description: string }[],
-				homepage: null,
-				author: null,
-				license: null,
-				installed: false,
-				enabled: false,
-				installedAt: null as Date | null,
-				latestVersion: null,
-				connections: rows,
-				accounts: rows
-					.map((connection) => connection.user ?? connection.account)
-					.filter((account): account is string => account !== null),
-			}));
 
 		const available = Object.values(FIRST_PARTY_MANIFESTS)
 			.filter(
 				(manifest) => !installedKeys.has(`${FIRST_PARTY}/${manifest.name}`),
 			)
-			.map((manifest) => ({
-				...describe(manifest as unknown as PluginManifest, FIRST_PARTY),
-				installed: false,
-				enabled: false,
-				installedAt: null as Date | null,
-				latestVersion: (manifest.version as string) ?? null,
-				connections: [] as { id: string; account: string | null }[],
-				accounts: [] as string[],
-			}));
+			.map((manifest) => {
+				const described = describe(
+					manifest as unknown as PluginManifest,
+					FIRST_PARTY,
+				);
+				const held_ =
+					described.connector && !claimed.has(described.connector)
+						? (held.get(described.connector) ?? [])
+						: [];
+				return {
+					...described,
+					installed: false,
+					enabled: false,
+					installedAt: null as Date | null,
+					latestVersion: (manifest.version as string) ?? null,
+					connections: held_,
+					accounts: accountLabels(held_),
+				};
+			});
 
-		return [...installed, ...orphaned, ...available];
+		return [...installed, ...available];
 	}),
 
 	install: protectedProcedure
@@ -506,28 +498,31 @@ export const pluginsRouter = createTRPCRouter({
 			const { id, marketplace } = install;
 
 			const [uninstalled] = await db
-				.select({ manifest: pluginInstalls.manifest })
+				.select({
+					manifest: pluginInstalls.manifest,
+					marketplace: pluginInstalls.marketplace,
+					pluginName: pluginInstalls.pluginName,
+				})
 				.from(pluginInstalls)
 				.where(eq(pluginInstalls.id, id))
 				.limit(1);
 
 			await db.delete(pluginInstalls).where(eq(pluginInstalls.id, id));
 
-			const connector = uninstalled
-				? pluginConnector(uninstalled.manifest as PluginManifest)
-				: null;
+			const connector = uninstalled ? installConnector(uninstalled) : null;
 
 			const stillShared =
 				connector &&
 				(
 					await db
-						.select({ manifest: pluginInstalls.manifest })
+						.select({
+							manifest: pluginInstalls.manifest,
+							marketplace: pluginInstalls.marketplace,
+							pluginName: pluginInstalls.pluginName,
+						})
 						.from(pluginInstalls)
 						.where(eq(pluginInstalls.userId, ctx.session.user.id))
-				).some(
-					(entry) =>
-						pluginConnector(entry.manifest as PluginManifest) === connector,
-				);
+				).some((entry) => installConnector(entry) === connector);
 
 			const disconnected =
 				connector && !stillShared

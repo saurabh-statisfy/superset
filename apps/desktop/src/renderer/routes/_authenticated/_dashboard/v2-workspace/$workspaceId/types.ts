@@ -1,5 +1,18 @@
+import type { UserContent } from "@superset/chat/protocol";
 import type { AgentIdentityId } from "@superset/shared/agent-catalog";
+export interface FilePosition {
+	line: number;
+	column?: number;
+}
+
+export type OpenFile = (
+	path: string,
+	openInNewTab?: boolean,
+	position?: FilePosition,
+) => void;
+
 export interface FilePaneData {
+	pendingPosition?: FilePosition;
 	filePath: string;
 	mode: "editor" | "diff" | "preview";
 	language?: string;
@@ -54,8 +67,8 @@ export interface CommentPaneData {
 }
 
 export interface PullRequestPaneData {
-	prNumber: number;
-	projectId?: string;
+	repoFullName: string;
+	number: number;
 }
 
 export interface PagePaneData {
@@ -64,12 +77,48 @@ export interface PagePaneData {
 	title?: string;
 }
 
-export interface ChatV3PaneData {
+export interface ChatPaneData {
+	terminalId: string;
 	sessionId: string | null;
+	agent?: {
+		id: string;
+		sessionId?: string;
+	};
+	pendingPrompt?: string;
+	pendingAttachments?: Array<{
+		attachmentId: string;
+		name: string;
+		mimeType: string;
+	}>;
+	queuedPrompts?: UserContent[][];
+	chatModelId?: string;
+	chatModelLabel?: string;
+	chatModeId?: string;
+	chatTitle?: string;
 }
 
 export interface DesktopPaneData {
 	kind: "desktop";
+}
+
+export interface MobilePaneData {
+	kind: "mobile";
+}
+
+export interface FilesPaneData {
+	kind: "files";
+}
+
+export interface ChangesListPaneData {
+	kind: "changes-list";
+}
+
+export interface ReviewPaneData {
+	kind: "review";
+}
+
+export interface PagesListPaneData {
+	kind: "pages-list";
 }
 
 /**
@@ -94,9 +143,7 @@ export type WorkspaceSearchKey =
 	| "subagentType"
 	| "openUrl"
 	| "openUrlTarget"
-	| "openUrlRequestId"
-	| "pageId"
-	| "pageSlug";
+	| "openUrlRequestId";
 
 /**
  * Drops the search params a deep link arrived with, once the hook that owns
@@ -109,7 +156,7 @@ export type ConsumeSearch = (keys: WorkspaceSearchKey[]) => void;
 export type PaneViewerData =
 	| FilePaneData
 	| TerminalPaneData
-	| ChatV3PaneData
+	| ChatPaneData
 	| BrowserPaneData
 	| DevtoolsPaneData
 	| DiffPaneData
@@ -117,4 +164,9 @@ export type PaneViewerData =
 	| PullRequestPaneData
 	| PagePaneData
 	| DesktopPaneData
+	| MobilePaneData
+	| FilesPaneData
+	| ChangesListPaneData
+	| ReviewPaneData
+	| PagesListPaneData
 	| SubagentPaneData;

@@ -20,6 +20,8 @@ import {
 	gitStatusPartialTask,
 	gitStatusSnapshotTask,
 } from "../../../workers/tasks/git";
+import { getLocalWorkspace } from "../../../workspaces/local-workspace-store";
+import { cancelAndWaitWorkspaceTitleCommit } from "../../../workspaces/workspace-title-jobs";
 import { protectedProcedure, queryProcedure, router } from "../../index";
 import { rethrowWorkerTaskAbort } from "../../worker-abort";
 import { resolveGithubRepo } from "../workspace-creation/shared/project-helpers";
@@ -155,7 +157,9 @@ function runStatusSnapshot(
 				);
 				if (result.baseRefFetchTarget) {
 					const target = result.baseRefFetchTarget;
-					const coordinatorGit = createUserSimpleGit(worktreePath).env(gitEnv);
+					const coordinatorGit = createUserSimpleGit(worktreePath, {
+						env: gitEnv,
+					});
 					// The coordinator maps live in this process, not in individual
 					// workers, so worktrees sharing one common Git dir share one TTL
 					// and in-flight fetch. The network fetch itself remains off-loop.
@@ -596,8 +600,19 @@ export const gitRouter = router({
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
+			await cancelAndWaitWorkspaceTitleCommit(ctx.db, input.workspaceId);
 			const worktreePath = resolveWorktreePath(ctx, input.workspaceId);
 			const git = await ctx.git(worktreePath);
+			// Background naming may have renamed the branch after the caller
+			// read it. Only then does the caller's name no longer exist, and
+			// the row holds the branch the workspace has now. The row can lag
+			// a checkout, so an existing name is always taken as given.
+			const callerBranchExists =
+				(await git.raw(["branch", "--list", input.oldName])).trim() !== "";
+			const oldName = callerBranchExists
+				? input.oldName
+				: (getLocalWorkspace(ctx.db, input.workspaceId)?.branch ??
+					input.oldName);
 
 			// Check if branch has been pushed to remote
 			try {
@@ -605,7 +620,7 @@ export const gitRouter = router({
 					"ls-remote",
 					"--heads",
 					"origin",
-					input.oldName,
+					oldName,
 				]);
 				if (remote.trim()) {
 					throw new TRPCError({
@@ -618,7 +633,7 @@ export const gitRouter = router({
 				// ls-remote failed — probably no remote, safe to rename
 			}
 
-			await git.raw(["branch", "-m", input.oldName, input.newName]);
+			await git.raw(["branch", "-m", oldName, input.newName]);
 			invalidateStatus(input.workspaceId);
 			return { name: input.newName };
 		}),

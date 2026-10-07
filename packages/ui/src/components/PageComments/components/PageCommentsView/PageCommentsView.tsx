@@ -8,6 +8,7 @@ import {
 	type FrameRect,
 	HOST_CHANNEL,
 	type HostMessageBody,
+	type PageLinkClick,
 	PENDING_ANCHOR_ID,
 } from "@superset/shared/page-comments-runtime";
 import {
@@ -15,6 +16,7 @@ import {
 	type PageViewportZoom,
 } from "@superset/shared/page-zoom";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { usePageStorageConnect } from "../../hooks/usePageStorageConnect";
 import { useComments } from "../../providers/CommentProvider";
 import { PageFrame } from "../PageFrame";
 import { CommentBubble, pinClassName } from "./components/CommentBubble";
@@ -38,6 +40,8 @@ interface PageCommentsViewProps {
 	 * host that focuses on click (a pane) hears about it here instead.
 	 */
 	onFramePointerDown?: () => void;
+	onLinkClick?: (click: PageLinkClick) => void;
+	storageTicket?: () => Promise<string | null>;
 }
 
 export function PageCommentsView({
@@ -47,7 +51,11 @@ export function PageCommentsView({
 	pinchZoomEnabled = false,
 	onScrollYChange,
 	onFramePointerDown,
+	onLinkClick,
+	storageTicket,
 }: PageCommentsViewProps) {
+	const onLinkClickRef = useRef(onLinkClick);
+	onLinkClickRef.current = onLinkClick;
 	const scrollYRef = useRef(initialScrollY ?? 0);
 	const onScrollYChangeRef = useRef(onScrollYChange);
 	onScrollYChangeRef.current = onScrollYChange;
@@ -87,6 +95,8 @@ export function PageCommentsView({
 	} = useComments();
 
 	const frameOrigin = useMemo(() => new URL(src).origin, [src]);
+
+	usePageStorageConnect({ frameRef, frameOrigin, ticket: storageTicket });
 
 	const [lastHoverRect, setLastHoverRect] = useState<FrameRect | null>(null);
 	useEffect(() => {
@@ -196,7 +206,18 @@ export function PageCommentsView({
 					height: rect.height * v.scale,
 				};
 			};
+			if (
+				data.type === "link-click" &&
+				typeof data.url === "string" &&
+				/^(https?:|mailto:|tel:)/i.test(data.url)
+			) {
+				onLinkClickRef.current?.(data);
+			}
 			if (data.type === "ready") {
+				send({
+					type: "set-link-handling",
+					enabled: Boolean(onLinkClickRef.current),
+				});
 				if (pinchZoomEnabled) send({ type: "enable-pinch-zoom" });
 				setReadySrc(src);
 				setFrameEpoch((epoch) => epoch + 1);

@@ -18,6 +18,7 @@ import { WorkspaceNameMarquee } from "renderer/components/WorkspaceNameMarquee";
 import type { DiffStats } from "renderer/hooks/host-service/useDiffStats";
 import { useFocusVisible } from "renderer/hooks/useFocusVisible";
 import { HotkeyLabel } from "renderer/hotkeys";
+import { pullRequestRefFromUrl } from "renderer/lib/github/pullRequestRef";
 import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { ProjectThumbnail } from "renderer/routes/_authenticated/components/ProjectThumbnail";
 import { RenameInput } from "renderer/screens/main/components/WorkspaceSidebar/RenameInput";
@@ -30,6 +31,7 @@ import type {
 } from "../../../../types";
 import { DashboardSidebarWorkspaceDiffStats } from "../DashboardSidebarWorkspaceDiffStats";
 import { DashboardSidebarWorkspaceIcon } from "../DashboardSidebarWorkspaceIcon";
+import { DashboardSidebarWorkspaceQueuedBadge } from "../DashboardSidebarWorkspaceQueuedBadge";
 import { DashboardSidebarWorkspaceChips } from "./components/DashboardSidebarWorkspaceChips";
 
 const PR_STATE_LABEL: Record<
@@ -210,9 +212,14 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 											event.stopPropagation();
 											// Lands in the workspace with its PR pane open, rather
 											// than on GitHub; the pane keeps the GitHub link.
+											const ref = pullRequestRefFromUrl(pullRequest.url);
+											if (!ref) {
+												window.open(pullRequest.url, "_blank");
+												return;
+											}
 											usePullRequestPaneIntent.getState().request({
 												workspaceId: workspace.id,
-												prNumber: pullRequest.number,
+												...ref,
 											});
 											void navigateToV2Workspace(workspace.id, navigate);
 										}}
@@ -378,15 +385,20 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 									{creationStatusText}
 								</span>
 							) : (
-								isActive &&
-								diffStats &&
-								(diffStats.additions > 0 || diffStats.deletions > 0) && (
-									<DashboardSidebarWorkspaceDiffStats
-										additions={diffStats.additions}
-										deletions={diffStats.deletions}
-										isActive={isActive}
+								<div className="flex items-center gap-1.5">
+									<DashboardSidebarWorkspaceQueuedBadge
+										workspaceId={workspace.id}
 									/>
-								)
+									{isActive &&
+										diffStats &&
+										(diffStats.additions > 0 || diffStats.deletions > 0) && (
+											<DashboardSidebarWorkspaceDiffStats
+												additions={diffStats.additions}
+												deletions={diffStats.deletions}
+												isActive={isActive}
+											/>
+										)}
+								</div>
 							)}
 							{!isPending && !isSelected && (
 								<div className="hidden items-center justify-end gap-1.5 group-hover:flex group-focus-within:flex">

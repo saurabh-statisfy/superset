@@ -1,8 +1,6 @@
 import { createWorkspaceStore, type WorkspaceState } from "@superset/panes";
-import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { eq } from "@tanstack/db";
 import { useLiveQuery } from "@tanstack/react-db";
-import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useEffect, useMemo, useRef } from "react";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
 import { useCollections } from "renderer/routes/_authenticated/providers/CollectionsProvider";
@@ -11,7 +9,6 @@ import {
 	rememberV2PaneSelection,
 } from "renderer/stores/v2-pane-selection";
 import type { PaneViewerData } from "../../types";
-import { dropUnavailablePanes } from "./utils/dropUnavailablePanes";
 import {
 	getSharedPaneLayoutSnapshot,
 	preserveLocalPaneSelection,
@@ -27,9 +24,17 @@ function getSnapshot(state: WorkspaceState<PaneViewerData>): string {
 	return getSharedPaneLayoutSnapshot(state);
 }
 
-export function useV2WorkspacePaneLayout() {
+export type PaneLayoutSlot = "paneLayout" | "rightPaneLayout";
+
+export function useV2WorkspacePaneLayout({
+	slot = "paneLayout",
+}: {
+	slot?: PaneLayoutSlot;
+} = {}) {
 	const { workspace } = useWorkspace();
 	const workspaceId = workspace.id;
+	const selectionKey =
+		slot === "paneLayout" ? workspaceId : `${workspaceId}:${slot}`;
 	const collections = useCollections();
 	// Keep the volatile pane store scoped to the route workspace. During fast
 	// workspace switches, live queries can briefly return stale rows; sharing
@@ -43,11 +48,11 @@ export function useV2WorkspacePaneLayout() {
 	// effect-cycle late.
 	const workspaceRuntime = useMemo(() => {
 		const persistedLayout =
-			(collections.v2WorkspaceLocalState.get(workspaceId)?.paneLayout as
+			(collections.v2WorkspaceLocalState.get(workspaceId)?.[slot] as
 				| WorkspaceState<PaneViewerData>
 				| undefined) ?? EMPTY_STATE;
 		const seededLayout = applyRememberedV2PaneSelection(
-			workspaceId,
+			selectionKey,
 			persistedLayout,
 		);
 		return {
@@ -57,7 +62,7 @@ export function useV2WorkspacePaneLayout() {
 				initialState: seededLayout,
 			}),
 		};
-	}, [collections, workspaceId]);
+	}, [collections, workspaceId, slot, selectionKey]);
 	const { store } = workspaceRuntime;
 	const syncStateRef = useRef({
 		workspaceId,
@@ -76,23 +81,15 @@ export function useV2WorkspacePaneLayout() {
 		);
 	const localWorkspaceState =
 		localWorkspaceRows.find((row) => row.workspaceId === workspaceId) ?? null;
-	const isPagesEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.PAGES);
-	const unavailableKinds = useMemo(
-		() => (isPagesEnabled === false ? ["page"] : []),
-		[isPagesEnabled],
-	);
 
 	const persistedPaneLayout = useMemo(
 		() =>
-			dropUnavailablePanes(
-				localWorkspaceState?.workspaceId === workspaceId
-					? ((localWorkspaceState.paneLayout as
-							| WorkspaceState<PaneViewerData>
-							| undefined) ?? EMPTY_STATE)
-					: EMPTY_STATE,
-				unavailableKinds,
-			),
-		[localWorkspaceState, workspaceId, unavailableKinds],
+			localWorkspaceState?.workspaceId === workspaceId
+				? ((localWorkspaceState[slot] as
+						| WorkspaceState<PaneViewerData>
+						| undefined) ?? EMPTY_STATE)
+				: EMPTY_STATE,
+		[localWorkspaceState, workspaceId, slot],
 	);
 
 	useEffect(() => {
@@ -130,7 +127,7 @@ export function useV2WorkspacePaneLayout() {
 				tabs: nextStore.tabs,
 				activeTabId: nextStore.activeTabId,
 			};
-			rememberV2PaneSelection(workspaceId, nextWorkspaceState);
+			rememberV2PaneSelection(selectionKey, nextWorkspaceState);
 			const nextSnapshot = getSnapshot(nextWorkspaceState);
 			if (nextSnapshot === syncStateRef.current.lastSyncedSnapshot) {
 				return;
@@ -141,7 +138,7 @@ export function useV2WorkspacePaneLayout() {
 			}
 
 			collections.v2WorkspaceLocalState.update(workspaceId, (draft) => {
-				draft.paneLayout = nextWorkspaceState;
+				draft[slot] = nextWorkspaceState;
 			});
 			syncStateRef.current.lastSyncedSnapshot = nextSnapshot;
 		});
@@ -149,7 +146,7 @@ export function useV2WorkspacePaneLayout() {
 		return () => {
 			unsubscribe();
 		};
-	}, [collections, store, workspaceId]);
+	}, [collections, store, workspaceId, slot, selectionKey]);
 
-	return { store, isLayoutReady };
+	return { store, isLayoutReady, hasRow: localWorkspaceState != null };
 }
